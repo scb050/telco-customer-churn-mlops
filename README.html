@@ -1,0 +1,1056 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Proyecto Integrador 5.12 — Predicción de Churn en Telecomunicaciones &#8212; Proyecto Telco Customer Churn</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=c73c0f3e"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=b8b12719"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'README';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Proyecto Telco Customer Churn</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="notebooks/01_eda_telco_churn.html">Proyecto Integrador 5.12 — Capítulo 5: Árboles e Interpretabilidad</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="notebooks/02_modeling_pipeline_gridsearch.html">Proyecto Integrador 5.12 — Capítulo 5: Árboles e Interpretabilidad</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="notebooks/03_interpretability_lime.html">3. Interpretabilidad con LIME</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/README.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Proyecto Integrador 5.12 — Predicción de Churn en Telecomunicaciones</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tabla-de-contenidos">Tabla de Contenidos</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#descripcion-del-proyecto">Descripción del Proyecto</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dataset">Dataset</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#arquitectura-del-proyecto">Arquitectura del Proyecto</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modelos-implementados">Modelos Implementados</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tabla-comparativa-de-metricas-conjunto-de-prueba-20">Tabla Comparativa de Métricas (conjunto de prueba, 20%)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mejores-hiperparametros-xgboost">Mejores Hiperparámetros (XGBoost)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#top-5-variables-mas-importantes-xgboost">Top 5 Variables más Importantes (XGBoost)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#instalacion">Instalación</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#requisitos-previos">Requisitos previos</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#instalacion-local">Instalación local</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ejecucion-de-notebooks">Ejecución de Notebooks</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ejecutar-la-api-localmente">Ejecutar la API localmente</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#docker">Docker</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#construir-la-imagen">Construir la imagen</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ejecutar-el-contenedor">Ejecutar el contenedor</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#con-variable-de-entorno-personalizada-para-el-modelo">Con variable de entorno personalizada para el modelo</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#verificar-que-funciona">Verificar que funciona</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#endpoints-de-la-api">Endpoints de la API</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#get"><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#get-health"><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/health</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#post-predict"><code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/predict</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#post-predict-batch"><code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/predict-batch</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#get-model-info"><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/model-info</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ci-cd-con-github-actions">CI/CD con GitHub Actions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretabilidad-con-lime">Interpretabilidad con LIME</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusiones">Conclusiones</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#referencias">Referencias</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="proyecto-integrador-5-12-prediccion-de-churn-en-telecomunicaciones">
+<h1>Proyecto Integrador 5.12 — Predicción de Churn en Telecomunicaciones<a class="headerlink" href="#proyecto-integrador-5-12-prediccion-de-churn-en-telecomunicaciones" title="Link to this heading">#</a></h1>
+<p><img alt="Python" src="https://img.shields.io/badge/Python-3.10-blue?logo=python" />
+<img alt="FastAPI" src="https://img.shields.io/badge/FastAPI-0.111-green?logo=fastapi" />
+<img alt="Docker" src="https://img.shields.io/badge/Docker-ready-blue?logo=docker" />
+<img alt="scikit-learn" src="https://img.shields.io/badge/scikit--learn-1.5.0-orange?logo=scikitlearn" />
+<img alt="XGBoost" src="https://img.shields.io/badge/XGBoost-2.1.0-red" />
+<img alt="License" src="https://img.shields.io/badge/License-Acad%C3%A9mico-lightgrey" /></p>
+<section id="tabla-de-contenidos">
+<h2>Tabla de Contenidos<a class="headerlink" href="#tabla-de-contenidos" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="#descripci%C3%B3n-del-proyecto"><span class="xref myst">Descripción del Proyecto</span></a></p></li>
+<li><p><a class="reference internal" href="#dataset"><span class="xref myst">Dataset</span></a></p></li>
+<li><p><a class="reference internal" href="#arquitectura-del-proyecto"><span class="xref myst">Arquitectura del Proyecto</span></a></p></li>
+<li><p><a class="reference internal" href="#modelos-implementados"><span class="xref myst">Modelos Implementados</span></a></p></li>
+<li><p><a class="reference internal" href="#instalaci%C3%B3n"><span class="xref myst">Instalación</span></a></p></li>
+<li><p><a class="reference internal" href="#ejecuci%C3%B3n-de-notebooks"><span class="xref myst">Ejecución de Notebooks</span></a></p></li>
+<li><p><a class="reference internal" href="#ejecutar-la-api-localmente"><span class="xref myst">Ejecutar la API localmente</span></a></p></li>
+<li><p><a class="reference internal" href="#docker"><span class="xref myst">Docker</span></a></p></li>
+<li><p><a class="reference internal" href="#endpoints-de-la-api"><span class="xref myst">Endpoints de la API</span></a></p></li>
+<li><p><a class="reference internal" href="#cicd-con-github-actions"><span class="xref myst">CI/CD con GitHub Actions</span></a></p></li>
+<li><p><a class="reference internal" href="#interpretabilidad-con-lime"><span class="xref myst">Interpretabilidad con LIME</span></a></p></li>
+<li><p><a class="reference internal" href="#conclusiones"><span class="xref myst">Conclusiones</span></a></p></li>
+<li><p><a class="reference internal" href="#referencias"><span class="xref myst">Referencias</span></a></p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="descripcion-del-proyecto">
+<h2>Descripción del Proyecto<a class="headerlink" href="#descripcion-del-proyecto" title="Link to this heading">#</a></h2>
+<p>El <strong>churn</strong> o abandono de clientes es uno de los problemas más críticos en la industria de telecomunicaciones, con costos de adquisición de nuevos clientes entre 5 y 25 veces superiores a los de retención. Este proyecto implementa un sistema completo de predicción de churn que incluye:</p>
+<ul class="simple">
+<li><p><strong>Análisis Exploratorio de Datos (EDA)</strong> sobre el dataset IBM Telco Customer Churn.</p></li>
+<li><p><strong>Modelado predictivo</strong> con cuatro algoritmos basados en árboles de decisión: Random Forest, XGBoost, CatBoost y LightGBM.</p></li>
+<li><p><strong>Interpretabilidad local</strong> mediante el método LIME (Local Interpretable Model-agnostic Explanations).</p></li>
+<li><p><strong>API REST</strong> desarrollada con FastAPI para servir predicciones en tiempo real con interfaz web interactiva.</p></li>
+<li><p><strong>Pipeline MLOps</strong> con Docker y GitHub Actions para integración y entrega continua.</p></li>
+</ul>
+<p>El modelo seleccionado (<strong>XGBoost</strong>) alcanza un <strong>AUC-ROC de 0.8481</strong> sobre el conjunto de prueba, identificando correctamente el 51.6% de los clientes que abandonarán la empresa.</p>
+</section>
+<hr class="docutils" />
+<section id="dataset">
+<h2>Dataset<a class="headerlink" href="#dataset" title="Link to this heading">#</a></h2>
+<p><strong>IBM Telco Customer Churn</strong></p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Característica</p></th>
+<th class="head"><p>Valor</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Fuente</p></td>
+<td><p>IBM Sample Data Sets</p></td>
+</tr>
+<tr class="row-odd"><td><p>Registros</p></td>
+<td><p>7,043 clientes</p></td>
+</tr>
+<tr class="row-even"><td><p>Variables</p></td>
+<td><p>21 (19 predictoras + 1 identificador + 1 objetivo)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Variable objetivo</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Churn</span></code> (No: 73.46%, Yes: 26.54%)</p></td>
+</tr>
+<tr class="row-even"><td><p>Desbalance de clases</p></td>
+<td><p>Moderado (~3:1)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>Variables predictoras:</strong></p>
+<ul class="simple">
+<li><p><strong>Demográficas:</strong> gender, SeniorCitizen, Partner, Dependents</p></li>
+<li><p><strong>Servicios:</strong> PhoneService, MultipleLines, InternetService, OnlineSecurity, OnlineBackup, DeviceProtection, TechSupport, StreamingTV, StreamingMovies</p></li>
+<li><p><strong>Contrato:</strong> Contract, PaperlessBilling, PaymentMethod</p></li>
+<li><p><strong>Facturación:</strong> tenure, MonthlyCharges, TotalCharges</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="arquitectura-del-proyecto">
+<h2>Arquitectura del Proyecto<a class="headerlink" href="#arquitectura-del-proyecto" title="Link to this heading">#</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>MP3/
+├── .github/
+│   └── workflows/
+│       └── ci.yml              # Pipeline CI/CD (lint → test → build Docker)
+├── app/
+│   └── api.py                  # API FastAPI con interfaz web integrada
+├── data/
+│   ├── raw/
+│   │   └── WA_Fn-UseC_-Telco-Customer-Churn.csv   # Dataset original IBM
+│   └── processed/
+│       └── telco_churn_clean.csv                   # Dataset limpio
+├── models/
+│   ├── best_model.joblib       # Pipeline XGBoost serializado (mejor modelo)
+│   └── model_metadata.json     # Metadatos: features, target, parámetros
+├── notebooks/
+│   ├── 01_eda_telco_churn.ipynb              # Análisis Exploratorio de Datos
+│   ├── 02_modeling_pipeline_gridsearch.ipynb # Entrenamiento y comparación de modelos
+│   └── 03_interpretability_lime.ipynb        # Interpretabilidad local con LIME
+├── reports/
+│   ├── feature_importance.csv  # Importancia de variables (XGBoost)
+│   ├── model_results.csv       # Métricas comparativas de los 4 modelos
+│   └── lime/                   # Explicaciones LIME (HTML + TXT) para 3 perfiles
+├── src/                        # Módulos Python reutilizables (extensión futura)
+├── tests/
+│   └── test_api.py             # Pruebas unitarias con pytest + TestClient
+├── Dockerfile                  # Imagen Docker para despliegue
+├── requirements.txt            # Dependencias con versiones fijas
+└── README.md                   # Este archivo
+</pre></div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="modelos-implementados">
+<h2>Modelos Implementados<a class="headerlink" href="#modelos-implementados" title="Link to this heading">#</a></h2>
+<p>Todos los modelos usan un <strong>Pipeline de scikit-learn</strong> que incluye:</p>
+<ol class="arabic simple">
+<li><p>Imputación de valores faltantes (<code class="docutils literal notranslate"><span class="pre">SimpleImputer</span></code>)</p></li>
+<li><p>Escalado numérico (<code class="docutils literal notranslate"><span class="pre">StandardScaler</span></code>)</p></li>
+<li><p>Codificación de categóricas (<code class="docutils literal notranslate"><span class="pre">OneHotEncoder</span></code>)</p></li>
+<li><p>Clasificador</p></li>
+</ol>
+<p>La selección de hiperparámetros se realizó con <code class="docutils literal notranslate"><span class="pre">GridSearchCV</span></code> (5-fold StratifiedKFold, <code class="docutils literal notranslate"><span class="pre">scoring='roc_auc'</span></code>, <code class="docutils literal notranslate"><span class="pre">n_jobs=-1</span></code>).</p>
+<section id="tabla-comparativa-de-metricas-conjunto-de-prueba-20">
+<h3>Tabla Comparativa de Métricas (conjunto de prueba, 20%)<a class="headerlink" href="#tabla-comparativa-de-metricas-conjunto-de-prueba-20" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Modelo</p></th>
+<th class="head"><p>CV AUC</p></th>
+<th class="head"><p>Accuracy</p></th>
+<th class="head"><p>Precision</p></th>
+<th class="head"><p>Recall</p></th>
+<th class="head"><p>F1-Score</p></th>
+<th class="head"><p><strong>AUC-ROC</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>XGBoost</strong> ⭐</p></td>
+<td><p>0.8504</p></td>
+<td><p><strong>0.8041</strong></p></td>
+<td><p><strong>0.6701</strong></p></td>
+<td><p>0.5160</p></td>
+<td><p>0.5831</p></td>
+<td><p><strong>0.8481</strong></p></td>
+</tr>
+<tr class="row-odd"><td><p>CatBoost</p></td>
+<td><p>0.8504</p></td>
+<td><p>0.7480</p></td>
+<td><p>0.5164</p></td>
+<td><p><strong>0.7995</strong></p></td>
+<td><p><strong>0.6275</strong></p></td>
+<td><p>0.8476</p></td>
+</tr>
+<tr class="row-even"><td><p>LightGBM</p></td>
+<td><p>0.8487</p></td>
+<td><p>0.8006</p></td>
+<td><p>0.6598</p></td>
+<td><p>0.5134</p></td>
+<td><p>0.5774</p></td>
+<td><p>0.8474</p></td>
+</tr>
+<tr class="row-odd"><td><p>Random Forest</p></td>
+<td><p>0.8453</p></td>
+<td><p>0.7658</p></td>
+<td><p>0.5445</p></td>
+<td><p>0.7193</p></td>
+<td><p>0.6198</p></td>
+<td><p>0.8392</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>Criterio de selección:</strong> Mayor AUC-ROC en el conjunto de prueba (métrica más robusta ante el desbalance de clases).</p>
+</section>
+<section id="mejores-hiperparametros-xgboost">
+<h3>Mejores Hiperparámetros (XGBoost)<a class="headerlink" href="#mejores-hiperparametros-xgboost" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s1">&#39;max_depth&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+    <span class="s1">&#39;learning_rate&#39;</span><span class="p">:</span> <span class="mf">0.05</span><span class="p">,</span>
+    <span class="s1">&#39;n_estimators&#39;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+    <span class="s1">&#39;subsample&#39;</span><span class="p">:</span> <span class="mf">0.8</span><span class="p">,</span>
+    <span class="s1">&#39;colsample_bytree&#39;</span><span class="p">:</span> <span class="mf">0.8</span><span class="p">,</span>
+    <span class="s1">&#39;scale_pos_weight&#39;</span><span class="p">:</span> <span class="mi">1</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="top-5-variables-mas-importantes-xgboost">
+<h3>Top 5 Variables más Importantes (XGBoost)<a class="headerlink" href="#top-5-variables-mas-importantes-xgboost" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Variable</p></th>
+<th class="head"><p>Importancia</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Contract_Month-to-month</p></td>
+<td><p>34.73%</p></td>
+</tr>
+<tr class="row-odd"><td><p>TechSupport_No</p></td>
+<td><p>8.78%</p></td>
+</tr>
+<tr class="row-even"><td><p>OnlineSecurity_No</p></td>
+<td><p>8.66%</p></td>
+</tr>
+<tr class="row-odd"><td><p>InternetService_Fiber optic</p></td>
+<td><p>7.21%</p></td>
+</tr>
+<tr class="row-even"><td><p>InternetService_DSL</p></td>
+<td><p>4.68%</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="instalacion">
+<h2>Instalación<a class="headerlink" href="#instalacion" title="Link to this heading">#</a></h2>
+<section id="requisitos-previos">
+<h3>Requisitos previos<a class="headerlink" href="#requisitos-previos" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Python 3.10+</p></li>
+<li><p>pip</p></li>
+<li><p>(Opcional) Docker Desktop</p></li>
+</ul>
+</section>
+<section id="instalacion-local">
+<h3>Instalación local<a class="headerlink" href="#instalacion-local" title="Link to this heading">#</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># 1. Clonar el repositorio</span>
+git<span class="w"> </span>clone<span class="w"> </span>&lt;url-del-repositorio&gt;
+<span class="nb">cd</span><span class="w"> </span>MP3
+
+<span class="c1"># 2. Crear entorno virtual (recomendado)</span>
+python<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>.venv
+
+<span class="c1"># Windows</span>
+.venv<span class="se">\S</span>cripts<span class="se">\a</span>ctivate
+
+<span class="c1"># macOS/Linux</span>
+<span class="nb">source</span><span class="w"> </span>.venv/bin/activate
+
+<span class="c1"># 3. Instalar dependencias</span>
+pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
+</pre></div>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="ejecucion-de-notebooks">
+<h2>Ejecución de Notebooks<a class="headerlink" href="#ejecucion-de-notebooks" title="Link to this heading">#</a></h2>
+<p>Ejecutar los notebooks en el siguiente orden:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Iniciar Jupyter</span>
+jupyter<span class="w"> </span>notebook
+</pre></div>
+</div>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Orden</p></th>
+<th class="head"><p>Notebook</p></th>
+<th class="head"><p>Descripción</p></th>
+<th class="head"><p>Prerequisito</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>1°</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">01_eda_telco_churn.ipynb</span></code></p></td>
+<td><p>Análisis exploratorio, limpieza, visualizaciones</p></td>
+<td><p>Dataset raw</p></td>
+</tr>
+<tr class="row-odd"><td><p>2°</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">02_modeling_pipeline_gridsearch.ipynb</span></code></p></td>
+<td><p>Entrenamiento, GridSearch, comparación, guarda modelo</p></td>
+<td><p>Notebook 01</p></td>
+</tr>
+<tr class="row-even"><td><p>3°</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">03_interpretability_lime.ipynb</span></code></p></td>
+<td><p>Explicaciones LIME para 3 perfiles de cliente</p></td>
+<td><p>Notebook 02</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<blockquote>
+<div><p><strong>Nota:</strong> El notebook 02 guarda automáticamente <code class="docutils literal notranslate"><span class="pre">models/best_model.joblib</span></code> y <code class="docutils literal notranslate"><span class="pre">models/model_metadata.json</span></code>, que son necesarios para la API.</p>
+</div></blockquote>
+</section>
+<hr class="docutils" />
+<section id="ejecutar-la-api-localmente">
+<h2>Ejecutar la API localmente<a class="headerlink" href="#ejecutar-la-api-localmente" title="Link to this heading">#</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Desde el directorio raíz del proyecto</span>
+uvicorn<span class="w"> </span>app.api:app<span class="w"> </span>--reload<span class="w"> </span>--host<span class="w"> </span><span class="m">0</span>.0.0.0<span class="w"> </span>--port<span class="w"> </span><span class="m">8000</span>
+</pre></div>
+</div>
+<p>La API estará disponible en:</p>
+<ul class="simple">
+<li><p><strong>Interfaz web:</strong> <a class="reference external" href="http://localhost:8000">http://localhost:8000</a></p></li>
+<li><p><strong>Documentación Swagger:</strong> <a class="reference external" href="http://localhost:8000/docs">http://localhost:8000/docs</a></p></li>
+<li><p><strong>ReDoc:</strong> <a class="reference external" href="http://localhost:8000/redoc">http://localhost:8000/redoc</a></p></li>
+<li><p><strong>Health check:</strong> <a class="reference external" href="http://localhost:8000/health">http://localhost:8000/health</a></p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="docker">
+<h2>Docker<a class="headerlink" href="#docker" title="Link to this heading">#</a></h2>
+<section id="construir-la-imagen">
+<h3>Construir la imagen<a class="headerlink" href="#construir-la-imagen" title="Link to this heading">#</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>telco-churn-api:latest<span class="w"> </span>.
+</pre></div>
+</div>
+</section>
+<section id="ejecutar-el-contenedor">
+<h3>Ejecutar el contenedor<a class="headerlink" href="#ejecutar-el-contenedor" title="Link to this heading">#</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--name<span class="w"> </span>telco-churn<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-p<span class="w"> </span><span class="m">8000</span>:8000<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>telco-churn-api:latest
+</pre></div>
+</div>
+</section>
+<section id="con-variable-de-entorno-personalizada-para-el-modelo">
+<h3>Con variable de entorno personalizada para el modelo<a class="headerlink" href="#con-variable-de-entorno-personalizada-para-el-modelo" title="Link to this heading">#</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--name<span class="w"> </span>telco-churn<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-p<span class="w"> </span><span class="m">8000</span>:8000<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-e<span class="w"> </span><span class="nv">MODEL_PATH</span><span class="o">=</span>/app/models/best_model.joblib<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>telco-churn-api:latest
+</pre></div>
+</div>
+</section>
+<section id="verificar-que-funciona">
+<h3>Verificar que funciona<a class="headerlink" href="#verificar-que-funciona" title="Link to this heading">#</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>curl<span class="w"> </span>http://localhost:8000/health
+</pre></div>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="endpoints-de-la-api">
+<h2>Endpoints de la API<a class="headerlink" href="#endpoints-de-la-api" title="Link to this heading">#</a></h2>
+<section id="get">
+<h3><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/</span></code><a class="headerlink" href="#get" title="Link to this heading">#</a></h3>
+<p>Interfaz web interactiva con formulario de predicción.</p>
+</section>
+<hr class="docutils" />
+<section id="get-health">
+<h3><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/health</span></code><a class="headerlink" href="#get-health" title="Link to this heading">#</a></h3>
+<p>Verifica el estado del servicio.</p>
+<p><strong>Respuesta:</strong></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ok&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;message&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;La API se encuentra activa.&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;model_loaded&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;model_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;XGBoost&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1.0.0&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;timestamp&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2024-01-15T10:30:00.000000&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="post-predict">
+<h3><code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/predict</span></code><a class="headerlink" href="#post-predict" title="Link to this heading">#</a></h3>
+<p>Predice la probabilidad de churn para un cliente individual.</p>
+<p><strong>Cuerpo de la solicitud:</strong></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;gender&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Female&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;SeniorCitizen&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;Partner&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Yes&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;Dependents&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;No&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;tenure&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">12</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;PhoneService&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Yes&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;MultipleLines&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;No&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;InternetService&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Fiber optic&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;OnlineSecurity&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;No&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;OnlineBackup&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Yes&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;DeviceProtection&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;No&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;TechSupport&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;No&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;StreamingTV&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Yes&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;StreamingMovies&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;No&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;Contract&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Month-to-month&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;PaperlessBilling&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Yes&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;PaymentMethod&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Electronic check&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;MonthlyCharges&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">70.35</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;TotalCharges&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">845.50</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>Ejemplo con curl:</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span><span class="s2">&quot;http://localhost:8000/predict&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{</span>
+<span class="s1">    &quot;gender&quot;: &quot;Female&quot;, &quot;SeniorCitizen&quot;: 0, &quot;Partner&quot;: &quot;Yes&quot;,</span>
+<span class="s1">    &quot;Dependents&quot;: &quot;No&quot;, &quot;tenure&quot;: 12, &quot;PhoneService&quot;: &quot;Yes&quot;,</span>
+<span class="s1">    &quot;MultipleLines&quot;: &quot;No&quot;, &quot;InternetService&quot;: &quot;Fiber optic&quot;,</span>
+<span class="s1">    &quot;OnlineSecurity&quot;: &quot;No&quot;, &quot;OnlineBackup&quot;: &quot;Yes&quot;,</span>
+<span class="s1">    &quot;DeviceProtection&quot;: &quot;No&quot;, &quot;TechSupport&quot;: &quot;No&quot;,</span>
+<span class="s1">    &quot;StreamingTV&quot;: &quot;Yes&quot;, &quot;StreamingMovies&quot;: &quot;No&quot;,</span>
+<span class="s1">    &quot;Contract&quot;: &quot;Month-to-month&quot;, &quot;PaperlessBilling&quot;: &quot;Yes&quot;,</span>
+<span class="s1">    &quot;PaymentMethod&quot;: &quot;Electronic check&quot;,</span>
+<span class="s1">    &quot;MonthlyCharges&quot;: 70.35, &quot;TotalCharges&quot;: 845.50</span>
+<span class="s1">  }&#39;</span>
+</pre></div>
+</div>
+<p><strong>Respuesta:</strong></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;timestamp&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2024-01-15T10:30:00.000000&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;input_data&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;...&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;...&quot;</span><span class="w"> </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;result&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;prediction&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;prediction_label&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Churn&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;churn_probability&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.7532</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;confidence&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Alta&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;risk_level&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Alto&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;risk_factors&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">      </span><span class="s2">&quot;Contrato mes a mes (42.7% de tasa de churn)&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="s2">&quot;Servicio de fibra óptica (41.9% de tasa de churn)&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="s2">&quot;Antigüedad baja (12 meses con la empresa)&quot;</span>
+<span class="w">    </span><span class="p">],</span>
+<span class="w">    </span><span class="nt">&quot;recommendation&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Cliente con alto riesgo de abandono...&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;threshold_used&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.5</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="post-predict-batch">
+<h3><code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/predict-batch</span></code><a class="headerlink" href="#post-predict-batch" title="Link to this heading">#</a></h3>
+<p>Predice el churn para múltiples clientes en una sola solicitud.</p>
+<p><strong>Ejemplo con curl:</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span><span class="s2">&quot;http://localhost:8000/predict-batch&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;customers&quot;: [&lt;cliente1&gt;, &lt;cliente2&gt;]}&#39;</span>
+</pre></div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="get-model-info">
+<h3><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/model-info</span></code><a class="headerlink" href="#get-model-info" title="Link to this heading">#</a></h3>
+<p>Retorna información y métricas del modelo activo.</p>
+<p><strong>Respuesta:</strong></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;model_name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;XGBoost&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;model_status&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;loaded&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1.0.0&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;selection_metric&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;test_roc_auc&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;prediction_threshold_default&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.5</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;test_metrics&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;test_accuracy&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.8041</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;test_precision&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.6701</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;test_recall&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.516</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;test_f1_score&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.5831</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;test_roc_auc&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.8481</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;best_cv_roc_auc&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.8504</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;features_used&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;gender&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;SeniorCitizen&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;...&quot;</span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="ci-cd-con-github-actions">
+<h2>CI/CD con GitHub Actions<a class="headerlink" href="#ci-cd-con-github-actions" title="Link to this heading">#</a></h2>
+<p>El pipeline <code class="docutils literal notranslate"><span class="pre">.github/workflows/ci.yml</span></code> se ejecuta automáticamente en cada <code class="docutils literal notranslate"><span class="pre">push</span></code> a <code class="docutils literal notranslate"><span class="pre">main</span></code> o <code class="docutils literal notranslate"><span class="pre">develop</span></code>, y en cada <code class="docutils literal notranslate"><span class="pre">pull_request</span></code> hacia <code class="docutils literal notranslate"><span class="pre">main</span></code>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Push / PR → [Job 1: Lint] → [Job 2: Tests] → [Job 3: Build Docker]
+</pre></div>
+</div>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Job</p></th>
+<th class="head"><p>Herramienta</p></th>
+<th class="head"><p>Descripción</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Lint</strong></p></td>
+<td><p>flake8</p></td>
+<td><p>Verifica estilo PEP8 en <code class="docutils literal notranslate"><span class="pre">app/api.py</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Test</strong></p></td>
+<td><p>pytest</p></td>
+<td><p>Ejecuta 25+ pruebas unitarias sobre todos los endpoints</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Build</strong></p></td>
+<td><p>Docker</p></td>
+<td><p>Construye la imagen y realiza prueba de humo (<code class="docutils literal notranslate"><span class="pre">/health</span></code>)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<hr class="docutils" />
+<section id="interpretabilidad-con-lime">
+<h2>Interpretabilidad con LIME<a class="headerlink" href="#interpretabilidad-con-lime" title="Link to this heading">#</a></h2>
+<p>El notebook <code class="docutils literal notranslate"><span class="pre">03_interpretability_lime.ipynb</span></code> aplica <strong>LIME (Local Interpretable Model-agnostic Explanations)</strong> para explicar predicciones individuales.</p>
+<p>Se analizan tres perfiles representativos:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Perfil</p></th>
+<th class="head"><p>Probabilidad de Churn</p></th>
+<th class="head"><p>Churn Real</p></th>
+<th class="head"><p>Predicción</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Alta probabilidad</p></td>
+<td><p>88.82%</p></td>
+<td><p>Sí</p></td>
+<td><p>Sí (VP)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Baja probabilidad</p></td>
+<td><p>1.05%</p></td>
+<td><p>No</p></td>
+<td><p>No (VN)</p></td>
+</tr>
+<tr class="row-even"><td><p>Probabilidad intermedia</p></td>
+<td><p>50.01%</p></td>
+<td><p>Sí</p></td>
+<td><p>Sí (VP)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Las explicaciones LIME se guardan en <code class="docutils literal notranslate"><span class="pre">reports/lime/</span></code> en formatos HTML y TXT.</p>
+</section>
+<hr class="docutils" />
+<section id="conclusiones">
+<h2>Conclusiones<a class="headerlink" href="#conclusiones" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p><strong>XGBoost</strong> fue el mejor modelo con <strong>AUC-ROC = 0.8481</strong>, superando a Random Forest, CatBoost y LightGBM.</p></li>
+<li><p>El <strong>tipo de contrato</strong> es la variable más determinante (34.7% de importancia): los clientes con contrato mensual tienen una tasa de churn del 42.7%.</p></li>
+<li><p>La <strong>ausencia de servicios de soporte</strong> (TechSupport, OnlineSecurity) y el <strong>servicio de fibra óptica</strong> son factores de riesgo secundarios pero significativos.</p></li>
+<li><p>El <strong>método de pago</strong> por cheque electrónico está asociado con la mayor tasa de churn (45.3%).</p></li>
+<li><p>LIME confirma que el modelo captura patrones coherentes con el análisis exploratorio: contratos cortos, ausencia de servicios y cargos elevados son señales de riesgo consistentes.</p></li>
+</ol>
+</section>
+<hr class="docutils" />
+<section id="referencias">
+<h2>Referencias<a class="headerlink" href="#referencias" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>Breiman, L. (2001). <em>Random Forests</em>. Machine Learning, 45(1), 5–32.</p></li>
+<li><p>Chen, T., &amp; Guestrin, C. (2016). <em>XGBoost: A Scalable Tree Boosting System</em>. KDD ‘16.</p></li>
+<li><p>Prokhorenkova, L. et al. (2018). <em>CatBoost: Unbiased Boosting with Categorical Features</em>. NeurIPS.</p></li>
+<li><p>Ke, G. et al. (2017). <em>LightGBM: A Highly Efficient Gradient Boosting Decision Tree</em>. NeurIPS.</p></li>
+<li><p>Ribeiro, M. T., Singh, S., &amp; Guestrin, C. (2016). <em>“Why Should I Trust You?”: Explaining the Predictions of Any Classifier</em>. KDD ‘16.</p></li>
+<li><p>IBM. (2019). <em>Telco Customer Churn Dataset</em>. IBM Sample Data Sets.</p></li>
+<li><p>Pedregosa, F. et al. (2011). <em>Scikit-learn: Machine Learning in Python</em>. JMLR, 12, 2825–2830.</p></li>
+</ol>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tabla-de-contenidos">Tabla de Contenidos</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#descripcion-del-proyecto">Descripción del Proyecto</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dataset">Dataset</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#arquitectura-del-proyecto">Arquitectura del Proyecto</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modelos-implementados">Modelos Implementados</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tabla-comparativa-de-metricas-conjunto-de-prueba-20">Tabla Comparativa de Métricas (conjunto de prueba, 20%)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mejores-hiperparametros-xgboost">Mejores Hiperparámetros (XGBoost)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#top-5-variables-mas-importantes-xgboost">Top 5 Variables más Importantes (XGBoost)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#instalacion">Instalación</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#requisitos-previos">Requisitos previos</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#instalacion-local">Instalación local</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ejecucion-de-notebooks">Ejecución de Notebooks</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ejecutar-la-api-localmente">Ejecutar la API localmente</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#docker">Docker</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#construir-la-imagen">Construir la imagen</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ejecutar-el-contenedor">Ejecutar el contenedor</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#con-variable-de-entorno-personalizada-para-el-modelo">Con variable de entorno personalizada para el modelo</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#verificar-que-funciona">Verificar que funciona</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#endpoints-de-la-api">Endpoints de la API</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#get"><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#get-health"><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/health</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#post-predict"><code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/predict</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#post-predict-batch"><code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/predict-batch</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#get-model-info"><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/model-info</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ci-cd-con-github-actions">CI/CD con GitHub Actions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretabilidad-con-lime">Interpretabilidad con LIME</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusiones">Conclusiones</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#referencias">Referencias</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Mateo Chang - Sergio Cadavid - Juan Camilo Conrado
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
