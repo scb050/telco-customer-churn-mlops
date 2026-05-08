@@ -1,0 +1,13 @@
+Explicación LIME - Alta probabilidad de churn
+================================================================================
+
+Contract=Month-to-month: 0.190074
+tenure <= 9.00: 0.138021
+MonthlyCharges > 90.00: 0.078953
+InternetService=Fiber optic: 0.077080
+OnlineSecurity=No: 0.059403
+PaymentMethod=Electronic check: 0.051436
+TechSupport=No: 0.048537
+PaperlessBilling=Yes: 0.039374
+OnlineBackup=No: 0.021343
+TotalCharges <= 402.98: 0.020866

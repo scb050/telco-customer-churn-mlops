@@ -1,0 +1,13 @@
+Explicación LIME - Probabilidad intermedia de churn
+================================================================================
+
+Contract=Month-to-month: 0.185444
+tenure <= 9.00: 0.134727
+OnlineSecurity=No: 0.058907
+InternetService=DSL: -0.057874
+TechSupport=No: 0.049959
+PaymentMethod=Electronic check: 0.046326
+PaperlessBilling=No: -0.036297
+35.66 < MonthlyCharges <= 70.50: -0.033617
+MultipleLines=No: -0.024063
+OnlineBackup=No: 0.022764

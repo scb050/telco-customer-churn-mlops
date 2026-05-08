@@ -1,0 +1,4 @@
+caso,indice_original,churn_real,prediccion,probabilidad_churn
+Alta probabilidad de churn,3380,1,1,0.8882
+Baja probabilidad de churn,6423,0,0,0.0105
+Probabilidad intermedia de churn,779,1,1,0.5001

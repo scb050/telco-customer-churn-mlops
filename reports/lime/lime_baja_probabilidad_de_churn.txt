@@ -1,0 +1,13 @@
+Explicación LIME - Baja probabilidad de churn
+================================================================================
+
+Contract=Two year: -0.165817
+tenure > 55.00: -0.086445
+MonthlyCharges <= 35.66: -0.041717
+InternetService=No: -0.040224
+PaperlessBilling=No: -0.039194
+TechSupport=No internet service: -0.033307
+OnlineSecurity=No internet service: -0.032570
+MultipleLines=Yes: 0.017875
+1394.92 < TotalCharges <= 3835.83: -0.017672
+PaymentMethod=Credit card (automatic): -0.016057
