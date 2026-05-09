@@ -1,0 +1,9 @@
+format: jb-book
+root: intro
+chapters:
+  - file: notebooks/01_eda_telco_churn
+    title: "Análisis Exploratorio"
+  - file: notebooks/02_modeling_pipeline_gridsearch
+    title: "Modelado y Comparación"
+  - file: notebooks/03_interpretability_lime
+    title: "Interpretabilidad LIME"

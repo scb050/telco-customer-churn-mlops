@@ -18,3 +18,4 @@ plotly==5.22.0
 jupyter==1.0.0
 notebook==7.2.1
 ipykernel==6.29.4
+jupyter-book==1.0.2
