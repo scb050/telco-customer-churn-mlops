@@ -2,13 +2,13 @@
 <!DOCTYPE html>
 
 
-<html lang="en" data-content_root="../" >
+<html lang="es" data-content_root="../" >
 
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Proyecto Integrador 5.12 — Capítulo 5: Árboles e Interpretabilidad &#8212; Proyecto Telco Customer Churn</title>
+    <title>EDA — Predicción de Churn en Telecomunicaciones &#8212; Predicción de Churn — Telco</title>
   
   
   
@@ -30,9 +30,9 @@
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
-    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -41,7 +41,7 @@
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="../_static/documentation_options.js?v=c73c0f3e"></script>
+    <script src="../_static/documentation_options.js?v=78d55cf8"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -50,7 +50,8 @@
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="../_static/togglebutton.js?v=b8b12719"></script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script src="../_static/translations.js?v=d190bf04"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script src="../_static/design-tabs.js?v=f930bc37"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
@@ -60,12 +61,12 @@
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks/01_eda_telco_churn';</script>
-    <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Proyecto Integrador 5.12 — Capítulo 5: Árboles e Interpretabilidad" href="02_modeling_pipeline_gridsearch.html" />
-    <link rel="prev" title="Proyecto Predicción de Churn en Telecomunicaciones" href="../intro.html" />
+    <link rel="index" title="Índice" href="../genindex.html" />
+    <link rel="search" title="Búsqueda" href="../search.html" />
+    <link rel="next" title="Modelado Predictivo — Predicción de Churn" href="02_modeling_pipeline_gridsearch.html" />
+    <link rel="prev" title="Predicción de Churn en Telecomunicaciones" href="../intro.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:language" content="es"/>
   </head>
   
   
@@ -73,12 +74,12 @@
 
   
   
-  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Saltar al contenido principal</a></div>
   
   <div id="pst-scroll-pixel-helper"></div>
   
   <button type="button" class="btn rounded-pill" id="pst-back-to-top">
-    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+    <i class="fa-solid fa-arrow-up"></i>Volver arriba</button>
 
   
   <input type="checkbox"
@@ -102,8 +103,8 @@
          class="form-control"
          name="q"
          id="search-input"
-         placeholder="Search..."
-         aria-label="Search..."
+         placeholder="Search this book..."
+         aria-label="Search this book..."
          autocomplete="off"
          autocorrect="off"
          autocapitalize="off"
@@ -113,7 +114,7 @@
   </div>
 
   <div class="pst-async-banner-revealer d-none">
-  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Advertencia de versión"></aside>
 </div>
 
   
@@ -151,28 +152,34 @@
   
   
   
-    <p class="title logo__title">Proyecto Telco Customer Churn</p>
+    <p class="title logo__title">Predicción de Churn — Telco</p>
   
 </a></div>
         <div class="sidebar-primary-item">
 
  <script>
  document.write(`
-   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+   <button class="btn search-button-field search-button__button" title="Búsqueda" aria-label="Búsqueda" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass"></i>
-    <span class="search-button__default-text">Search</span>
+    <span class="search-button__default-text">Búsqueda</span>
     <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
    </button>
  `);
  </script></div>
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Predicción de Churn en Telecomunicaciones
+                </a>
+            </li>
+        </ul>
         <ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Proyecto Integrador 5.12 — Capítulo 5: Árboles e Interpretabilidad</a></li>
-
-<li class="toctree-l1"><a class="reference internal" href="02_modeling_pipeline_gridsearch.html">Proyecto Integrador 5.12 — Capítulo 5: Árboles e Interpretabilidad</a></li>
-
-<li class="toctree-l1"><a class="reference internal" href="03_interpretability_lime.html">3. Interpretabilidad con LIME</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Análisis Exploratorio</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_modeling_pipeline_gridsearch.html">Modelado y Comparación</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_interpretability_lime.html">Interpretabilidad LIME</a></li>
 </ul>
 
     </div>
@@ -220,7 +227,7 @@
 
 
 <div class="dropdown dropdown-download-buttons">
-  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Descarga esta pagina">
     <i class="fas fa-download"></i>
   </button>
   <ul class="dropdown-menu">
@@ -229,7 +236,7 @@
       
       <li><a href="../_sources/notebooks/01_eda_telco_churn.ipynb" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
-   title="Download source file"
+   title="Descargar archivo fuente"
    data-bs-placement="left" data-bs-toggle="tooltip"
 >
   
@@ -247,7 +254,7 @@
       <li>
 <button onclick="window.print()"
   class="btn btn-sm btn-download-pdf-button dropdown-item"
-  title="Print to PDF"
+  title="Imprimir en PDF"
   data-bs-placement="left" data-bs-toggle="tooltip"
 >
   
@@ -267,7 +274,7 @@
 
 <button onclick="toggleFullScreen()"
   class="btn btn-sm btn-fullscreen-button"
-  title="Fullscreen mode"
+  title="Modo de pantalla completa"
   data-bs-placement="bottom" data-bs-toggle="tooltip"
 >
   
@@ -282,7 +289,7 @@
 
 <script>
 document.write(`
-  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="claro/oscuro" aria-label="claro/oscuro" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
     <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
     <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
@@ -293,7 +300,7 @@ document.write(`
 
 <script>
 document.write(`
-  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Búsqueda" aria-label="Búsqueda" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
   </button>
 `);
@@ -311,57 +318,27 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Proyecto Integrador 5.12 — Capítulo 5: Árboles e Interpretabilidad</h1>
+    <h1>EDA — Predicción de Churn en Telecomunicaciones</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
             
             <div>
-                <h2> Contents </h2>
+                <h2> Contenido </h2>
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Proyecto Integrador 5.12 — Capítulo 5: Árboles e Interpretabilidad</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#notebook-1-analisis-exploratorio-de-datos-eda">Notebook 1: Análisis Exploratorio de Datos (EDA)</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#objetivo-del-notebook">Objetivo del Notebook</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-exploratorio-de-datos-telco-customer-churn">Análisis Exploratorio de Datos - Telco Customer Churn</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#carga-del-dataset">2. Carga del Dataset</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#calidad-del-dataset">3. Calidad del Dataset</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretacion-de-la-calidad-del-dataset">Interpretación de la Calidad del Dataset</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#calidad-del-dataset">3. Calidad del Dataset</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-de-la-variable-objetivo">4. Análisis de la Variable Objetivo</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#diccionario-de-variables">Diccionario de variables</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-del-desbalance-de-la-variable-objetivo">Análisis del desbalance de la variable objetivo</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretacion-del-desbalance">Interpretación del Desbalance</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretacion">Interpretación</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#diccionario-de-variables">Diccionario de variables</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-de-variables-numericas">5. Análisis de Variables Numéricas</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-de-variables-numericas-segun-churn">Análisis de variables numéricas según Churn</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-de-variables-numericas">5. Análisis de Variables Numéricas</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretacion-de-variables-numericas">Interpretación de Variables Numéricas</a></li>
-</ul>
-</li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Interpretación</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tasa-de-churn-por-categorias">Tasa de churn por categorías</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Interpretación</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-cruzado-de-variables-categoricas">Análisis cruzado de variables categóricas</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Interpretación</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tasa-de-churn-por-categorias">Tasa de churn por categorías</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-cruzado-de-variables-categoricas">Análisis cruzado de variables categóricas</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusiones-principales-del-eda">Conclusiones principales del EDA</a></li>
 </ul>
-</li>
-</ul>
-
             </nav>
         </div>
     </div>
@@ -372,36 +349,11 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="proyecto-integrador-5-12-capitulo-5-arboles-e-interpretabilidad">
-<h1>Proyecto Integrador 5.12 — Capítulo 5: Árboles e Interpretabilidad<a class="headerlink" href="#proyecto-integrador-5-12-capitulo-5-arboles-e-interpretabilidad" title="Link to this heading">#</a></h1>
-<section id="notebook-1-analisis-exploratorio-de-datos-eda">
-<h2>Notebook 1: Análisis Exploratorio de Datos (EDA)<a class="headerlink" href="#notebook-1-analisis-exploratorio-de-datos-eda" title="Link to this heading">#</a></h2>
-<hr class="docutils" />
-<p><strong>Asignatura:</strong> Machine Learning
-<strong>Proyecto:</strong> Predicción de Churn en Telecomunicaciones
-<strong>Dataset:</strong> IBM Telco Customer Churn (7,043 clientes)
-<strong>Fecha:</strong> 2025</p>
-<hr class="docutils" />
-<section id="objetivo-del-notebook">
-<h3>Objetivo del Notebook<a class="headerlink" href="#objetivo-del-notebook" title="Link to this heading">#</a></h3>
-<p>Este notebook constituye la primera etapa del flujo de trabajo del proyecto. Su propósito es realizar
-un análisis exploratorio riguroso del dataset <em>IBM Telco Customer Churn</em> con los siguientes objetivos específicos:</p>
-<ol class="arabic simple">
-<li><p><strong>Comprender la estructura del dataset:</strong> dimensiones, tipos de variables y calidad de los datos.</p></li>
-<li><p><strong>Detectar valores faltantes y duplicados</strong> que requieran tratamiento previo al modelado.</p></li>
-<li><p><strong>Analizar el desbalance de la variable objetivo</strong> (<code class="docutils literal notranslate"><span class="pre">Churn</span></code>) para anticipar estrategias de evaluación.</p></li>
-<li><p><strong>Identificar patrones y correlaciones</strong> entre las variables predictoras y la probabilidad de abandono.</p></li>
-<li><p><strong>Generar hipótesis</strong> sobre qué variables tendrán mayor importancia en los modelos predictivos.</p></li>
-</ol>
-<p>Los resultados de este análisis guiarán las decisiones de preprocesamiento y selección de modelos en el Notebook 2.</p>
-</section>
-</section>
-</section>
-<hr class="docutils" />
-<section class="tex2jax_ignore mathjax_ignore" id="analisis-exploratorio-de-datos-telco-customer-churn">
-<h1>Análisis Exploratorio de Datos - Telco Customer Churn<a class="headerlink" href="#analisis-exploratorio-de-datos-telco-customer-churn" title="Link to this heading">#</a></h1>
-<p>Este notebook presenta el análisis exploratorio inicial del dataset Telco Customer Churn. El objetivo es comprender la estructura de los datos, revisar la calidad de la información, analizar la variable objetivo <code class="docutils literal notranslate"><span class="pre">Churn</span></code> e identificar patrones relevantes para la posterior construcción de modelos de clasificación.</p>
-<p>El análisis incluye revisión de valores faltantes, duplicados, distribución de variables numéricas y categóricas, tasas de churn por categoría y análisis cruzado entre variables relevantes.</p>
+  <section class="tex2jax_ignore mathjax_ignore" id="eda-prediccion-de-churn-en-telecomunicaciones">
+<h1>EDA — Predicción de Churn en Telecomunicaciones<a class="headerlink" href="#eda-prediccion-de-churn-en-telecomunicaciones" title="Link to this heading">#</a></h1>
+<p><strong>Asignatura:</strong> Machine Learning<br />
+<strong>Dataset:</strong> IBM Telco Customer Churn (7,043 clientes)<br />
+<strong>Objetivo:</strong> Explorar la estructura del dataset, detectar patrones y formular hipótesis para el modelado.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
@@ -418,6 +370,7 @@ un análisis exploratorio riguroso del dataset <em>IBM Telco Customer Churn</em>
 </div>
 </div>
 </div>
+<p>Se importan las librerías necesarias. <code class="docutils literal notranslate"><span class="pre">pandas</span></code> y <code class="docutils literal notranslate"><span class="pre">numpy</span></code> manejan los datos en formato tabular, <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code> y <code class="docutils literal notranslate"><span class="pre">seaborn</span></code> generan las visualizaciones, y <code class="docutils literal notranslate"><span class="pre">pathlib</span></code> construye rutas de archivo compatibles entre sistemas operativos. Las opciones de display se configuran para ver todas las columnas y hasta 100 filas sin truncamiento.</p>
 <section id="carga-del-dataset">
 <h2>2. Carga del Dataset<a class="headerlink" href="#carga-del-dataset" title="Link to this heading">#</a></h2>
 <p>Se carga el dataset original desde la carpeta <code class="docutils literal notranslate"><span class="pre">data/raw/</span></code>. La ruta se construye de forma relativa
@@ -436,185 +389,16 @@ servicios contratados, información contractual y la variable objetivo <code cla
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>customerID</th>
-      <th>gender</th>
-      <th>SeniorCitizen</th>
-      <th>Partner</th>
-      <th>Dependents</th>
-      <th>tenure</th>
-      <th>PhoneService</th>
-      <th>MultipleLines</th>
-      <th>InternetService</th>
-      <th>OnlineSecurity</th>
-      <th>OnlineBackup</th>
-      <th>DeviceProtection</th>
-      <th>TechSupport</th>
-      <th>StreamingTV</th>
-      <th>StreamingMovies</th>
-      <th>Contract</th>
-      <th>PaperlessBilling</th>
-      <th>PaymentMethod</th>
-      <th>MonthlyCharges</th>
-      <th>TotalCharges</th>
-      <th>Churn</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>7590-VHVEG</td>
-      <td>Female</td>
-      <td>0</td>
-      <td>Yes</td>
-      <td>No</td>
-      <td>1</td>
-      <td>No</td>
-      <td>No phone service</td>
-      <td>DSL</td>
-      <td>No</td>
-      <td>Yes</td>
-      <td>No</td>
-      <td>No</td>
-      <td>No</td>
-      <td>No</td>
-      <td>Month-to-month</td>
-      <td>Yes</td>
-      <td>Electronic check</td>
-      <td>29.85</td>
-      <td>29.85</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>5575-GNVDE</td>
-      <td>Male</td>
-      <td>0</td>
-      <td>No</td>
-      <td>No</td>
-      <td>34</td>
-      <td>Yes</td>
-      <td>No</td>
-      <td>DSL</td>
-      <td>Yes</td>
-      <td>No</td>
-      <td>Yes</td>
-      <td>No</td>
-      <td>No</td>
-      <td>No</td>
-      <td>One year</td>
-      <td>No</td>
-      <td>Mailed check</td>
-      <td>56.95</td>
-      <td>1889.5</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>3668-QPYBK</td>
-      <td>Male</td>
-      <td>0</td>
-      <td>No</td>
-      <td>No</td>
-      <td>2</td>
-      <td>Yes</td>
-      <td>No</td>
-      <td>DSL</td>
-      <td>Yes</td>
-      <td>Yes</td>
-      <td>No</td>
-      <td>No</td>
-      <td>No</td>
-      <td>No</td>
-      <td>Month-to-month</td>
-      <td>Yes</td>
-      <td>Mailed check</td>
-      <td>53.85</td>
-      <td>108.15</td>
-      <td>Yes</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>7795-CFOCW</td>
-      <td>Male</td>
-      <td>0</td>
-      <td>No</td>
-      <td>No</td>
-      <td>45</td>
-      <td>No</td>
-      <td>No phone service</td>
-      <td>DSL</td>
-      <td>Yes</td>
-      <td>No</td>
-      <td>Yes</td>
-      <td>Yes</td>
-      <td>No</td>
-      <td>No</td>
-      <td>One year</td>
-      <td>No</td>
-      <td>Bank transfer (automatic)</td>
-      <td>42.30</td>
-      <td>1840.75</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>9237-HQITU</td>
-      <td>Female</td>
-      <td>0</td>
-      <td>No</td>
-      <td>No</td>
-      <td>2</td>
-      <td>Yes</td>
-      <td>No</td>
-      <td>Fiber optic</td>
-      <td>No</td>
-      <td>No</td>
-      <td>No</td>
-      <td>No</td>
-      <td>No</td>
-      <td>No</td>
-      <td>Month-to-month</td>
-      <td>Yes</td>
-      <td>Electronic check</td>
-      <td>70.70</td>
-      <td>151.65</td>
-      <td>Yes</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
 </div>
+<p>El dataset se carga con 7.043 filas y 21 columnas. Se pueden ver variables demográficas como <code class="docutils literal notranslate"><span class="pre">gender</span></code> y <code class="docutils literal notranslate"><span class="pre">SeniorCitizen</span></code>, servicios contratados como <code class="docutils literal notranslate"><span class="pre">InternetService</span></code> y <code class="docutils literal notranslate"><span class="pre">OnlineSecurity</span></code>, variables de facturación, y la variable objetivo <code class="docutils literal notranslate"><span class="pre">Churn</span></code> con valores <code class="docutils literal notranslate"><span class="pre">'Yes'</span></code> y <code class="docutils literal notranslate"><span class="pre">'No'</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">shape</span>
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(7043, 21)
-</pre></div>
 </div>
-</div>
-</div>
+<p>El dataset tiene 7.043 registros y 21 columnas.</p>
 </section>
 <section id="calidad-del-dataset">
 <h2>3. Calidad del Dataset<a class="headerlink" href="#calidad-del-dataset" title="Link to this heading">#</a></h2>
@@ -634,497 +418,62 @@ lo que genera valores nulos al convertirla.</p>
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
-RangeIndex: 7043 entries, 0 to 7042
-Data columns (total 21 columns):
- #   Column            Non-Null Count  Dtype  
----  ------            --------------  -----  
- 0   customerID        7043 non-null   object 
- 1   gender            7043 non-null   object 
- 2   SeniorCitizen     7043 non-null   int64  
- 3   Partner           7043 non-null   object 
- 4   Dependents        7043 non-null   object 
- 5   tenure            7043 non-null   int64  
- 6   PhoneService      7043 non-null   object 
- 7   MultipleLines     7043 non-null   object 
- 8   InternetService   7043 non-null   object 
- 9   OnlineSecurity    7043 non-null   object 
- 10  OnlineBackup      7043 non-null   object 
- 11  DeviceProtection  7043 non-null   object 
- 12  TechSupport       7043 non-null   object 
- 13  StreamingTV       7043 non-null   object 
- 14  StreamingMovies   7043 non-null   object 
- 15  Contract          7043 non-null   object 
- 16  PaperlessBilling  7043 non-null   object 
- 17  PaymentMethod     7043 non-null   object 
- 18  MonthlyCharges    7043 non-null   float64
- 19  TotalCharges      7043 non-null   object 
- 20  Churn             7043 non-null   object 
-dtypes: float64(1), int64(2), object(18)
-memory usage: 1.1+ MB
-</pre></div>
 </div>
-</div>
-</div>
+<p>La mayoría de columnas son tipo <code class="docutils literal notranslate"><span class="pre">object</span></code>. <code class="docutils literal notranslate"><span class="pre">SeniorCitizen</span></code> y <code class="docutils literal notranslate"><span class="pre">tenure</span></code> son enteros y <code class="docutils literal notranslate"><span class="pre">MonthlyCharges</span></code> es decimal. El detalle importante es que <code class="docutils literal notranslate"><span class="pre">TotalCharges</span></code> aparece como <code class="docutils literal notranslate"><span class="pre">object</span></code> en lugar de numérica, lo que indica que tiene algún valor que pandas no puede interpretar como número.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">describe</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="s2">&quot;all&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>count</th>
-      <th>unique</th>
-      <th>top</th>
-      <th>freq</th>
-      <th>mean</th>
-      <th>std</th>
-      <th>min</th>
-      <th>25%</th>
-      <th>50%</th>
-      <th>75%</th>
-      <th>max</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>customerID</th>
-      <td>7043</td>
-      <td>7043</td>
-      <td>3186-AJIEK</td>
-      <td>1</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>gender</th>
-      <td>7043</td>
-      <td>2</td>
-      <td>Male</td>
-      <td>3555</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>SeniorCitizen</th>
-      <td>7043.0</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>0.162147</td>
-      <td>0.368612</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>1.0</td>
-    </tr>
-    <tr>
-      <th>Partner</th>
-      <td>7043</td>
-      <td>2</td>
-      <td>No</td>
-      <td>3641</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>Dependents</th>
-      <td>7043</td>
-      <td>2</td>
-      <td>No</td>
-      <td>4933</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>tenure</th>
-      <td>7043.0</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>32.371149</td>
-      <td>24.559481</td>
-      <td>0.0</td>
-      <td>9.0</td>
-      <td>29.0</td>
-      <td>55.0</td>
-      <td>72.0</td>
-    </tr>
-    <tr>
-      <th>PhoneService</th>
-      <td>7043</td>
-      <td>2</td>
-      <td>Yes</td>
-      <td>6361</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>MultipleLines</th>
-      <td>7043</td>
-      <td>3</td>
-      <td>No</td>
-      <td>3390</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>InternetService</th>
-      <td>7043</td>
-      <td>3</td>
-      <td>Fiber optic</td>
-      <td>3096</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>OnlineSecurity</th>
-      <td>7043</td>
-      <td>3</td>
-      <td>No</td>
-      <td>3498</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>OnlineBackup</th>
-      <td>7043</td>
-      <td>3</td>
-      <td>No</td>
-      <td>3088</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>DeviceProtection</th>
-      <td>7043</td>
-      <td>3</td>
-      <td>No</td>
-      <td>3095</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>TechSupport</th>
-      <td>7043</td>
-      <td>3</td>
-      <td>No</td>
-      <td>3473</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>StreamingTV</th>
-      <td>7043</td>
-      <td>3</td>
-      <td>No</td>
-      <td>2810</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>StreamingMovies</th>
-      <td>7043</td>
-      <td>3</td>
-      <td>No</td>
-      <td>2785</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>Contract</th>
-      <td>7043</td>
-      <td>3</td>
-      <td>Month-to-month</td>
-      <td>3875</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>PaperlessBilling</th>
-      <td>7043</td>
-      <td>2</td>
-      <td>Yes</td>
-      <td>4171</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>PaymentMethod</th>
-      <td>7043</td>
-      <td>4</td>
-      <td>Electronic check</td>
-      <td>2365</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>MonthlyCharges</th>
-      <td>7043.0</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>64.761692</td>
-      <td>30.090047</td>
-      <td>18.25</td>
-      <td>35.5</td>
-      <td>70.35</td>
-      <td>89.85</td>
-      <td>118.75</td>
-    </tr>
-    <tr>
-      <th>TotalCharges</th>
-      <td>7043</td>
-      <td>6531</td>
-      <td>20.2</td>
-      <td>11</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>Churn</th>
-      <td>7043</td>
-      <td>2</td>
-      <td>No</td>
-      <td>5174</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
 </div>
+<p><code class="docutils literal notranslate"><span class="pre">tenure</span></code> va de 0 a 72 meses con media de 32, y <code class="docutils literal notranslate"><span class="pre">MonthlyCharges</span></code> de <span class="math notranslate nohighlight">\(18.25 a \)</span>118.75. <code class="docutils literal notranslate"><span class="pre">TotalCharges</span></code> tiene 6.531 valores únicos y aparece como <code class="docutils literal notranslate"><span class="pre">object</span></code>, confirmando que pandas no la está tratando como número a pesar de contener precios.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;customerID&#39;,
- &#39;gender&#39;,
- &#39;SeniorCitizen&#39;,
- &#39;Partner&#39;,
- &#39;Dependents&#39;,
- &#39;tenure&#39;,
- &#39;PhoneService&#39;,
- &#39;MultipleLines&#39;,
- &#39;InternetService&#39;,
- &#39;OnlineSecurity&#39;,
- &#39;OnlineBackup&#39;,
- &#39;DeviceProtection&#39;,
- &#39;TechSupport&#39;,
- &#39;StreamingTV&#39;,
- &#39;StreamingMovies&#39;,
- &#39;Contract&#39;,
- &#39;PaperlessBilling&#39;,
- &#39;PaymentMethod&#39;,
- &#39;MonthlyCharges&#39;,
- &#39;TotalCharges&#39;,
- &#39;Churn&#39;]
-</pre></div>
 </div>
-</div>
-</div>
+<p>Se listan las 21 columnas del dataset. <code class="docutils literal notranslate"><span class="pre">customerID</span></code> es un identificador único que no aporta valor predictivo y se eliminará antes del modelado.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>customerID          0
-gender              0
-SeniorCitizen       0
-Partner             0
-Dependents          0
-tenure              0
-PhoneService        0
-MultipleLines       0
-InternetService     0
-OnlineSecurity      0
-OnlineBackup        0
-DeviceProtection    0
-TechSupport         0
-StreamingTV         0
-StreamingMovies     0
-Contract            0
-PaperlessBilling    0
-PaymentMethod       0
-MonthlyCharges      0
-TotalCharges        0
-Churn               0
-dtype: int64
-</pre></div>
 </div>
-</div>
-</div>
+<p>No aparece ningún nulo, pero esto es engañoso. <code class="docutils literal notranslate"><span class="pre">TotalCharges</span></code> contiene cadenas vacías que pandas no detecta como <code class="docutils literal notranslate"><span class="pre">NaN</span></code> hasta que se intenta convertirlas a número.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">duplicated</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.int64(0)
-</pre></div>
 </div>
-</div>
-</div>
-<section id="interpretacion-de-la-calidad-del-dataset">
-<h3>Interpretación de la Calidad del Dataset<a class="headerlink" href="#interpretacion-de-la-calidad-del-dataset" title="Link to this heading">#</a></h3>
-<p>El dataset presenta una calidad satisfactoria en su estado original. No se detectan registros duplicados
-y la mayoría de las variables no presentan valores faltantes declarados. Sin embargo, la columna <code class="docutils literal notranslate"><span class="pre">TotalCharges</span></code>
-está almacenada como tipo <code class="docutils literal notranslate"><span class="pre">object</span></code> en lugar de <code class="docutils literal notranslate"><span class="pre">float64</span></code>, lo que indica que contiene valores no numéricos
-(cadenas vacías para clientes con <code class="docutils literal notranslate"><span class="pre">tenure</span> <span class="pre">=</span> <span class="pre">0</span></code>). Al convertirla con <code class="docutils literal notranslate"><span class="pre">pd.to_numeric</span></code>, se generan 11 valores
-nulos que corresponden a clientes que no han realizado ningún pago (clientes nuevos con <code class="docutils literal notranslate"><span class="pre">tenure</span> <span class="pre">=</span> <span class="pre">0</span></code>).</p>
-<p>Esta condición es coherente con el dominio del negocio: un cliente con cero meses de permanencia no tiene
-cargos totales registrados. Por tanto, la imputación con valor <code class="docutils literal notranslate"><span class="pre">0</span></code> es la decisión más adecuada, ya que
-refleja fielmente la realidad operacional.</p>
+<p>No hay registros duplicados en el dataset. Cada fila corresponde a un cliente distinto.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;customerID&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">duplicated</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.int64(0)
-</pre></div>
 </div>
-</div>
-</div>
+<p>Todos los <code class="docutils literal notranslate"><span class="pre">customerID</span></code> son únicos. Esta columna se puede eliminar con confianza antes del modelado.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;Churn&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Churn
-No     5174
-Yes    1869
-Name: count, dtype: int64
-</pre></div>
 </div>
-</div>
-</div>
-</section>
+<p>Hay 5.174 clientes que no hicieron churn y 1.869 que sí. Las clases están desbalanceadas, con la clase negativa triplicando a la positiva.</p>
 </section>
 <section id="analisis-de-la-variable-objetivo">
 <h2>4. Análisis de la Variable Objetivo<a class="headerlink" href="#analisis-de-la-variable-objetivo" title="Link to this heading">#</a></h2>
 <p>Se analiza la distribución de la variable <code class="docutils literal notranslate"><span class="pre">Churn</span></code> para cuantificar el desbalance entre clases.
 Este paso es crítico porque un desbalance significativo puede hacer que modelos entrenados con
-<code class="docutils literal notranslate"><span class="pre">accuracy</span></code> como única métrica sean engañosos: un clasificador que siempre predice “No Churn”
+<code class="docutils literal notranslate"><span class="pre">accuracy</span></code> como única métrica sean engañosos: un clasificador que siempre predice «No Churn»
 alcanzaría ~73% de accuracy sin ningún valor predictivo real.</p>
 <p>Se espera confirmar que existe un desbalance moderado (~73% No / ~27% Sí), lo que justifica
 el uso de métricas como AUC-ROC, F1-score y Recall como criterios primarios de evaluación.</p>
@@ -1134,15 +483,8 @@ el uso de métricas como AUC-ROC, F1-score y Recall como criterios primarios de 
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Churn
-No     73.463013
-Yes    26.536987
-Name: proportion, dtype: float64
-</pre></div>
 </div>
-</div>
-</div>
+<p>El 73.46% de los clientes no abandonó y el 26.54% sí. Un modelo que siempre prediga «No Churn» tendría 73% de accuracy sin ningún poder predictivo real, por eso se usarán métricas como AUC-ROC y F1-score.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
@@ -1154,12 +496,8 @@ Name: proportion, dtype: float64
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<img alt="../_images/cdc98e15d75b4afdd32ff4ce48ac39f5822c11fc31112c75d3d5d1cc55b3d5f3.png" src="../_images/cdc98e15d75b4afdd32ff4ce48ac39f5822c11fc31112c75d3d5d1cc55b3d5f3.png" />
 </div>
-</div>
-<p>La variable objetivo es Churn, que indica si un cliente abandonó o no la empresa.
-En esta primera revisión se observa si existe desbalance entre las clases, lo cual es importante porque puede afectar el entrenamiento de los modelos de clasificación.</p>
+<p>La barra de «No» es casi tres veces más alta que la de «Yes». La clase mayoritaria domina claramente, confirmando el desbalance.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;TotalCharges&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_numeric</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;TotalCharges&quot;</span><span class="p">],</span> <span class="n">errors</span><span class="o">=</span><span class="s2">&quot;coerce&quot;</span><span class="p">)</span>
@@ -1167,335 +505,23 @@ En esta primera revisión se observa si existe desbalance entre las clases, lo c
 </div>
 </div>
 </div>
+<p>Al convertir con <code class="docutils literal notranslate"><span class="pre">errors='coerce'</span></code>, las cadenas vacías pasan a ser <code class="docutils literal notranslate"><span class="pre">NaN</span></code>. Esto permite identificar exactamente cuántos registros tienen ese problema.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;TotalCharges&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.int64(11)
-</pre></div>
 </div>
-</div>
-</div>
+<p>Aparecen 11 valores nulos en <code class="docutils literal notranslate"><span class="pre">TotalCharges</span></code>, todos correspondientes a clientes con <code class="docutils literal notranslate"><span class="pre">tenure</span> <span class="pre">=</span> <span class="pre">0</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;TotalCharges&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">isna</span><span class="p">()]</span>
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>customerID</th>
-      <th>gender</th>
-      <th>SeniorCitizen</th>
-      <th>Partner</th>
-      <th>Dependents</th>
-      <th>tenure</th>
-      <th>PhoneService</th>
-      <th>MultipleLines</th>
-      <th>InternetService</th>
-      <th>OnlineSecurity</th>
-      <th>OnlineBackup</th>
-      <th>DeviceProtection</th>
-      <th>TechSupport</th>
-      <th>StreamingTV</th>
-      <th>StreamingMovies</th>
-      <th>Contract</th>
-      <th>PaperlessBilling</th>
-      <th>PaymentMethod</th>
-      <th>MonthlyCharges</th>
-      <th>TotalCharges</th>
-      <th>Churn</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>488</th>
-      <td>4472-LVYGI</td>
-      <td>Female</td>
-      <td>0</td>
-      <td>Yes</td>
-      <td>Yes</td>
-      <td>0</td>
-      <td>No</td>
-      <td>No phone service</td>
-      <td>DSL</td>
-      <td>Yes</td>
-      <td>No</td>
-      <td>Yes</td>
-      <td>Yes</td>
-      <td>Yes</td>
-      <td>No</td>
-      <td>Two year</td>
-      <td>Yes</td>
-      <td>Bank transfer (automatic)</td>
-      <td>52.55</td>
-      <td>NaN</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>753</th>
-      <td>3115-CZMZD</td>
-      <td>Male</td>
-      <td>0</td>
-      <td>No</td>
-      <td>Yes</td>
-      <td>0</td>
-      <td>Yes</td>
-      <td>No</td>
-      <td>No</td>
-      <td>No internet service</td>
-      <td>No internet service</td>
-      <td>No internet service</td>
-      <td>No internet service</td>
-      <td>No internet service</td>
-      <td>No internet service</td>
-      <td>Two year</td>
-      <td>No</td>
-      <td>Mailed check</td>
-      <td>20.25</td>
-      <td>NaN</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>936</th>
-      <td>5709-LVOEQ</td>
-      <td>Female</td>
-      <td>0</td>
-      <td>Yes</td>
-      <td>Yes</td>
-      <td>0</td>
-      <td>Yes</td>
-      <td>No</td>
-      <td>DSL</td>
-      <td>Yes</td>
-      <td>Yes</td>
-      <td>Yes</td>
-      <td>No</td>
-      <td>Yes</td>
-      <td>Yes</td>
-      <td>Two year</td>
-      <td>No</td>
-      <td>Mailed check</td>
-      <td>80.85</td>
-      <td>NaN</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>1082</th>
-      <td>4367-NUYAO</td>
-      <td>Male</td>
-      <td>0</td>
-      <td>Yes</td>
-      <td>Yes</td>
-      <td>0</td>
-      <td>Yes</td>
-      <td>Yes</td>
-      <td>No</td>
-      <td>No internet service</td>
-      <td>No internet service</td>
-      <td>No internet service</td>
-      <td>No internet service</td>
-      <td>No internet service</td>
-      <td>No internet service</td>
-      <td>Two year</td>
-      <td>No</td>
-      <td>Mailed check</td>
-      <td>25.75</td>
-      <td>NaN</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>1340</th>
-      <td>1371-DWPAZ</td>
-      <td>Female</td>
-      <td>0</td>
-      <td>Yes</td>
-      <td>Yes</td>
-      <td>0</td>
-      <td>No</td>
-      <td>No phone service</td>
-      <td>DSL</td>
-      <td>Yes</td>
-      <td>Yes</td>
-      <td>Yes</td>
-      <td>Yes</td>
-      <td>Yes</td>
-      <td>No</td>
-      <td>Two year</td>
-      <td>No</td>
-      <td>Credit card (automatic)</td>
-      <td>56.05</td>
-      <td>NaN</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>3331</th>
-      <td>7644-OMVMY</td>
-      <td>Male</td>
-      <td>0</td>
-      <td>Yes</td>
-      <td>Yes</td>
-      <td>0</td>
-      <td>Yes</td>
-      <td>No</td>
-      <td>No</td>
-      <td>No internet service</td>
-      <td>No internet service</td>
-      <td>No internet service</td>
-      <td>No internet service</td>
-      <td>No internet service</td>
-      <td>No internet service</td>
-      <td>Two year</td>
-      <td>No</td>
-      <td>Mailed check</td>
-      <td>19.85</td>
-      <td>NaN</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>3826</th>
-      <td>3213-VVOLG</td>
-      <td>Male</td>
-      <td>0</td>
-      <td>Yes</td>
-      <td>Yes</td>
-      <td>0</td>
-      <td>Yes</td>
-      <td>Yes</td>
-      <td>No</td>
-      <td>No internet service</td>
-      <td>No internet service</td>
-      <td>No internet service</td>
-      <td>No internet service</td>
-      <td>No internet service</td>
-      <td>No internet service</td>
-      <td>Two year</td>
-      <td>No</td>
-      <td>Mailed check</td>
-      <td>25.35</td>
-      <td>NaN</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>4380</th>
-      <td>2520-SGTTA</td>
-      <td>Female</td>
-      <td>0</td>
-      <td>Yes</td>
-      <td>Yes</td>
-      <td>0</td>
-      <td>Yes</td>
-      <td>No</td>
-      <td>No</td>
-      <td>No internet service</td>
-      <td>No internet service</td>
-      <td>No internet service</td>
-      <td>No internet service</td>
-      <td>No internet service</td>
-      <td>No internet service</td>
-      <td>Two year</td>
-      <td>No</td>
-      <td>Mailed check</td>
-      <td>20.00</td>
-      <td>NaN</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>5218</th>
-      <td>2923-ARZLG</td>
-      <td>Male</td>
-      <td>0</td>
-      <td>Yes</td>
-      <td>Yes</td>
-      <td>0</td>
-      <td>Yes</td>
-      <td>No</td>
-      <td>No</td>
-      <td>No internet service</td>
-      <td>No internet service</td>
-      <td>No internet service</td>
-      <td>No internet service</td>
-      <td>No internet service</td>
-      <td>No internet service</td>
-      <td>One year</td>
-      <td>Yes</td>
-      <td>Mailed check</td>
-      <td>19.70</td>
-      <td>NaN</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>6670</th>
-      <td>4075-WKNIU</td>
-      <td>Female</td>
-      <td>0</td>
-      <td>Yes</td>
-      <td>Yes</td>
-      <td>0</td>
-      <td>Yes</td>
-      <td>Yes</td>
-      <td>DSL</td>
-      <td>No</td>
-      <td>Yes</td>
-      <td>Yes</td>
-      <td>Yes</td>
-      <td>Yes</td>
-      <td>No</td>
-      <td>Two year</td>
-      <td>No</td>
-      <td>Mailed check</td>
-      <td>73.35</td>
-      <td>NaN</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>6754</th>
-      <td>2775-SEFEE</td>
-      <td>Male</td>
-      <td>0</td>
-      <td>No</td>
-      <td>Yes</td>
-      <td>0</td>
-      <td>Yes</td>
-      <td>Yes</td>
-      <td>DSL</td>
-      <td>Yes</td>
-      <td>Yes</td>
-      <td>No</td>
-      <td>Yes</td>
-      <td>No</td>
-      <td>No</td>
-      <td>Two year</td>
-      <td>Yes</td>
-      <td>Bank transfer (automatic)</td>
-      <td>61.90</td>
-      <td>NaN</td>
-      <td>No</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
 </div>
+<p>Los 11 clientes con <code class="docutils literal notranslate"><span class="pre">TotalCharges</span></code> nulo tienen todos <code class="docutils literal notranslate"><span class="pre">tenure</span> <span class="pre">=</span> <span class="pre">0</span></code>, es decir, son clientes nuevos que aún no han completado su primer mes. Todos tienen <code class="docutils literal notranslate"><span class="pre">Churn</span> <span class="pre">=</span> <span class="pre">'No'</span></code>, lo cual es lógico: no pueden haber abandonado si acaban de entrar. El valor correcto para imputar es 0.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;TotalCharges&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;TotalCharges&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
@@ -1503,18 +529,15 @@ En esta primera revisión se observa si existe desbalance entre las clases, lo c
 </div>
 </div>
 </div>
+<p>Los 11 nulos se reemplazan con 0, representando que estos clientes no tienen cargos totales acumulados todavía.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;TotalCharges&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.int64(0)
-</pre></div>
 </div>
-</div>
-</div>
+<p>Ningún valor nulo en <code class="docutils literal notranslate"><span class="pre">TotalCharges</span></code>. La corrección quedó aplicada correctamente.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">target</span> <span class="o">=</span> <span class="s2">&quot;Churn&quot;</span>
@@ -1532,100 +555,16 @@ En esta primera revisión se observa si existe desbalance entre las clases, lo c
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Variables numéricas:
-[&#39;SeniorCitizen&#39;, &#39;tenure&#39;, &#39;MonthlyCharges&#39;, &#39;TotalCharges&#39;]
-
-Variables categóricas:
-[&#39;gender&#39;, &#39;Partner&#39;, &#39;Dependents&#39;, &#39;PhoneService&#39;, &#39;MultipleLines&#39;, &#39;InternetService&#39;, &#39;OnlineSecurity&#39;, &#39;OnlineBackup&#39;, &#39;DeviceProtection&#39;, &#39;TechSupport&#39;, &#39;StreamingTV&#39;, &#39;StreamingMovies&#39;, &#39;Contract&#39;, &#39;PaperlessBilling&#39;, &#39;PaymentMethod&#39;]
-</pre></div>
 </div>
-</div>
-</div>
+<p>Se separan 4 variables numéricas (<code class="docutils literal notranslate"><span class="pre">SeniorCitizen</span></code>, <code class="docutils literal notranslate"><span class="pre">tenure</span></code>, <code class="docutils literal notranslate"><span class="pre">MonthlyCharges</span></code>, <code class="docutils literal notranslate"><span class="pre">TotalCharges</span></code>) y 15 categóricas. <code class="docutils literal notranslate"><span class="pre">customerID</span></code> y <code class="docutils literal notranslate"><span class="pre">Churn</span></code> quedan fuera: el primero es identificador y el segundo es la variable objetivo.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="n">numeric_cols</span><span class="p">]</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span><span class="o">.</span><span class="n">T</span>
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>count</th>
-      <th>mean</th>
-      <th>std</th>
-      <th>min</th>
-      <th>25%</th>
-      <th>50%</th>
-      <th>75%</th>
-      <th>max</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>SeniorCitizen</th>
-      <td>7043.0</td>
-      <td>0.162147</td>
-      <td>0.368612</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>0.00</td>
-      <td>1.00</td>
-    </tr>
-    <tr>
-      <th>tenure</th>
-      <td>7043.0</td>
-      <td>32.371149</td>
-      <td>24.559481</td>
-      <td>0.00</td>
-      <td>9.00</td>
-      <td>29.00</td>
-      <td>55.00</td>
-      <td>72.00</td>
-    </tr>
-    <tr>
-      <th>MonthlyCharges</th>
-      <td>7043.0</td>
-      <td>64.761692</td>
-      <td>30.090047</td>
-      <td>18.25</td>
-      <td>35.50</td>
-      <td>70.35</td>
-      <td>89.85</td>
-      <td>118.75</td>
-    </tr>
-    <tr>
-      <th>TotalCharges</th>
-      <td>7043.0</td>
-      <td>2279.734304</td>
-      <td>2266.794470</td>
-      <td>0.00</td>
-      <td>398.55</td>
-      <td>1394.55</td>
-      <td>3786.60</td>
-      <td>8684.80</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
 </div>
+<p><code class="docutils literal notranslate"><span class="pre">SeniorCitizen</span></code> es prácticamente binaria con solo un 16.2% de adultos mayores. <code class="docutils literal notranslate"><span class="pre">tenure</span></code> tiene alta dispersión —de 0 a 72 meses— con mediana en 29. <code class="docutils literal notranslate"><span class="pre">MonthlyCharges</span></code> va de <span class="math notranslate nohighlight">\(18.25 a \)</span>118.75. <code class="docutils literal notranslate"><span class="pre">TotalCharges</span></code> tiene aún más variabilidad, lo que justifica escalar las variables antes de entrenar los modelos.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">numeric_cols</span><span class="p">:</span>
@@ -1638,13 +577,8 @@ Variables categóricas:
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<img alt="../_images/b952162440ce5de925d5c9fc745ada1b42504484fd27dc9e3c6312eda432d328.png" src="../_images/b952162440ce5de925d5c9fc745ada1b42504484fd27dc9e3c6312eda432d328.png" />
-<img alt="../_images/3e2137b9961f16cc05878e7b7ceefd1746b298640d047f38220f1ae4c5d18c8e.png" src="../_images/3e2137b9961f16cc05878e7b7ceefd1746b298640d047f38220f1ae4c5d18c8e.png" />
-<img alt="../_images/48da9b51336e86e4bee6eef7bb6fa291cea67525c430b5ed59c27e9146951e96.png" src="../_images/48da9b51336e86e4bee6eef7bb6fa291cea67525c430b5ed59c27e9146951e96.png" />
-<img alt="../_images/25e601a01a7707d4772cb192cc5fc81b3d067649831cd170d24e4e8badca2bd9.png" src="../_images/25e601a01a7707d4772cb192cc5fc81b3d067649831cd170d24e4e8badca2bd9.png" />
 </div>
-</div>
+<p>Los histogramas muestran que los clientes con churn tienden a tener menor <code class="docutils literal notranslate"><span class="pre">tenure</span></code> —la mayoría se concentra en los primeros meses—, <code class="docutils literal notranslate"><span class="pre">MonthlyCharges</span></code> más altos, y <code class="docutils literal notranslate"><span class="pre">TotalCharges</span></code> menores por haber acumulado menos tiempo de facturación. Las diferencias en la distribución entre ambas clases son visibles en las tres variables.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">categorical_cols</span><span class="p">:</span>
@@ -1653,111 +587,8 @@ Variables categóricas:
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>gender
-gender
-Male      3555
-Female    3488
-Name: count, dtype: int64
-
-Partner
-Partner
-No     3641
-Yes    3402
-Name: count, dtype: int64
-
-Dependents
-Dependents
-No     4933
-Yes    2110
-Name: count, dtype: int64
-
-PhoneService
-PhoneService
-Yes    6361
-No      682
-Name: count, dtype: int64
-
-MultipleLines
-MultipleLines
-No                  3390
-Yes                 2971
-No phone service     682
-Name: count, dtype: int64
-
-InternetService
-InternetService
-Fiber optic    3096
-DSL            2421
-No             1526
-Name: count, dtype: int64
-
-OnlineSecurity
-OnlineSecurity
-No                     3498
-Yes                    2019
-No internet service    1526
-Name: count, dtype: int64
-
-OnlineBackup
-OnlineBackup
-No                     3088
-Yes                    2429
-No internet service    1526
-Name: count, dtype: int64
-
-DeviceProtection
-DeviceProtection
-No                     3095
-Yes                    2422
-No internet service    1526
-Name: count, dtype: int64
-
-TechSupport
-TechSupport
-No                     3473
-Yes                    2044
-No internet service    1526
-Name: count, dtype: int64
-
-StreamingTV
-StreamingTV
-No                     2810
-Yes                    2707
-No internet service    1526
-Name: count, dtype: int64
-
-StreamingMovies
-StreamingMovies
-No                     2785
-Yes                    2732
-No internet service    1526
-Name: count, dtype: int64
-
-Contract
-Contract
-Month-to-month    3875
-Two year          1695
-One year          1473
-Name: count, dtype: int64
-
-PaperlessBilling
-PaperlessBilling
-Yes    4171
-No     2872
-Name: count, dtype: int64
-
-PaymentMethod
-PaymentMethod
-Electronic check             2365
-Mailed check                 1612
-Bank transfer (automatic)    1544
-Credit card (automatic)      1522
-Name: count, dtype: int64
-</pre></div>
 </div>
-</div>
-</div>
+<p>El contrato mensual es el más frecuente con 3.875 clientes. La fibra óptica es el servicio de internet predominante. En servicios adicionales como <code class="docutils literal notranslate"><span class="pre">OnlineSecurity</span></code> y <code class="docutils literal notranslate"><span class="pre">TechSupport</span></code>, la categoría «No» supera ampliamente a «Yes», lo que indica que muchos clientes no los tienen contratados. El pago por cheque electrónico es el método más usado con 2.365 clientes.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">categorical_cols</span><span class="p">:</span>
@@ -1772,24 +603,8 @@ Name: count, dtype: int64
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<img alt="../_images/546be9ccaffb9bfa4bf892a6396046b5008a4dcc019ddcb39b2d0469d5c22ae2.png" src="../_images/546be9ccaffb9bfa4bf892a6396046b5008a4dcc019ddcb39b2d0469d5c22ae2.png" />
-<img alt="../_images/81d686101eebe236fc789a1de418191df2ebb84b49cf4450ef6a278389cd2305.png" src="../_images/81d686101eebe236fc789a1de418191df2ebb84b49cf4450ef6a278389cd2305.png" />
-<img alt="../_images/9311884be931f6985064b57c1736166c03bc2aa8f6bee2336d9c92fb11bdbc49.png" src="../_images/9311884be931f6985064b57c1736166c03bc2aa8f6bee2336d9c92fb11bdbc49.png" />
-<img alt="../_images/5bb216ab3f2edc36bc2f56224b74691cff241388da160ed36497afd3fcf73978.png" src="../_images/5bb216ab3f2edc36bc2f56224b74691cff241388da160ed36497afd3fcf73978.png" />
-<img alt="../_images/7d8c1b49668bc55eb331454585870e6d445877fc30fe1c7ffb8d2f458f825bcc.png" src="../_images/7d8c1b49668bc55eb331454585870e6d445877fc30fe1c7ffb8d2f458f825bcc.png" />
-<img alt="../_images/6c9e68f144363b1034e62bf30695fa59b5cc52a5a84b6cc7bdd088ab444aa0bb.png" src="../_images/6c9e68f144363b1034e62bf30695fa59b5cc52a5a84b6cc7bdd088ab444aa0bb.png" />
-<img alt="../_images/e5cabf9e682a61dac36ee1e997daa27f2d7bd42fa8247d6e55982237a061704d.png" src="../_images/e5cabf9e682a61dac36ee1e997daa27f2d7bd42fa8247d6e55982237a061704d.png" />
-<img alt="../_images/71d9652710d2ca5f954037fe77c98fc56f674e85d17fd2086227294b86d922de.png" src="../_images/71d9652710d2ca5f954037fe77c98fc56f674e85d17fd2086227294b86d922de.png" />
-<img alt="../_images/735ca2dd998ded947e73a2440368ad4f83371d2d7a6977dfaa70a2be6c8ef367.png" src="../_images/735ca2dd998ded947e73a2440368ad4f83371d2d7a6977dfaa70a2be6c8ef367.png" />
-<img alt="../_images/dcc63dbd89db429df996f2c10da754b5ed1c68a0886d1ced9a47e3c91898d64e.png" src="../_images/dcc63dbd89db429df996f2c10da754b5ed1c68a0886d1ced9a47e3c91898d64e.png" />
-<img alt="../_images/6b776e789d2b4bbfb981fdb11282fa8875c08278f5eb426941451696d2e040c1.png" src="../_images/6b776e789d2b4bbfb981fdb11282fa8875c08278f5eb426941451696d2e040c1.png" />
-<img alt="../_images/4e95d769e2cfc78b6706d283b0dfdd576c1f496e7d2b0912610f0d1293080370.png" src="../_images/4e95d769e2cfc78b6706d283b0dfdd576c1f496e7d2b0912610f0d1293080370.png" />
-<img alt="../_images/9e5baa14a3168741a2fc7a62835cb68de1bbede755dadbe7157d3cc1b0eb3cf6.png" src="../_images/9e5baa14a3168741a2fc7a62835cb68de1bbede755dadbe7157d3cc1b0eb3cf6.png" />
-<img alt="../_images/f7a31d4c238bb4e1b021cb7ab8f1134171e9a81406880c360a6be0d84e5a215b.png" src="../_images/f7a31d4c238bb4e1b021cb7ab8f1134171e9a81406880c360a6be0d84e5a215b.png" />
-<img alt="../_images/4fc2b45dbf549ff15a5c765c828cf6387b1a91d18d45bd92ce9609d465c3ac8f.png" src="../_images/4fc2b45dbf549ff15a5c765c828cf6387b1a91d18d45bd92ce9609d465c3ac8f.png" />
 </div>
-</div>
+<p>Se ve que dentro de <code class="docutils literal notranslate"><span class="pre">Contract</span> <span class="pre">Month-to-month</span></code> la barra naranja (churn) es proporcionalmente mucho más alta que en One year o Two year. Para <code class="docutils literal notranslate"><span class="pre">InternetService</span></code>, la fibra óptica tiene claramente más churn que DSL. En <code class="docutils literal notranslate"><span class="pre">OnlineSecurity</span></code> y <code class="docutils literal notranslate"><span class="pre">TechSupport</span></code>, quienes no tienen el servicio muestran una proporción de churn visiblemente mayor.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">churn_rate_by_category</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">column</span><span class="p">):</span>
@@ -1807,78 +622,8 @@ Name: count, dtype: int64
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Contract</th>
-      <th>Churn</th>
-      <th>proporcion</th>
-      <th>porcentaje</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>Month-to-month</td>
-      <td>No</td>
-      <td>0.572903</td>
-      <td>57.290323</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>Month-to-month</td>
-      <td>Yes</td>
-      <td>0.427097</td>
-      <td>42.709677</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>One year</td>
-      <td>No</td>
-      <td>0.887305</td>
-      <td>88.730482</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>One year</td>
-      <td>Yes</td>
-      <td>0.112695</td>
-      <td>11.269518</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>Two year</td>
-      <td>No</td>
-      <td>0.971681</td>
-      <td>97.168142</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>Two year</td>
-      <td>Yes</td>
-      <td>0.028319</td>
-      <td>2.831858</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
 </div>
+<p>Para <code class="docutils literal notranslate"><span class="pre">Contract</span></code>, el contrato mensual tiene un 42.71% de churn, el anual un 11.27% y el bianual apenas un 2.83%. Es una de las diferencias más grandes entre categorías de todo el dataset.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;Contract&quot;</span><span class="p">,</span> <span class="s2">&quot;InternetService&quot;</span><span class="p">,</span> <span class="s2">&quot;PaymentMethod&quot;</span><span class="p">,</span> <span class="s2">&quot;OnlineSecurity&quot;</span><span class="p">,</span> <span class="s2">&quot;TechSupport&quot;</span><span class="p">,</span> <span class="s2">&quot;PaperlessBilling&quot;</span><span class="p">]:</span>
@@ -1887,441 +632,8 @@ Name: count, dtype: int64
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Tasa de churn por Contract
-</pre></div>
 </div>
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Contract</th>
-      <th>Churn</th>
-      <th>proporcion</th>
-      <th>porcentaje</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>Month-to-month</td>
-      <td>No</td>
-      <td>0.572903</td>
-      <td>57.290323</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>Month-to-month</td>
-      <td>Yes</td>
-      <td>0.427097</td>
-      <td>42.709677</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>One year</td>
-      <td>No</td>
-      <td>0.887305</td>
-      <td>88.730482</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>One year</td>
-      <td>Yes</td>
-      <td>0.112695</td>
-      <td>11.269518</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>Two year</td>
-      <td>No</td>
-      <td>0.971681</td>
-      <td>97.168142</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>Two year</td>
-      <td>Yes</td>
-      <td>0.028319</td>
-      <td>2.831858</td>
-    </tr>
-  </tbody>
-</table>
-</div></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Tasa de churn por InternetService
-</pre></div>
-</div>
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>InternetService</th>
-      <th>Churn</th>
-      <th>proporcion</th>
-      <th>porcentaje</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>DSL</td>
-      <td>No</td>
-      <td>0.810409</td>
-      <td>81.040892</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>DSL</td>
-      <td>Yes</td>
-      <td>0.189591</td>
-      <td>18.959108</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>Fiber optic</td>
-      <td>No</td>
-      <td>0.581072</td>
-      <td>58.107235</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>Fiber optic</td>
-      <td>Yes</td>
-      <td>0.418928</td>
-      <td>41.892765</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>No</td>
-      <td>No</td>
-      <td>0.925950</td>
-      <td>92.595020</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>No</td>
-      <td>Yes</td>
-      <td>0.074050</td>
-      <td>7.404980</td>
-    </tr>
-  </tbody>
-</table>
-</div></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Tasa de churn por PaymentMethod
-</pre></div>
-</div>
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>PaymentMethod</th>
-      <th>Churn</th>
-      <th>proporcion</th>
-      <th>porcentaje</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>Bank transfer (automatic)</td>
-      <td>No</td>
-      <td>0.832902</td>
-      <td>83.290155</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>Bank transfer (automatic)</td>
-      <td>Yes</td>
-      <td>0.167098</td>
-      <td>16.709845</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>Credit card (automatic)</td>
-      <td>No</td>
-      <td>0.847569</td>
-      <td>84.756899</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>Credit card (automatic)</td>
-      <td>Yes</td>
-      <td>0.152431</td>
-      <td>15.243101</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>Electronic check</td>
-      <td>No</td>
-      <td>0.547146</td>
-      <td>54.714588</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>Electronic check</td>
-      <td>Yes</td>
-      <td>0.452854</td>
-      <td>45.285412</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>Mailed check</td>
-      <td>No</td>
-      <td>0.808933</td>
-      <td>80.893300</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>Mailed check</td>
-      <td>Yes</td>
-      <td>0.191067</td>
-      <td>19.106700</td>
-    </tr>
-  </tbody>
-</table>
-</div></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Tasa de churn por OnlineSecurity
-</pre></div>
-</div>
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>OnlineSecurity</th>
-      <th>Churn</th>
-      <th>proporcion</th>
-      <th>porcentaje</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>No</td>
-      <td>No</td>
-      <td>0.582333</td>
-      <td>58.233276</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>No</td>
-      <td>Yes</td>
-      <td>0.417667</td>
-      <td>41.766724</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>No internet service</td>
-      <td>No</td>
-      <td>0.925950</td>
-      <td>92.595020</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>No internet service</td>
-      <td>Yes</td>
-      <td>0.074050</td>
-      <td>7.404980</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>Yes</td>
-      <td>No</td>
-      <td>0.853888</td>
-      <td>85.388806</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>Yes</td>
-      <td>Yes</td>
-      <td>0.146112</td>
-      <td>14.611194</td>
-    </tr>
-  </tbody>
-</table>
-</div></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Tasa de churn por TechSupport
-</pre></div>
-</div>
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>TechSupport</th>
-      <th>Churn</th>
-      <th>proporcion</th>
-      <th>porcentaje</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>No</td>
-      <td>No</td>
-      <td>0.583645</td>
-      <td>58.364526</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>No</td>
-      <td>Yes</td>
-      <td>0.416355</td>
-      <td>41.635474</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>No internet service</td>
-      <td>No</td>
-      <td>0.925950</td>
-      <td>92.595020</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>No internet service</td>
-      <td>Yes</td>
-      <td>0.074050</td>
-      <td>7.404980</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>Yes</td>
-      <td>No</td>
-      <td>0.848337</td>
-      <td>84.833659</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>Yes</td>
-      <td>Yes</td>
-      <td>0.151663</td>
-      <td>15.166341</td>
-    </tr>
-  </tbody>
-</table>
-</div></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Tasa de churn por PaperlessBilling
-</pre></div>
-</div>
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>PaperlessBilling</th>
-      <th>Churn</th>
-      <th>proporcion</th>
-      <th>porcentaje</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>No</td>
-      <td>No</td>
-      <td>0.836699</td>
-      <td>83.669916</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>No</td>
-      <td>Yes</td>
-      <td>0.163301</td>
-      <td>16.330084</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>Yes</td>
-      <td>No</td>
-      <td>0.664349</td>
-      <td>66.434908</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>Yes</td>
-      <td>Yes</td>
-      <td>0.335651</td>
-      <td>33.565092</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
-</div>
+<p>Los patrones más llamativos: el pago por cheque electrónico tiene la tasa de churn más alta con 45.29%, seguido del contrato mensual con 42.71%. No tener <code class="docutils literal notranslate"><span class="pre">OnlineSecurity</span></code> ni <code class="docutils literal notranslate"><span class="pre">TechSupport</span></code> está asociado a tasas superiores al 41%. Los clientes con fibra óptica tienen 41.89% de churn, mientras que los que no tienen internet tienen apenas 7.40%.</p>
 </section>
 <section id="diccionario-de-variables">
 <h2>Diccionario de variables<a class="headerlink" href="#diccionario-de-variables" title="Link to this heading">#</a></h2>
@@ -2373,287 +685,8 @@ Name: count, dtype: int64
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Variable</th>
-      <th>Descripción</th>
-      <th>Tipo esperado</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>customerID</td>
-      <td>Identificador único del cliente.</td>
-      <td>Categórica identificadora</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>gender</td>
-      <td>Género del cliente.</td>
-      <td>Categórica</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>SeniorCitizen</td>
-      <td>Indica si el cliente es adulto mayor: 1 = Sí, ...</td>
-      <td>Numérica binaria</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>Partner</td>
-      <td>Indica si el cliente tiene pareja.</td>
-      <td>Categórica</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>Dependents</td>
-      <td>Indica si el cliente tiene dependientes.</td>
-      <td>Categórica</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>tenure</td>
-      <td>Número de meses que el cliente ha permanecido ...</td>
-      <td>Numérica</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>PhoneService</td>
-      <td>Indica si el cliente tiene servicio telefónico.</td>
-      <td>Categórica</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>MultipleLines</td>
-      <td>Indica si el cliente tiene múltiples líneas te...</td>
-      <td>Categórica</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>InternetService</td>
-      <td>Tipo de servicio de internet contratado.</td>
-      <td>Categórica</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>OnlineSecurity</td>
-      <td>Indica si el cliente tiene seguridad en línea.</td>
-      <td>Categórica</td>
-    </tr>
-    <tr>
-      <th>10</th>
-      <td>OnlineBackup</td>
-      <td>Indica si el cliente tiene respaldo en línea.</td>
-      <td>Categórica</td>
-    </tr>
-    <tr>
-      <th>11</th>
-      <td>DeviceProtection</td>
-      <td>Indica si el cliente tiene protección de dispo...</td>
-      <td>Categórica</td>
-    </tr>
-    <tr>
-      <th>12</th>
-      <td>TechSupport</td>
-      <td>Indica si el cliente tiene soporte técnico.</td>
-      <td>Categórica</td>
-    </tr>
-    <tr>
-      <th>13</th>
-      <td>StreamingTV</td>
-      <td>Indica si el cliente tiene servicio de televis...</td>
-      <td>Categórica</td>
-    </tr>
-    <tr>
-      <th>14</th>
-      <td>StreamingMovies</td>
-      <td>Indica si el cliente tiene servicio de películ...</td>
-      <td>Categórica</td>
-    </tr>
-    <tr>
-      <th>15</th>
-      <td>Contract</td>
-      <td>Tipo de contrato del cliente.</td>
-      <td>Categórica</td>
-    </tr>
-    <tr>
-      <th>16</th>
-      <td>PaperlessBilling</td>
-      <td>Indica si el cliente usa facturación electrónica.</td>
-      <td>Categórica</td>
-    </tr>
-    <tr>
-      <th>17</th>
-      <td>PaymentMethod</td>
-      <td>Método de pago utilizado por el cliente.</td>
-      <td>Categórica</td>
-    </tr>
-    <tr>
-      <th>18</th>
-      <td>MonthlyCharges</td>
-      <td>Cargo mensual del cliente.</td>
-      <td>Numérica</td>
-    </tr>
-    <tr>
-      <th>19</th>
-      <td>TotalCharges</td>
-      <td>Cargo total acumulado del cliente.</td>
-      <td>Numérica</td>
-    </tr>
-    <tr>
-      <th>20</th>
-      <td>Churn</td>
-      <td>Variable objetivo: indica si el cliente abando...</td>
-      <td>Categórica objetivo</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
 </div>
-</section>
-<section id="analisis-del-desbalance-de-la-variable-objetivo">
-<h2>Análisis del desbalance de la variable objetivo<a class="headerlink" href="#analisis-del-desbalance-de-la-variable-objetivo" title="Link to this heading">#</a></h2>
-<p>En problemas de churn, es importante revisar si la variable objetivo está balanceada. Si hay una clase mucho más frecuente que la otra, métricas como <code class="docutils literal notranslate"><span class="pre">accuracy</span></code> pueden ser engañosas. Por eso, en la etapa de modelado también será necesario considerar métricas como <code class="docutils literal notranslate"><span class="pre">precision</span></code>, <code class="docutils literal notranslate"><span class="pre">recall</span></code>, <code class="docutils literal notranslate"><span class="pre">F1-score</span></code> y <code class="docutils literal notranslate"><span class="pre">AUC</span></code>.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">churn_counts</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;Churn&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
-<span class="n">churn_percentages</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;Churn&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span>
-
-<span class="n">resumen_churn</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
-    <span class="s2">&quot;Cantidad&quot;</span><span class="p">:</span> <span class="n">churn_counts</span><span class="p">,</span>
-    <span class="s2">&quot;Porcentaje&quot;</span><span class="p">:</span> <span class="n">churn_percentages</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-<span class="p">})</span>
-
-<span class="n">resumen_churn</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Cantidad</th>
-      <th>Porcentaje</th>
-    </tr>
-    <tr>
-      <th>Churn</th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>No</th>
-      <td>5174</td>
-      <td>73.46</td>
-    </tr>
-    <tr>
-      <th>Yes</th>
-      <td>1869</td>
-      <td>26.54</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
-<span class="n">sns</span><span class="o">.</span><span class="n">countplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;Churn&quot;</span><span class="p">)</span>
-
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Distribución de la variable objetivo: Churn&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Churn&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Cantidad de clientes&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="../_images/cdc98e15d75b4afdd32ff4ce48ac39f5822c11fc31112c75d3d5d1cc55b3d5f3.png" src="../_images/cdc98e15d75b4afdd32ff4ce48ac39f5822c11fc31112c75d3d5d1cc55b3d5f3.png" />
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
-
-<span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">barplot</span><span class="p">(</span>
-    <span class="n">x</span><span class="o">=</span><span class="n">churn_percentages</span><span class="o">.</span><span class="n">index</span><span class="p">,</span>
-    <span class="n">y</span><span class="o">=</span><span class="n">churn_percentages</span><span class="o">.</span><span class="n">values</span>
-<span class="p">)</span>
-
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Distribución porcentual de Churn&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Churn&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Porcentaje de clientes&quot;</span><span class="p">)</span>
-
-<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">churn_percentages</span><span class="o">.</span><span class="n">values</span><span class="p">):</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">value</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">value</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">)</span>
-
-<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="../_images/1e5a7f8bb7a8a62b7ea6adf5697eb598470aedff1b0df39f698f5ae865172131.png" src="../_images/1e5a7f8bb7a8a62b7ea6adf5697eb598470aedff1b0df39f698f5ae865172131.png" />
-</div>
-</div>
-<section id="interpretacion-del-desbalance">
-<h3>Interpretación del Desbalance<a class="headerlink" href="#interpretacion-del-desbalance" title="Link to this heading">#</a></h3>
-<p>La variable objetivo <code class="docutils literal notranslate"><span class="pre">Churn</span></code> presenta un desbalance moderado con una proporción aproximada de 3:1
-entre clientes que no abandonaron (73.46%) y clientes que sí lo hicieron (26.54%). Este tipo de
-desbalance es habitual en problemas de retención de clientes y representa un desafío para los modelos
-de clasificación tradicionales.</p>
-<p>En consecuencia, durante la etapa de modelado se priorizarán las siguientes estrategias:</p>
-<ol class="arabic simple">
-<li><p><strong>División estratificada</strong> del conjunto de entrenamiento y prueba para preservar la proporción de clases.</p></li>
-<li><p><strong>Métricas de evaluación robustas:</strong> AUC-ROC, Recall, F1-score y Precision en lugar de Accuracy.</p></li>
-<li><p><strong>Parámetros de balance de clases</strong> en los clasificadores (<code class="docutils literal notranslate"><span class="pre">class_weight='balanced'</span></code>, <code class="docutils literal notranslate"><span class="pre">scale_pos_weight</span></code>).</p></li>
-</ol>
-<p>El AUC-ROC es la métrica principal de selección de modelos, ya que mide la capacidad discriminativa
-del modelo con independencia del umbral de clasificación.</p>
-</section>
-<section id="interpretacion">
-<h3>Interpretación<a class="headerlink" href="#interpretacion" title="Link to this heading">#</a></h3>
-<p>La variable objetivo <code class="docutils literal notranslate"><span class="pre">Churn</span></code> presenta una mayor proporción de clientes que no abandonaron la empresa frente a los que sí abandonaron. Esto evidencia un desbalance moderado entre clases.</p>
-<p>Por esta razón, en la etapa de modelado no será suficiente evaluar únicamente el <code class="docutils literal notranslate"><span class="pre">accuracy</span></code>. Será importante analizar métricas como <code class="docutils literal notranslate"><span class="pre">recall</span></code>, <code class="docutils literal notranslate"><span class="pre">precision</span></code>, <code class="docutils literal notranslate"><span class="pre">F1-score</span></code> y <code class="docutils literal notranslate"><span class="pre">AUC</span></code>, especialmente porque el objetivo del negocio es identificar correctamente a los clientes con riesgo de abandono.</p>
-</section>
-</section>
-<section id="analisis-de-variables-numericas-segun-churn">
-<h2>Análisis de variables numéricas según Churn<a class="headerlink" href="#analisis-de-variables-numericas-segun-churn" title="Link to this heading">#</a></h2>
-<p>Se comparan las principales variables numéricas con la variable objetivo <code class="docutils literal notranslate"><span class="pre">Churn</span></code>. Esto permite identificar si existen diferencias visibles entre los clientes que abandonaron y los que permanecieron en la empresa.</p>
+<p>El diccionario presenta las 21 variables con su descripción y tipo esperado. Se puede ver qué variables son numéricas, cuáles categóricas y cuál es la variable objetivo.</p>
 <section id="analisis-de-variables-numericas">
 <h3>5. Análisis de Variables Numéricas<a class="headerlink" href="#analisis-de-variables-numericas" title="Link to this heading">#</a></h3>
 <p>Se analiza la distribución de las cuatro variables numéricas del dataset (<code class="docutils literal notranslate"><span class="pre">SeniorCitizen</span></code>, <code class="docutils literal notranslate"><span class="pre">tenure</span></code>,
@@ -2666,24 +699,6 @@ del modelo con independencia del umbral de clasificación.</p>
 </ul>
 <p>Se anticipan diferencias significativas en <code class="docutils literal notranslate"><span class="pre">tenure</span></code> (antigüedad) y <code class="docutils literal notranslate"><span class="pre">MonthlyCharges</span></code> (cargos mensuales)
 entre las dos clases de la variable objetivo.</p>
-<section id="interpretacion-de-variables-numericas">
-<h4>Interpretación de Variables Numéricas<a class="headerlink" href="#interpretacion-de-variables-numericas" title="Link to this heading">#</a></h4>
-<p>El análisis estadístico comparativo revela diferencias sustanciales entre los dos grupos:</p>
-<p><strong>Tenure (antigüedad en meses):</strong>
-Los clientes que abandonaron la empresa presentan una antigüedad media de 17.98 meses, notablemente
-inferior a los 37.57 meses de los clientes que permanecieron. Esta diferencia sugiere que los clientes
-nuevos o con poca antigüedad son significativamente más vulnerables al churn, posiblemente porque aún
-no han consolidado su relación con la empresa ni experimentado suficientes beneficios del servicio.</p>
-<p><strong>MonthlyCharges (cargos mensuales):</strong>
-Los clientes con churn presentan cargos mensuales promedio más altos (<span class="math notranslate nohighlight">\(74.44 vs \)</span>61.27). Esto podría
-indicar que los clientes con planes más costosos —probablemente asociados a servicios de fibra óptica—
-experimentan mayor insatisfacción o encuentran alternativas más económicas en la competencia.</p>
-<p><strong>TotalCharges (cargos totales):</strong>
-Paradójicamente, los clientes con churn presentan cargos totales menores (<span class="math notranslate nohighlight">\(1,531.80 vs \)</span>2,549.91),
-lo que es consistente con su menor antigüedad: han estado menos tiempo y, por tanto, han acumulado
-menos facturación total. Esta variable no es independiente de <code class="docutils literal notranslate"><span class="pre">tenure</span></code>.</p>
-<p>Estas observaciones confirman la relevancia predictiva de las variables numéricas y anticipan que
-<code class="docutils literal notranslate"><span class="pre">tenure</span></code> será una de las features más importantes en los modelos de clasificación.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">numeric_analysis_cols</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;tenure&quot;</span><span class="p">,</span> <span class="s2">&quot;MonthlyCharges&quot;</span><span class="p">,</span> <span class="s2">&quot;TotalCharges&quot;</span><span class="p">]</span>
@@ -2699,129 +714,16 @@ menos facturación total. Esta variable no es independiente de <code class="docu
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<img alt="../_images/e584c1d4459b2a7f6b1e10bac864461a778d976c8bd9a9f449de2bb0fd98fb10.png" src="../_images/e584c1d4459b2a7f6b1e10bac864461a778d976c8bd9a9f449de2bb0fd98fb10.png" />
-<img alt="../_images/ef2846038ea74520beb3e894246eb41bd9b635c5c2f50dce9565f20c909cbab5.png" src="../_images/ef2846038ea74520beb3e894246eb41bd9b635c5c2f50dce9565f20c909cbab5.png" />
-<img alt="../_images/563d5331c155aa7ccfbe55ccf0b088cd8d0658c98e56eddc52df629409f90ba5.png" src="../_images/563d5331c155aa7ccfbe55ccf0b088cd8d0658c98e56eddc52df629409f90ba5.png" />
 </div>
-</div>
+<p>En <code class="docutils literal notranslate"><span class="pre">tenure</span></code> la diferencia es muy clara: los clientes con churn tienen mediana de ~10 meses frente a ~38 meses de los que se quedan. En <code class="docutils literal notranslate"><span class="pre">MonthlyCharges</span></code> los que hacen churn tienen medianas más altas (~<span class="math notranslate nohighlight">\(79 vs ~\)</span>64). <code class="docutils literal notranslate"><span class="pre">TotalCharges</span></code> muestra la diferencia inversa porque los clientes con churn llevan menos tiempo acumulando cargos.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;Churn&quot;</span><span class="p">)[</span><span class="n">numeric_analysis_cols</span><span class="p">]</span><span class="o">.</span><span class="n">agg</span><span class="p">([</span><span class="s2">&quot;mean&quot;</span><span class="p">,</span> <span class="s2">&quot;median&quot;</span><span class="p">,</span> <span class="s2">&quot;std&quot;</span><span class="p">,</span> <span class="s2">&quot;min&quot;</span><span class="p">,</span> <span class="s2">&quot;max&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead tr th {
-        text-align: left;
-    }
-
-    .dataframe thead tr:last-of-type th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr>
-      <th></th>
-      <th colspan="5" halign="left">tenure</th>
-      <th colspan="5" halign="left">MonthlyCharges</th>
-      <th colspan="5" halign="left">TotalCharges</th>
-    </tr>
-    <tr>
-      <th></th>
-      <th>mean</th>
-      <th>median</th>
-      <th>std</th>
-      <th>min</th>
-      <th>max</th>
-      <th>mean</th>
-      <th>median</th>
-      <th>std</th>
-      <th>min</th>
-      <th>max</th>
-      <th>mean</th>
-      <th>median</th>
-      <th>std</th>
-      <th>min</th>
-      <th>max</th>
-    </tr>
-    <tr>
-      <th>Churn</th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>No</th>
-      <td>37.57</td>
-      <td>38.0</td>
-      <td>24.11</td>
-      <td>0</td>
-      <td>72</td>
-      <td>61.27</td>
-      <td>64.43</td>
-      <td>31.09</td>
-      <td>18.25</td>
-      <td>118.75</td>
-      <td>2549.91</td>
-      <td>1679.52</td>
-      <td>2329.95</td>
-      <td>0.00</td>
-      <td>8672.45</td>
-    </tr>
-    <tr>
-      <th>Yes</th>
-      <td>17.98</td>
-      <td>10.0</td>
-      <td>19.53</td>
-      <td>1</td>
-      <td>72</td>
-      <td>74.44</td>
-      <td>79.65</td>
-      <td>24.67</td>
-      <td>18.85</td>
-      <td>118.35</td>
-      <td>1531.80</td>
-      <td>703.55</td>
-      <td>1890.82</td>
-      <td>18.85</td>
-      <td>8684.80</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
 </div>
-</section>
-</section>
-<section id="id1">
-<h3>Interpretación<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
-<p>Los boxplots permiten comparar el comportamiento de las variables numéricas entre clientes que abandonaron y clientes que permanecieron.</p>
-<p>En particular, <code class="docutils literal notranslate"><span class="pre">tenure</span></code> es una variable relevante porque puede mostrar si los clientes con menor antigüedad presentan mayor tendencia al churn. Asimismo, <code class="docutils literal notranslate"><span class="pre">MonthlyCharges</span></code> y <code class="docutils literal notranslate"><span class="pre">TotalCharges</span></code> ayudan a analizar si los cargos mensuales o acumulados están relacionados con el abandono.</p>
+<p>Los clientes con churn tienen una antigüedad media de 17.98 meses frente a los 37.57 de los que permanecen —los clientes nuevos son claramente más propensos a abandonar. En cargos mensuales, quienes hacen churn pagan en promedio <span class="math notranslate nohighlight">\(74.44 contra \)</span>61.27, lo que apunta a que los planes más caros generan más insatisfacción. Los cargos totales son menores para los clientes con churn (<span class="math notranslate nohighlight">\(1.531 vs \)</span>2.549) precisamente porque llevan menos tiempo en la empresa, no porque paguen menos por mes.</p>
 </section>
 </section>
 <section id="tasa-de-churn-por-categorias">
@@ -2847,6 +749,7 @@ menos facturación total. Esta variable no es independiente de <code class="docu
 </div>
 </div>
 </div>
+<p>La función <code class="docutils literal notranslate"><span class="pre">churn_rate_table()</span></code> devuelve para cada categoría el total de clientes, cuántos hicieron churn y el porcentaje. Las filas se ordenan de mayor a menor tasa de churn para identificar fácilmente los grupos más riesgosos.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">variables_categoricas_clave</span> <span class="o">=</span> <span class="p">[</span>
@@ -2866,417 +769,8 @@ menos facturación total. Esta variable no es independiente de <code class="docu
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Tasa de churn por Contract
-</pre></div>
 </div>
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Contract</th>
-      <th>clientes</th>
-      <th>clientes_churn</th>
-      <th>churn_rate</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>Month-to-month</td>
-      <td>3875</td>
-      <td>1655</td>
-      <td>42.71</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>One year</td>
-      <td>1473</td>
-      <td>166</td>
-      <td>11.27</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>Two year</td>
-      <td>1695</td>
-      <td>48</td>
-      <td>2.83</td>
-    </tr>
-  </tbody>
-</table>
-</div></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Tasa de churn por InternetService
-</pre></div>
-</div>
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>InternetService</th>
-      <th>clientes</th>
-      <th>clientes_churn</th>
-      <th>churn_rate</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>1</th>
-      <td>Fiber optic</td>
-      <td>3096</td>
-      <td>1297</td>
-      <td>41.89</td>
-    </tr>
-    <tr>
-      <th>0</th>
-      <td>DSL</td>
-      <td>2421</td>
-      <td>459</td>
-      <td>18.96</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>No</td>
-      <td>1526</td>
-      <td>113</td>
-      <td>7.40</td>
-    </tr>
-  </tbody>
-</table>
-</div></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Tasa de churn por PaymentMethod
-</pre></div>
-</div>
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>PaymentMethod</th>
-      <th>clientes</th>
-      <th>clientes_churn</th>
-      <th>churn_rate</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>2</th>
-      <td>Electronic check</td>
-      <td>2365</td>
-      <td>1071</td>
-      <td>45.29</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>Mailed check</td>
-      <td>1612</td>
-      <td>308</td>
-      <td>19.11</td>
-    </tr>
-    <tr>
-      <th>0</th>
-      <td>Bank transfer (automatic)</td>
-      <td>1544</td>
-      <td>258</td>
-      <td>16.71</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>Credit card (automatic)</td>
-      <td>1522</td>
-      <td>232</td>
-      <td>15.24</td>
-    </tr>
-  </tbody>
-</table>
-</div></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Tasa de churn por OnlineSecurity
-</pre></div>
-</div>
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>OnlineSecurity</th>
-      <th>clientes</th>
-      <th>clientes_churn</th>
-      <th>churn_rate</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>No</td>
-      <td>3498</td>
-      <td>1461</td>
-      <td>41.77</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>Yes</td>
-      <td>2019</td>
-      <td>295</td>
-      <td>14.61</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>No internet service</td>
-      <td>1526</td>
-      <td>113</td>
-      <td>7.40</td>
-    </tr>
-  </tbody>
-</table>
-</div></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Tasa de churn por TechSupport
-</pre></div>
-</div>
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>TechSupport</th>
-      <th>clientes</th>
-      <th>clientes_churn</th>
-      <th>churn_rate</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>No</td>
-      <td>3473</td>
-      <td>1446</td>
-      <td>41.64</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>Yes</td>
-      <td>2044</td>
-      <td>310</td>
-      <td>15.17</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>No internet service</td>
-      <td>1526</td>
-      <td>113</td>
-      <td>7.40</td>
-    </tr>
-  </tbody>
-</table>
-</div></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Tasa de churn por PaperlessBilling
-</pre></div>
-</div>
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>PaperlessBilling</th>
-      <th>clientes</th>
-      <th>clientes_churn</th>
-      <th>churn_rate</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>1</th>
-      <td>Yes</td>
-      <td>4171</td>
-      <td>1400</td>
-      <td>33.57</td>
-    </tr>
-    <tr>
-      <th>0</th>
-      <td>No</td>
-      <td>2872</td>
-      <td>469</td>
-      <td>16.33</td>
-    </tr>
-  </tbody>
-</table>
-</div></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Tasa de churn por OnlineBackup
-</pre></div>
-</div>
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>OnlineBackup</th>
-      <th>clientes</th>
-      <th>clientes_churn</th>
-      <th>churn_rate</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>No</td>
-      <td>3088</td>
-      <td>1233</td>
-      <td>39.93</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>Yes</td>
-      <td>2429</td>
-      <td>523</td>
-      <td>21.53</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>No internet service</td>
-      <td>1526</td>
-      <td>113</td>
-      <td>7.40</td>
-    </tr>
-  </tbody>
-</table>
-</div></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Tasa de churn por DeviceProtection
-</pre></div>
-</div>
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>DeviceProtection</th>
-      <th>clientes</th>
-      <th>clientes_churn</th>
-      <th>churn_rate</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>No</td>
-      <td>3095</td>
-      <td>1211</td>
-      <td>39.13</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>Yes</td>
-      <td>2422</td>
-      <td>545</td>
-      <td>22.50</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>No internet service</td>
-      <td>1526</td>
-      <td>113</td>
-      <td>7.40</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
-</div>
+<p>Los patrones más destacados en las tablas: <code class="docutils literal notranslate"><span class="pre">PaymentMethod</span> <span class="pre">Electronic</span> <span class="pre">check</span></code> tiene el mayor churn con 45.29%, <code class="docutils literal notranslate"><span class="pre">Contract</span> <span class="pre">Month-to-month</span></code> con 42.71%, y los clientes sin <code class="docutils literal notranslate"><span class="pre">OnlineSecurity</span></code> (41.77%) o sin <code class="docutils literal notranslate"><span class="pre">TechSupport</span></code> (41.64%) también presentan tasas muy altas. En contraste, los clientes sin ningún servicio de internet tienen tasas de apenas 7.40%.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">variables_categoricas_clave</span><span class="p">:</span>
@@ -3294,22 +788,8 @@ menos facturación total. Esta variable no es independiente de <code class="docu
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<img alt="../_images/df698368aba60aca90e8465efcd2e236897480eb3b3dbec7bfb43d3885c6d74f.png" src="../_images/df698368aba60aca90e8465efcd2e236897480eb3b3dbec7bfb43d3885c6d74f.png" />
-<img alt="../_images/f19ba32f52fe52c5277e818fbb5138157fe12cf74be2b50fbe8b4cc9a3812789.png" src="../_images/f19ba32f52fe52c5277e818fbb5138157fe12cf74be2b50fbe8b4cc9a3812789.png" />
-<img alt="../_images/f80ce5f2a3d56457f33c1dfa7f24de7abe5eca6941193ed9206ca55430a5cc28.png" src="../_images/f80ce5f2a3d56457f33c1dfa7f24de7abe5eca6941193ed9206ca55430a5cc28.png" />
-<img alt="../_images/0d1d0049ee14ae9eff968b6a8f972f656742b61f0e658283d05c741e621af85e.png" src="../_images/0d1d0049ee14ae9eff968b6a8f972f656742b61f0e658283d05c741e621af85e.png" />
-<img alt="../_images/e7ac47519e9f56732094f69ab1126ce71813f4014c558bd5e819a19fa6fcec91.png" src="../_images/e7ac47519e9f56732094f69ab1126ce71813f4014c558bd5e819a19fa6fcec91.png" />
-<img alt="../_images/fe5ec8afe775f613c07f5194165d84c9ae763951ef98e5f638c136243437a680.png" src="../_images/fe5ec8afe775f613c07f5194165d84c9ae763951ef98e5f638c136243437a680.png" />
-<img alt="../_images/1f504d26062b3a414b056547edbf9be79a53ee30d7aca52dcc2ad831a25ee36a.png" src="../_images/1f504d26062b3a414b056547edbf9be79a53ee30d7aca52dcc2ad831a25ee36a.png" />
-<img alt="../_images/a79fc8e3235895bc9f1fc2a7d27d5c2e859651441e62fd31d9a57d8e734ab312.png" src="../_images/a79fc8e3235895bc9f1fc2a7d27d5c2e859651441e62fd31d9a57d8e734ab312.png" />
 </div>
-</div>
-<section id="id2">
-<h3>Interpretación<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
-<p>Las tablas y gráficas de tasa de churn permiten identificar qué categorías concentran mayor riesgo de abandono.</p>
-<p>Variables como <code class="docutils literal notranslate"><span class="pre">Contract</span></code>, <code class="docutils literal notranslate"><span class="pre">PaymentMethod</span></code>, <code class="docutils literal notranslate"><span class="pre">OnlineSecurity</span></code> y <code class="docutils literal notranslate"><span class="pre">TechSupport</span></code> pueden ser especialmente relevantes, ya que muestran diferencias importantes en el porcentaje de clientes que abandonan la empresa dependiendo del tipo de contrato, método de pago o servicios adicionales contratados.</p>
-</section>
+<p>Los gráficos ordenados de mayor a menor tasa muestran visualmente cuáles categorías son más riesgosas. <code class="docutils literal notranslate"><span class="pre">Electronic</span> <span class="pre">check</span></code> en PaymentMethod y <code class="docutils literal notranslate"><span class="pre">Month-to-month</span></code> en Contract sobresalen claramente por encima del resto.</p>
 </section>
 <section id="analisis-cruzado-de-variables-categoricas">
 <h2>Análisis cruzado de variables categóricas<a class="headerlink" href="#analisis-cruzado-de-variables-categoricas" title="Link to this heading">#</a></h2>
@@ -3329,64 +809,8 @@ menos facturación total. Esta variable no es independiente de <code class="docu
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th>PaymentMethod</th>
-      <th>Bank transfer (automatic)</th>
-      <th>Credit card (automatic)</th>
-      <th>Electronic check</th>
-      <th>Mailed check</th>
-    </tr>
-    <tr>
-      <th>Contract</th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>Month-to-month</th>
-      <td>34.13</td>
-      <td>32.78</td>
-      <td>53.73</td>
-      <td>31.58</td>
-    </tr>
-    <tr>
-      <th>One year</th>
-      <td>9.72</td>
-      <td>10.30</td>
-      <td>18.44</td>
-      <td>6.82</td>
-    </tr>
-    <tr>
-      <th>Two year</th>
-      <td>3.37</td>
-      <td>2.24</td>
-      <td>7.74</td>
-      <td>0.79</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
 </div>
+<p>La combinación más riesgosa es contrato mensual + pago por cheque electrónico, con un 53.73% de churn. En el otro extremo, los contratos bianuales tienen tasas por debajo del 8% sin importar el método de pago.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
@@ -3405,10 +829,8 @@ menos facturación total. Esta variable no es independiente de <code class="docu
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<img alt="../_images/2b5f11f56147506d05e0d0ab963ea2a09af4e22ef3d94edba91fcc670323b25a.png" src="../_images/2b5f11f56147506d05e0d0ab963ea2a09af4e22ef3d94edba91fcc670323b25a.png" />
 </div>
-</div>
+<p>La celda más oscura del mapa es <code class="docutils literal notranslate"><span class="pre">Month-to-month</span> <span class="pre">/</span> <span class="pre">Electronic</span> <span class="pre">check</span></code> (53.73%), confirmando visualmente que es el perfil de mayor riesgo. Los contratos bianuales forman una fila casi completamente blanca en la parte inferior.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tabla_contract_internet</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span>
@@ -3424,59 +846,8 @@ menos facturación total. Esta variable no es independiente de <code class="docu
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th>InternetService</th>
-      <th>DSL</th>
-      <th>Fiber optic</th>
-      <th>No</th>
-    </tr>
-    <tr>
-      <th>Contract</th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>Month-to-month</th>
-      <td>32.22</td>
-      <td>54.61</td>
-      <td>18.89</td>
-    </tr>
-    <tr>
-      <th>One year</th>
-      <td>9.30</td>
-      <td>19.29</td>
-      <td>2.47</td>
-    </tr>
-    <tr>
-      <th>Two year</th>
-      <td>1.91</td>
-      <td>7.23</td>
-      <td>0.78</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
 </div>
+<p>La combinación contrato mensual + fibra óptica es la de mayor churn con 54.61%. Los contratos anuales y bianuales reducen drásticamente esa tasa incluso para clientes con fibra óptica.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
@@ -3495,14 +866,8 @@ menos facturación total. Esta variable no es independiente de <code class="docu
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<img alt="../_images/896212caa6f0fb6805dc44806becf144e4769dbe8a708bc4d7475d234a35a0af.png" src="../_images/896212caa6f0fb6805dc44806becf144e4769dbe8a708bc4d7475d234a35a0af.png" />
 </div>
-</div>
-<section id="id3">
-<h3>Interpretación<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
-<p>El análisis cruzado permite detectar perfiles de clientes con mayor riesgo de abandono. Por ejemplo, la combinación entre contratos mensuales y ciertos métodos de pago puede estar asociada con una tasa de churn más alta.</p>
-<p>Este tipo de análisis es útil para el negocio porque ayuda a identificar segmentos específicos de clientes que podrían requerir estrategias de retención más personalizadas.</p>
+<p>La celda más oscura es <code class="docutils literal notranslate"><span class="pre">Month-to-month</span> <span class="pre">/</span> <span class="pre">Fiber</span> <span class="pre">optic</span></code> con 54.61%. Los contratos de largo plazo tienen tonos muy claros en todas las columnas, mostrando que el tipo de contrato tiene más influencia que el tipo de internet.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">PROCESSED_PATH</span> <span class="o">=</span> <span class="n">BASE_DIR</span> <span class="o">/</span> <span class="s2">&quot;data&quot;</span> <span class="o">/</span> <span class="s2">&quot;processed&quot;</span> <span class="o">/</span> <span class="s2">&quot;telco_churn_clean.csv&quot;</span>
@@ -3513,13 +878,8 @@ menos facturación total. Esta variable no es independiente de <code class="docu
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Dataset limpio guardado en: c:\Users\sergi\OneDrive\Desktop\Machine Learning\MP3\data\processed\telco_churn_clean.csv
-</pre></div>
 </div>
-</div>
-</div>
-</section>
+<p>El dataset limpio (con <code class="docutils literal notranslate"><span class="pre">TotalCharges</span></code> corregida a <code class="docutils literal notranslate"><span class="pre">float64</span></code>) se guarda en <code class="docutils literal notranslate"><span class="pre">data/processed/</span></code> para usarse como entrada en el Notebook 2.</p>
 </section>
 <section id="conclusiones-principales-del-eda">
 <h2>Conclusiones principales del EDA<a class="headerlink" href="#conclusiones-principales-del-eda" title="Link to this heading">#</a></h2>
@@ -3571,19 +931,19 @@ menos facturación total. Esta variable no es independiente de <code class="docu
 <div class="prev-next-area">
     <a class="left-prev"
        href="../intro.html"
-       title="previous page">
+       title="página anterior">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
-        <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Proyecto Predicción de Churn en Telecomunicaciones</p>
+        <p class="prev-next-subtitle">anterior</p>
+        <p class="prev-next-title">Predicción de Churn en Telecomunicaciones</p>
       </div>
     </a>
     <a class="right-next"
        href="02_modeling_pipeline_gridsearch.html"
-       title="next page">
+       title="siguiente página">
       <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Proyecto Integrador 5.12 — Capítulo 5: Árboles e Interpretabilidad</p>
+        <p class="prev-next-subtitle">siguiente</p>
+        <p class="prev-next-title">Modelado Predictivo — Predicción de Churn</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -3599,51 +959,21 @@ menos facturación total. Esta variable no es independiente de <code class="docu
 
   <div class="sidebar-secondary-item">
   <div class="page-toc tocsection onthispage">
-    <i class="fa-solid fa-list"></i> Contents
+    <i class="fa-solid fa-list"></i> Contenido
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Proyecto Integrador 5.12 — Capítulo 5: Árboles e Interpretabilidad</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#notebook-1-analisis-exploratorio-de-datos-eda">Notebook 1: Análisis Exploratorio de Datos (EDA)</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#objetivo-del-notebook">Objetivo del Notebook</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-exploratorio-de-datos-telco-customer-churn">Análisis Exploratorio de Datos - Telco Customer Churn</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#carga-del-dataset">2. Carga del Dataset</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#calidad-del-dataset">3. Calidad del Dataset</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretacion-de-la-calidad-del-dataset">Interpretación de la Calidad del Dataset</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#calidad-del-dataset">3. Calidad del Dataset</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-de-la-variable-objetivo">4. Análisis de la Variable Objetivo</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#diccionario-de-variables">Diccionario de variables</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-del-desbalance-de-la-variable-objetivo">Análisis del desbalance de la variable objetivo</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretacion-del-desbalance">Interpretación del Desbalance</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretacion">Interpretación</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#diccionario-de-variables">Diccionario de variables</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-de-variables-numericas">5. Análisis de Variables Numéricas</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-de-variables-numericas-segun-churn">Análisis de variables numéricas según Churn</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-de-variables-numericas">5. Análisis de Variables Numéricas</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretacion-de-variables-numericas">Interpretación de Variables Numéricas</a></li>
-</ul>
-</li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Interpretación</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tasa-de-churn-por-categorias">Tasa de churn por categorías</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Interpretación</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-cruzado-de-variables-categoricas">Análisis cruzado de variables categóricas</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Interpretación</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tasa-de-churn-por-categorias">Tasa de churn por categorías</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-cruzado-de-variables-categoricas">Análisis cruzado de variables categóricas</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusiones-principales-del-eda">Conclusiones principales del EDA</a></li>
 </ul>
-</li>
-</ul>
-
   </nav></div>
 
 </div></div>
@@ -3657,20 +987,13 @@ menos facturación total. Esta variable no es independiente de <code class="docu
   <div class="footer-item">
     
 <p class="component-author">
-By Mateo Chang - Sergio Cadavid - Juan Camilo Conrado
+Por Sergio Cadavid · Juan Conrado · Mateo Chang
 </p>
 
   </div>
   
   <div class="footer-item">
     
-
-  <p class="copyright">
-    
-      © Copyright 2023.
-      <br/>
-    
-  </p>
 
   </div>
   

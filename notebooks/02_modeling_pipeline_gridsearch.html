@@ -2,13 +2,13 @@
 <!DOCTYPE html>
 
 
-<html lang="en" data-content_root="../" >
+<html lang="es" data-content_root="../" >
 
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Proyecto Integrador 5.12 — Capítulo 5: Árboles e Interpretabilidad &#8212; Proyecto Telco Customer Churn</title>
+    <title>Modelado Predictivo — Predicción de Churn &#8212; Predicción de Churn — Telco</title>
   
   
   
@@ -30,9 +30,9 @@
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
-    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -41,7 +41,7 @@
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="../_static/documentation_options.js?v=c73c0f3e"></script>
+    <script src="../_static/documentation_options.js?v=78d55cf8"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -50,7 +50,8 @@
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="../_static/togglebutton.js?v=b8b12719"></script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script src="../_static/translations.js?v=d190bf04"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script src="../_static/design-tabs.js?v=f930bc37"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
@@ -58,12 +59,12 @@
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks/02_modeling_pipeline_gridsearch';</script>
-    <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Proyecto Integrador 5.12 — Capítulo 5: Árboles e Interpretabilidad" href="03_interpretability_lime.html" />
-    <link rel="prev" title="Proyecto Integrador 5.12 — Capítulo 5: Árboles e Interpretabilidad" href="01_eda_telco_churn.html" />
+    <link rel="index" title="Índice" href="../genindex.html" />
+    <link rel="search" title="Búsqueda" href="../search.html" />
+    <link rel="next" title="Interpretabilidad Local con LIME" href="03_interpretability_lime.html" />
+    <link rel="prev" title="EDA — Predicción de Churn en Telecomunicaciones" href="01_eda_telco_churn.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:language" content="es"/>
   </head>
   
   
@@ -71,12 +72,12 @@
 
   
   
-  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Saltar al contenido principal</a></div>
   
   <div id="pst-scroll-pixel-helper"></div>
   
   <button type="button" class="btn rounded-pill" id="pst-back-to-top">
-    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+    <i class="fa-solid fa-arrow-up"></i>Volver arriba</button>
 
   
   <input type="checkbox"
@@ -100,8 +101,8 @@
          class="form-control"
          name="q"
          id="search-input"
-         placeholder="Search..."
-         aria-label="Search..."
+         placeholder="Search this book..."
+         aria-label="Search this book..."
          autocomplete="off"
          autocorrect="off"
          autocapitalize="off"
@@ -111,7 +112,7 @@
   </div>
 
   <div class="pst-async-banner-revealer d-none">
-  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Advertencia de versión"></aside>
 </div>
 
   
@@ -149,28 +150,34 @@
   
   
   
-    <p class="title logo__title">Proyecto Telco Customer Churn</p>
+    <p class="title logo__title">Predicción de Churn — Telco</p>
   
 </a></div>
         <div class="sidebar-primary-item">
 
  <script>
  document.write(`
-   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+   <button class="btn search-button-field search-button__button" title="Búsqueda" aria-label="Búsqueda" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass"></i>
-    <span class="search-button__default-text">Search</span>
+    <span class="search-button__default-text">Búsqueda</span>
     <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
    </button>
  `);
  </script></div>
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Predicción de Churn en Telecomunicaciones
+                </a>
+            </li>
+        </ul>
         <ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="01_eda_telco_churn.html">Proyecto Integrador 5.12 — Capítulo 5: Árboles e Interpretabilidad</a></li>
-
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Proyecto Integrador 5.12 — Capítulo 5: Árboles e Interpretabilidad</a></li>
-
-<li class="toctree-l1"><a class="reference internal" href="03_interpretability_lime.html">3. Interpretabilidad con LIME</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01_eda_telco_churn.html">Análisis Exploratorio</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Modelado y Comparación</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_interpretability_lime.html">Interpretabilidad LIME</a></li>
 </ul>
 
     </div>
@@ -218,7 +225,7 @@
 
 
 <div class="dropdown dropdown-download-buttons">
-  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Descarga esta pagina">
     <i class="fas fa-download"></i>
   </button>
   <ul class="dropdown-menu">
@@ -227,7 +234,7 @@
       
       <li><a href="../_sources/notebooks/02_modeling_pipeline_gridsearch.ipynb" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
-   title="Download source file"
+   title="Descargar archivo fuente"
    data-bs-placement="left" data-bs-toggle="tooltip"
 >
   
@@ -245,7 +252,7 @@
       <li>
 <button onclick="window.print()"
   class="btn btn-sm btn-download-pdf-button dropdown-item"
-  title="Print to PDF"
+  title="Imprimir en PDF"
   data-bs-placement="left" data-bs-toggle="tooltip"
 >
   
@@ -265,7 +272,7 @@
 
 <button onclick="toggleFullScreen()"
   class="btn btn-sm btn-fullscreen-button"
-  title="Fullscreen mode"
+  title="Modo de pantalla completa"
   data-bs-placement="bottom" data-bs-toggle="tooltip"
 >
   
@@ -280,7 +287,7 @@
 
 <script>
 document.write(`
-  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="claro/oscuro" aria-label="claro/oscuro" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
     <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
     <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
@@ -291,7 +298,7 @@ document.write(`
 
 <script>
 document.write(`
-  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Búsqueda" aria-label="Búsqueda" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
   </button>
 `);
@@ -309,38 +316,21 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Proyecto Integrador 5.12 — Capítulo 5: Árboles e Interpretabilidad</h1>
+    <h1>Modelado Predictivo — Predicción de Churn</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
             
             <div>
-                <h2> Contents </h2>
+                <h2> Contenido </h2>
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Proyecto Integrador 5.12 — Capítulo 5: Árboles e Interpretabilidad</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#notebook-2-modelado-predictivo-con-pipeline-y-gridsearchcv">Notebook 2: Modelado Predictivo con Pipeline y GridSearchCV</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#objetivo-del-notebook">Objetivo del Notebook</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#modelado-predictivo-telco-customer-churn">Modelado predictivo - Telco Customer Churn</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretacion-de-las-curvas-roc">Interpretación de las Curvas ROC</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretacion-de-las-matrices-de-confusion">Interpretación de las Matrices de Confusión</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pipeline-de-preprocesamiento">3. Pipeline de Preprocesamiento</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#configuracion-de-modelos-y-busqueda-de-hiperparametros">5. Configuración de Modelos y Búsqueda de Hiperparámetros</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#comparacion-de-resultados">6. Comparación de Resultados</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretacion-de-resultados-comparativos">Interpretación de Resultados Comparativos</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretacion-de-la-importancia-de-caracteristicas">Interpretación de la Importancia de Características</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#comparacion-de-resultados">6. Comparación de Resultados</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusiones-del-modelado-predictivo">7. Conclusiones del Modelado Predictivo</a></li>
 </ul>
-</li>
-</ul>
-
             </nav>
         </div>
     </div>
@@ -351,48 +341,11 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="proyecto-integrador-5-12-capitulo-5-arboles-e-interpretabilidad">
-<h1>Proyecto Integrador 5.12 — Capítulo 5: Árboles e Interpretabilidad<a class="headerlink" href="#proyecto-integrador-5-12-capitulo-5-arboles-e-interpretabilidad" title="Link to this heading">#</a></h1>
-<section id="notebook-2-modelado-predictivo-con-pipeline-y-gridsearchcv">
-<h2>Notebook 2: Modelado Predictivo con Pipeline y GridSearchCV<a class="headerlink" href="#notebook-2-modelado-predictivo-con-pipeline-y-gridsearchcv" title="Link to this heading">#</a></h2>
-<hr class="docutils" />
-<p><strong>Asignatura:</strong> Machine Learning
-<strong>Proyecto:</strong> Predicción de Churn en Telecomunicaciones
-<strong>Algoritmos:</strong> Random Forest · XGBoost · CatBoost · LightGBM
-<strong>Fecha:</strong> 2025</p>
-<hr class="docutils" />
-<section id="objetivo-del-notebook">
-<h3>Objetivo del Notebook<a class="headerlink" href="#objetivo-del-notebook" title="Link to this heading">#</a></h3>
-<p>Este notebook implementa el flujo completo de modelado predictivo para el problema de clasificación
-de churn en telecomunicaciones. El proceso sigue las mejores prácticas de Machine Learning aplicado:</p>
-<ol class="arabic simple">
-<li><p><strong>Preprocesamiento estructurado</strong> mediante <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> de scikit-learn con <code class="docutils literal notranslate"><span class="pre">SimpleImputer</span></code>,
-<code class="docutils literal notranslate"><span class="pre">StandardScaler</span></code> y <code class="docutils literal notranslate"><span class="pre">OneHotEncoder</span></code>.</p></li>
-<li><p><strong>Optimización de hiperparámetros</strong> con <code class="docutils literal notranslate"><span class="pre">GridSearchCV</span></code> y validación cruzada estratificada de 5 pliegues.</p></li>
-<li><p><strong>Entrenamiento y evaluación</strong> de 4 algoritmos basados en árboles: Random Forest, XGBoost, CatBoost y LightGBM.</p></li>
-<li><p><strong>Comparación rigurosa</strong> mediante métricas múltiples: Accuracy, Precision, Recall, F1-Score y AUC-ROC.</p></li>
-<li><p><strong>Selección y serialización</strong> del mejor modelo para su uso posterior en la API y el análisis de interpretabilidad.</p></li>
-<li><p><strong>Análisis de importancia de características</strong> para comprender qué variables guían las predicciones.</p></li>
-</ol>
-</section>
-</section>
-</section>
-<hr class="docutils" />
-<section class="tex2jax_ignore mathjax_ignore" id="modelado-predictivo-telco-customer-churn">
-<h1>Modelado predictivo - Telco Customer Churn<a class="headerlink" href="#modelado-predictivo-telco-customer-churn" title="Link to this heading">#</a></h1>
-<p>En este notebook se construyen modelos de clasificación para predecir la probabilidad de abandono de clientes en una empresa de telecomunicaciones.</p>
-<p>El flujo de trabajo incluye:</p>
-<ol class="arabic simple">
-<li><p>Carga del dataset limpio.</p></li>
-<li><p>Separación de variables predictoras y variable objetivo.</p></li>
-<li><p>División entre entrenamiento y prueba.</p></li>
-<li><p>Construcción de pipelines de preprocesamiento.</p></li>
-<li><p>Entrenamiento de modelos con GridSearchCV.</p></li>
-<li><p>Evaluación con métricas de clasificación.</p></li>
-<li><p>Comparación de modelos.</p></li>
-<li><p>Selección y guardado del mejor modelo.</p></li>
-<li><p>Análisis de importancia de características.</p></li>
-</ol>
+  <section class="tex2jax_ignore mathjax_ignore" id="modelado-predictivo-prediccion-de-churn">
+<h1>Modelado Predictivo — Predicción de Churn<a class="headerlink" href="#modelado-predictivo-prediccion-de-churn" title="Link to this heading">#</a></h1>
+<p><strong>Asignatura:</strong> Machine Learning<br />
+<strong>Algoritmos:</strong> Random Forest · XGBoost · CatBoost · LightGBM<br />
+<strong>Objetivo:</strong> Entrenar y comparar modelos con Pipeline y GridSearchCV para seleccionar el mejor clasificador.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
@@ -436,6 +389,7 @@ de churn en telecomunicaciones. El proceso sigue las mejores prácticas de Machi
 </div>
 </div>
 </div>
+<p>Se importan scikit-learn para los pipelines y métricas, XGBoost, CatBoost y LightGBM como clasificadores, y <code class="docutils literal notranslate"><span class="pre">joblib</span></code> y <code class="docutils literal notranslate"><span class="pre">json</span></code> para serializar el modelo y sus metadatos. Los warnings se suprimen para mantener la salida limpia durante el GridSearchCV.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Curvas ROC comparativas en una sola figura</span>
@@ -478,20 +432,7 @@ de churn en telecomunicaciones. El proceso sigue las mejores prácticas de Machi
 </div>
 </div>
 </div>
-<section id="interpretacion-de-las-curvas-roc">
-<h2>Interpretación de las Curvas ROC<a class="headerlink" href="#interpretacion-de-las-curvas-roc" title="Link to this heading">#</a></h2>
-<p>La curva ROC (Receiver Operating Characteristic) representa el trade-off entre la Tasa de
-Verdaderos Positivos (sensibilidad) y la Tasa de Falsos Positivos a diferentes umbrales de
-clasificación. El Área Bajo la Curva (AUC-ROC) cuantifica la capacidad discriminativa global
-del modelo: un valor de 1.0 indica clasificación perfecta, mientras que 0.5 indica desempeño
-equivalente a una clasificación aleatoria.</p>
-<p>Los cuatro modelos presentan curvas ROC muy similares con AUC entre 0.839 y 0.848, lo que indica
-que todos capturan los patrones de churn de forma competente. Las curvas se ubican claramente
-por encima de la diagonal de referencia (clasificador aleatorio), confirmando su valor predictivo.</p>
-<p>La diferencia de AUC entre el mejor (XGBoost, 0.8481) y el peor modelo (Random Forest, 0.8392)
-es de apenas 0.009 puntos, sugiriendo que el dataset y sus señales predictivas dominan el
-desempeño más que las diferencias entre algoritmos. Sin embargo, XGBoost mantiene una ventaja
-consistente y fue seleccionado como el modelo final para despliegue.</p>
+<p>Los cuatro modelos tienen curvas muy cercanas entre sí, todas bien por encima de la diagonal de un clasificador aleatorio. El AUC varía entre 0.839 y 0.848, lo que indica que todos capturan los patrones de churn de forma similar. XGBoost (0.8481) queda levemente más arriba que los demás.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Matrices de confusión para todos los modelos (seaborn heatmap)</span>
@@ -540,23 +481,7 @@ consistente y fue seleccionado como el modelo final para despliegue.</p>
 </div>
 </div>
 </div>
-</section>
-<section id="interpretacion-de-las-matrices-de-confusion">
-<h2>Interpretación de las Matrices de Confusión<a class="headerlink" href="#interpretacion-de-las-matrices-de-confusion" title="Link to this heading">#</a></h2>
-<p>Las matrices de confusión revelan el comportamiento detallado de cada modelo ante los dos tipos
-de error posibles:</p>
-<ul class="simple">
-<li><p><strong>Falsos Negativos (FN):</strong> clientes que realmente abandonarán pero el modelo predice que no.
-Este es el error más costoso para el negocio, pues representa clientes en riesgo no atendidos.</p></li>
-<li><p><strong>Falsos Positivos (FP):</strong> clientes que no abandonarán pero el modelo predice que sí.
-Este error genera costos operacionales por acciones de retención innecesarias.</p></li>
-</ul>
-<p><strong>XGBoost</strong> presenta la mayor cantidad de Verdaderos Negativos (correctamente clasificados como
-No Churn), lo que le confiere una Precision más alta. <strong>CatBoost</strong> detecta más Verdaderos Positivos
-(clientes con churn real correctamente identificados), lo que se refleja en su mayor Recall.</p>
-<p>La elección entre estos trade-offs depende de los costos operacionales del negocio. Para este
-proyecto se seleccionó XGBoost por su superior AUC-ROC global, que es independiente del umbral
-de clasificación y constituye la métrica más robusta para comparar modelos ante el desbalance de clases.</p>
+<p>Las matrices muestran que los cuatro modelos clasifican bien la clase «No Churn» —los verdaderos negativos son altos en todos—, pero tienen más dificultad con «Churn». XGBoost y LightGBM tienen más falsos negativos pero menos falsos positivos, priorizando precisión sobre recall. CatBoost y Random Forest capturan más churns reales a costa de más falsas alarmas.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">BASE_DIR</span> <span class="o">=</span> <span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span><span class="o">.</span><span class="n">parent</span> <span class="k">if</span> <span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;notebooks&quot;</span> <span class="k">else</span> <span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span>
@@ -569,224 +494,24 @@ de clasificación y constituye la métrica más robusta para comparar modelos an
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>customerID</th>
-      <th>gender</th>
-      <th>SeniorCitizen</th>
-      <th>Partner</th>
-      <th>Dependents</th>
-      <th>tenure</th>
-      <th>PhoneService</th>
-      <th>MultipleLines</th>
-      <th>InternetService</th>
-      <th>OnlineSecurity</th>
-      <th>OnlineBackup</th>
-      <th>DeviceProtection</th>
-      <th>TechSupport</th>
-      <th>StreamingTV</th>
-      <th>StreamingMovies</th>
-      <th>Contract</th>
-      <th>PaperlessBilling</th>
-      <th>PaymentMethod</th>
-      <th>MonthlyCharges</th>
-      <th>TotalCharges</th>
-      <th>Churn</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>7590-VHVEG</td>
-      <td>Female</td>
-      <td>0</td>
-      <td>Yes</td>
-      <td>No</td>
-      <td>1</td>
-      <td>No</td>
-      <td>No phone service</td>
-      <td>DSL</td>
-      <td>No</td>
-      <td>Yes</td>
-      <td>No</td>
-      <td>No</td>
-      <td>No</td>
-      <td>No</td>
-      <td>Month-to-month</td>
-      <td>Yes</td>
-      <td>Electronic check</td>
-      <td>29.85</td>
-      <td>29.85</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>5575-GNVDE</td>
-      <td>Male</td>
-      <td>0</td>
-      <td>No</td>
-      <td>No</td>
-      <td>34</td>
-      <td>Yes</td>
-      <td>No</td>
-      <td>DSL</td>
-      <td>Yes</td>
-      <td>No</td>
-      <td>Yes</td>
-      <td>No</td>
-      <td>No</td>
-      <td>No</td>
-      <td>One year</td>
-      <td>No</td>
-      <td>Mailed check</td>
-      <td>56.95</td>
-      <td>1889.50</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>3668-QPYBK</td>
-      <td>Male</td>
-      <td>0</td>
-      <td>No</td>
-      <td>No</td>
-      <td>2</td>
-      <td>Yes</td>
-      <td>No</td>
-      <td>DSL</td>
-      <td>Yes</td>
-      <td>Yes</td>
-      <td>No</td>
-      <td>No</td>
-      <td>No</td>
-      <td>No</td>
-      <td>Month-to-month</td>
-      <td>Yes</td>
-      <td>Mailed check</td>
-      <td>53.85</td>
-      <td>108.15</td>
-      <td>Yes</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>7795-CFOCW</td>
-      <td>Male</td>
-      <td>0</td>
-      <td>No</td>
-      <td>No</td>
-      <td>45</td>
-      <td>No</td>
-      <td>No phone service</td>
-      <td>DSL</td>
-      <td>Yes</td>
-      <td>No</td>
-      <td>Yes</td>
-      <td>Yes</td>
-      <td>No</td>
-      <td>No</td>
-      <td>One year</td>
-      <td>No</td>
-      <td>Bank transfer (automatic)</td>
-      <td>42.30</td>
-      <td>1840.75</td>
-      <td>No</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>9237-HQITU</td>
-      <td>Female</td>
-      <td>0</td>
-      <td>No</td>
-      <td>No</td>
-      <td>2</td>
-      <td>Yes</td>
-      <td>No</td>
-      <td>Fiber optic</td>
-      <td>No</td>
-      <td>No</td>
-      <td>No</td>
-      <td>No</td>
-      <td>No</td>
-      <td>No</td>
-      <td>Month-to-month</td>
-      <td>Yes</td>
-      <td>Electronic check</td>
-      <td>70.70</td>
-      <td>151.65</td>
-      <td>Yes</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
 </div>
+<p>El dataset procesado se carga correctamente. <code class="docutils literal notranslate"><span class="pre">TotalCharges</span></code> aparece ahora como <code class="docutils literal notranslate"><span class="pre">float64</span></code>, confirmando que la corrección aplicada en el Notebook 1 está en efecto.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">shape</span>
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(7043, 21)
-</pre></div>
 </div>
-</div>
-</div>
+<p>El dataset tiene las mismas 7.043 filas y 21 columnas, sin pérdida de registros durante la limpieza.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
-RangeIndex: 7043 entries, 0 to 7042
-Data columns (total 21 columns):
- #   Column            Non-Null Count  Dtype  
----  ------            --------------  -----  
- 0   customerID        7043 non-null   object 
- 1   gender            7043 non-null   object 
- 2   SeniorCitizen     7043 non-null   int64  
- 3   Partner           7043 non-null   object 
- 4   Dependents        7043 non-null   object 
- 5   tenure            7043 non-null   int64  
- 6   PhoneService      7043 non-null   object 
- 7   MultipleLines     7043 non-null   object 
- 8   InternetService   7043 non-null   object 
- 9   OnlineSecurity    7043 non-null   object 
- 10  OnlineBackup      7043 non-null   object 
- 11  DeviceProtection  7043 non-null   object 
- 12  TechSupport       7043 non-null   object 
- 13  StreamingTV       7043 non-null   object 
- 14  StreamingMovies   7043 non-null   object 
- 15  Contract          7043 non-null   object 
- 16  PaperlessBilling  7043 non-null   object 
- 17  PaymentMethod     7043 non-null   object 
- 18  MonthlyCharges    7043 non-null   float64
- 19  TotalCharges      7043 non-null   float64
- 20  Churn             7043 non-null   object 
-dtypes: float64(2), int64(2), object(17)
-memory usage: 1.1+ MB
-</pre></div>
 </div>
-</div>
-</div>
+<p><code class="docutils literal notranslate"><span class="pre">TotalCharges</span></code> ya es <code class="docutils literal notranslate"><span class="pre">float64</span></code> en lugar de <code class="docutils literal notranslate"><span class="pre">object</span></code>. La corrección del Notebook 1 está aplicada.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">target</span> <span class="o">=</span> <span class="s2">&quot;Churn&quot;</span>
@@ -798,197 +523,24 @@ memory usage: 1.1+ MB
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>customerID</th>
-      <th>gender</th>
-      <th>SeniorCitizen</th>
-      <th>Partner</th>
-      <th>Dependents</th>
-      <th>tenure</th>
-      <th>PhoneService</th>
-      <th>MultipleLines</th>
-      <th>InternetService</th>
-      <th>OnlineSecurity</th>
-      <th>OnlineBackup</th>
-      <th>DeviceProtection</th>
-      <th>TechSupport</th>
-      <th>StreamingTV</th>
-      <th>StreamingMovies</th>
-      <th>Contract</th>
-      <th>PaperlessBilling</th>
-      <th>PaymentMethod</th>
-      <th>MonthlyCharges</th>
-      <th>TotalCharges</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>7590-VHVEG</td>
-      <td>Female</td>
-      <td>0</td>
-      <td>Yes</td>
-      <td>No</td>
-      <td>1</td>
-      <td>No</td>
-      <td>No phone service</td>
-      <td>DSL</td>
-      <td>No</td>
-      <td>Yes</td>
-      <td>No</td>
-      <td>No</td>
-      <td>No</td>
-      <td>No</td>
-      <td>Month-to-month</td>
-      <td>Yes</td>
-      <td>Electronic check</td>
-      <td>29.85</td>
-      <td>29.85</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>5575-GNVDE</td>
-      <td>Male</td>
-      <td>0</td>
-      <td>No</td>
-      <td>No</td>
-      <td>34</td>
-      <td>Yes</td>
-      <td>No</td>
-      <td>DSL</td>
-      <td>Yes</td>
-      <td>No</td>
-      <td>Yes</td>
-      <td>No</td>
-      <td>No</td>
-      <td>No</td>
-      <td>One year</td>
-      <td>No</td>
-      <td>Mailed check</td>
-      <td>56.95</td>
-      <td>1889.50</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>3668-QPYBK</td>
-      <td>Male</td>
-      <td>0</td>
-      <td>No</td>
-      <td>No</td>
-      <td>2</td>
-      <td>Yes</td>
-      <td>No</td>
-      <td>DSL</td>
-      <td>Yes</td>
-      <td>Yes</td>
-      <td>No</td>
-      <td>No</td>
-      <td>No</td>
-      <td>No</td>
-      <td>Month-to-month</td>
-      <td>Yes</td>
-      <td>Mailed check</td>
-      <td>53.85</td>
-      <td>108.15</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>7795-CFOCW</td>
-      <td>Male</td>
-      <td>0</td>
-      <td>No</td>
-      <td>No</td>
-      <td>45</td>
-      <td>No</td>
-      <td>No phone service</td>
-      <td>DSL</td>
-      <td>Yes</td>
-      <td>No</td>
-      <td>Yes</td>
-      <td>Yes</td>
-      <td>No</td>
-      <td>No</td>
-      <td>One year</td>
-      <td>No</td>
-      <td>Bank transfer (automatic)</td>
-      <td>42.30</td>
-      <td>1840.75</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>9237-HQITU</td>
-      <td>Female</td>
-      <td>0</td>
-      <td>No</td>
-      <td>No</td>
-      <td>2</td>
-      <td>Yes</td>
-      <td>No</td>
-      <td>Fiber optic</td>
-      <td>No</td>
-      <td>No</td>
-      <td>No</td>
-      <td>No</td>
-      <td>No</td>
-      <td>No</td>
-      <td>Month-to-month</td>
-      <td>Yes</td>
-      <td>Electronic check</td>
-      <td>70.70</td>
-      <td>151.65</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
 </div>
+<p>Se separa la variable objetivo <code class="docutils literal notranslate"><span class="pre">Churn</span></code> del resto de features. Se mapea a 0 (No Churn) y 1 (Churn) para que los clasificadores puedan procesarla numéricamente.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Churn
-0    5174
-1    1869
-Name: count, dtype: int64
-</pre></div>
 </div>
-</div>
-</div>
+<p>5.174 casos de No Churn (0) y 1.869 de Churn (1). El mismo desbalance ~73%/27% del EDA.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span>
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Churn
-0    73.463013
-1    26.536987
-Name: proportion, dtype: float64
-</pre></div>
 </div>
-</div>
-</div>
+<p>El desbalance de 73.46% / 26.54% confirma que se debe usar <code class="docutils literal notranslate"><span class="pre">class_weight='balanced'</span></code> o <code class="docutils literal notranslate"><span class="pre">scale_pos_weight</span></code> según el algoritmo para que el clasificador no ignore la clase minoritaria.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="s2">&quot;customerID&quot;</span> <span class="ow">in</span> <span class="n">X</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
@@ -998,161 +550,8 @@ Name: proportion, dtype: float64
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>gender</th>
-      <th>SeniorCitizen</th>
-      <th>Partner</th>
-      <th>Dependents</th>
-      <th>tenure</th>
-      <th>PhoneService</th>
-      <th>MultipleLines</th>
-      <th>InternetService</th>
-      <th>OnlineSecurity</th>
-      <th>OnlineBackup</th>
-      <th>DeviceProtection</th>
-      <th>TechSupport</th>
-      <th>StreamingTV</th>
-      <th>StreamingMovies</th>
-      <th>Contract</th>
-      <th>PaperlessBilling</th>
-      <th>PaymentMethod</th>
-      <th>MonthlyCharges</th>
-      <th>TotalCharges</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>Female</td>
-      <td>0</td>
-      <td>Yes</td>
-      <td>No</td>
-      <td>1</td>
-      <td>No</td>
-      <td>No phone service</td>
-      <td>DSL</td>
-      <td>No</td>
-      <td>Yes</td>
-      <td>No</td>
-      <td>No</td>
-      <td>No</td>
-      <td>No</td>
-      <td>Month-to-month</td>
-      <td>Yes</td>
-      <td>Electronic check</td>
-      <td>29.85</td>
-      <td>29.85</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>Male</td>
-      <td>0</td>
-      <td>No</td>
-      <td>No</td>
-      <td>34</td>
-      <td>Yes</td>
-      <td>No</td>
-      <td>DSL</td>
-      <td>Yes</td>
-      <td>No</td>
-      <td>Yes</td>
-      <td>No</td>
-      <td>No</td>
-      <td>No</td>
-      <td>One year</td>
-      <td>No</td>
-      <td>Mailed check</td>
-      <td>56.95</td>
-      <td>1889.50</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>Male</td>
-      <td>0</td>
-      <td>No</td>
-      <td>No</td>
-      <td>2</td>
-      <td>Yes</td>
-      <td>No</td>
-      <td>DSL</td>
-      <td>Yes</td>
-      <td>Yes</td>
-      <td>No</td>
-      <td>No</td>
-      <td>No</td>
-      <td>No</td>
-      <td>Month-to-month</td>
-      <td>Yes</td>
-      <td>Mailed check</td>
-      <td>53.85</td>
-      <td>108.15</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>Male</td>
-      <td>0</td>
-      <td>No</td>
-      <td>No</td>
-      <td>45</td>
-      <td>No</td>
-      <td>No phone service</td>
-      <td>DSL</td>
-      <td>Yes</td>
-      <td>No</td>
-      <td>Yes</td>
-      <td>Yes</td>
-      <td>No</td>
-      <td>No</td>
-      <td>One year</td>
-      <td>No</td>
-      <td>Bank transfer (automatic)</td>
-      <td>42.30</td>
-      <td>1840.75</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>Female</td>
-      <td>0</td>
-      <td>No</td>
-      <td>No</td>
-      <td>2</td>
-      <td>Yes</td>
-      <td>No</td>
-      <td>Fiber optic</td>
-      <td>No</td>
-      <td>No</td>
-      <td>No</td>
-      <td>No</td>
-      <td>No</td>
-      <td>No</td>
-      <td>Month-to-month</td>
-      <td>Yes</td>
-      <td>Electronic check</td>
-      <td>70.70</td>
-      <td>151.65</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
 </div>
+<p>Se elimina <code class="docutils literal notranslate"><span class="pre">customerID</span></code> y el dataset queda con 19 variables predictoras listas para el pipeline.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">numeric_features</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;int64&quot;</span><span class="p">,</span> <span class="s2">&quot;float64&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
@@ -1166,16 +565,8 @@ Name: proportion, dtype: float64
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Variables numéricas:
-[&#39;SeniorCitizen&#39;, &#39;tenure&#39;, &#39;MonthlyCharges&#39;, &#39;TotalCharges&#39;]
-
-Variables categóricas:
-[&#39;gender&#39;, &#39;Partner&#39;, &#39;Dependents&#39;, &#39;PhoneService&#39;, &#39;MultipleLines&#39;, &#39;InternetService&#39;, &#39;OnlineSecurity&#39;, &#39;OnlineBackup&#39;, &#39;DeviceProtection&#39;, &#39;TechSupport&#39;, &#39;StreamingTV&#39;, &#39;StreamingMovies&#39;, &#39;Contract&#39;, &#39;PaperlessBilling&#39;, &#39;PaymentMethod&#39;]
-</pre></div>
 </div>
-</div>
-</div>
+<p>4 variables numéricas y 15 categóricas. Esta separación es necesaria porque el <code class="docutils literal notranslate"><span class="pre">ColumnTransformer</span></code> aplica transformaciones distintas a cada grupo.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
@@ -1197,26 +588,8 @@ Variables categóricas:
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Tamaño entrenamiento: (5634, 19)
-Tamaño prueba: (1409, 19)
-
-Distribución en entrenamiento:
-Churn
-0    73.464679
-1    26.535321
-Name: proportion, dtype: float64
-
-Distribución en prueba:
-Churn
-0    73.456352
-1    26.543648
-Name: proportion, dtype: float64
-</pre></div>
 </div>
-</div>
-</div>
-</section>
+<p>El dataset se divide en 5.634 registros para entrenamiento y 1.409 para prueba. Con <code class="docutils literal notranslate"><span class="pre">stratify=y</span></code> la distribución de churn es prácticamente idéntica en ambos subconjuntos (~73.46%/26.54%), garantizando que la evaluación sea representativa.</p>
 <section id="pipeline-de-preprocesamiento">
 <h2>3. Pipeline de Preprocesamiento<a class="headerlink" href="#pipeline-de-preprocesamiento" title="Link to this heading">#</a></h2>
 <p>Se construye un <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> de scikit-learn que encapsula todas las transformaciones de datos
@@ -1267,905 +640,8 @@ los resultados en la matriz de features final.</p>
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_html"><style>#sk-container-id-1 {
-  /* Definition of color scheme common for light and dark mode */
-  --sklearn-color-text: #000;
-  --sklearn-color-text-muted: #666;
-  --sklearn-color-line: gray;
-  /* Definition of color scheme for unfitted estimators */
-  --sklearn-color-unfitted-level-0: #fff5e6;
-  --sklearn-color-unfitted-level-1: #f6e4d2;
-  --sklearn-color-unfitted-level-2: #ffe0b3;
-  --sklearn-color-unfitted-level-3: chocolate;
-  /* Definition of color scheme for fitted estimators */
-  --sklearn-color-fitted-level-0: #f0f8ff;
-  --sklearn-color-fitted-level-1: #d4ebff;
-  --sklearn-color-fitted-level-2: #b3dbfd;
-  --sklearn-color-fitted-level-3: cornflowerblue;
-
-  /* Specific color for light theme */
-  --sklearn-color-text-on-default-background: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, black)));
-  --sklearn-color-background: var(--sg-background-color, var(--theme-background, var(--jp-layout-color0, white)));
-  --sklearn-color-border-box: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, black)));
-  --sklearn-color-icon: #696969;
-
-  @media (prefers-color-scheme: dark) {
-    /* Redefinition of color scheme for dark theme */
-    --sklearn-color-text-on-default-background: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, white)));
-    --sklearn-color-background: var(--sg-background-color, var(--theme-background, var(--jp-layout-color0, #111)));
-    --sklearn-color-border-box: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, white)));
-    --sklearn-color-icon: #878787;
-  }
-}
-
-#sk-container-id-1 {
-  color: var(--sklearn-color-text);
-}
-
-#sk-container-id-1 pre {
-  padding: 0;
-}
-
-#sk-container-id-1 input.sk-hidden--visually {
-  border: 0;
-  clip: rect(1px 1px 1px 1px);
-  clip: rect(1px, 1px, 1px, 1px);
-  height: 1px;
-  margin: -1px;
-  overflow: hidden;
-  padding: 0;
-  position: absolute;
-  width: 1px;
-}
-
-#sk-container-id-1 div.sk-dashed-wrapped {
-  border: 1px dashed var(--sklearn-color-line);
-  margin: 0 0.4em 0.5em 0.4em;
-  box-sizing: border-box;
-  padding-bottom: 0.4em;
-  background-color: var(--sklearn-color-background);
-}
-
-#sk-container-id-1 div.sk-container {
-  /* jupyter's `normalize.less` sets `[hidden] { display: none; }`
-     but bootstrap.min.css set `[hidden] { display: none !important; }`
-     so we also need the `!important` here to be able to override the
-     default hidden behavior on the sphinx rendered scikit-learn.org.
-     See: https://github.com/scikit-learn/scikit-learn/issues/21755 */
-  display: inline-block !important;
-  position: relative;
-}
-
-#sk-container-id-1 div.sk-text-repr-fallback {
-  display: none;
-}
-
-div.sk-parallel-item,
-div.sk-serial,
-div.sk-item {
-  /* draw centered vertical line to link estimators */
-  background-image: linear-gradient(var(--sklearn-color-text-on-default-background), var(--sklearn-color-text-on-default-background));
-  background-size: 2px 100%;
-  background-repeat: no-repeat;
-  background-position: center center;
-}
-
-/* Parallel-specific style estimator block */
-
-#sk-container-id-1 div.sk-parallel-item::after {
-  content: "";
-  width: 100%;
-  border-bottom: 2px solid var(--sklearn-color-text-on-default-background);
-  flex-grow: 1;
-}
-
-#sk-container-id-1 div.sk-parallel {
-  display: flex;
-  align-items: stretch;
-  justify-content: center;
-  background-color: var(--sklearn-color-background);
-  position: relative;
-}
-
-#sk-container-id-1 div.sk-parallel-item {
-  display: flex;
-  flex-direction: column;
-}
-
-#sk-container-id-1 div.sk-parallel-item:first-child::after {
-  align-self: flex-end;
-  width: 50%;
-}
-
-#sk-container-id-1 div.sk-parallel-item:last-child::after {
-  align-self: flex-start;
-  width: 50%;
-}
-
-#sk-container-id-1 div.sk-parallel-item:only-child::after {
-  width: 0;
-}
-
-/* Serial-specific style estimator block */
-
-#sk-container-id-1 div.sk-serial {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: var(--sklearn-color-background);
-  padding-right: 1em;
-  padding-left: 1em;
-}
-
-
-/* Toggleable style: style used for estimator/Pipeline/ColumnTransformer box that is
-clickable and can be expanded/collapsed.
-- Pipeline and ColumnTransformer use this feature and define the default style
-- Estimators will overwrite some part of the style using the `sk-estimator` class
-*/
-
-/* Pipeline and ColumnTransformer style (default) */
-
-#sk-container-id-1 div.sk-toggleable {
-  /* Default theme specific background. It is overwritten whether we have a
-  specific estimator or a Pipeline/ColumnTransformer */
-  background-color: var(--sklearn-color-background);
-}
-
-/* Toggleable label */
-#sk-container-id-1 label.sk-toggleable__label {
-  cursor: pointer;
-  display: flex;
-  width: 100%;
-  margin-bottom: 0;
-  padding: 0.5em;
-  box-sizing: border-box;
-  text-align: center;
-  align-items: start;
-  justify-content: space-between;
-  gap: 0.5em;
-}
-
-#sk-container-id-1 label.sk-toggleable__label .caption {
-  font-size: 0.6rem;
-  font-weight: lighter;
-  color: var(--sklearn-color-text-muted);
-}
-
-#sk-container-id-1 label.sk-toggleable__label-arrow:before {
-  /* Arrow on the left of the label */
-  content: "▸";
-  float: left;
-  margin-right: 0.25em;
-  color: var(--sklearn-color-icon);
-}
-
-#sk-container-id-1 label.sk-toggleable__label-arrow:hover:before {
-  color: var(--sklearn-color-text);
-}
-
-/* Toggleable content - dropdown */
-
-#sk-container-id-1 div.sk-toggleable__content {
-  display: none;
-  text-align: left;
-  /* unfitted */
-  background-color: var(--sklearn-color-unfitted-level-0);
-}
-
-#sk-container-id-1 div.sk-toggleable__content.fitted {
-  /* fitted */
-  background-color: var(--sklearn-color-fitted-level-0);
-}
-
-#sk-container-id-1 div.sk-toggleable__content pre {
-  margin: 0.2em;
-  border-radius: 0.25em;
-  color: var(--sklearn-color-text);
-  /* unfitted */
-  background-color: var(--sklearn-color-unfitted-level-0);
-}
-
-#sk-container-id-1 div.sk-toggleable__content.fitted pre {
-  /* unfitted */
-  background-color: var(--sklearn-color-fitted-level-0);
-}
-
-#sk-container-id-1 input.sk-toggleable__control:checked~div.sk-toggleable__content {
-  /* Expand drop-down */
-  display: block;
-  width: 100%;
-  overflow: visible;
-}
-
-#sk-container-id-1 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {
-  content: "▾";
-}
-
-/* Pipeline/ColumnTransformer-specific style */
-
-#sk-container-id-1 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {
-  color: var(--sklearn-color-text);
-  background-color: var(--sklearn-color-unfitted-level-2);
-}
-
-#sk-container-id-1 div.sk-label.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
-  background-color: var(--sklearn-color-fitted-level-2);
-}
-
-/* Estimator-specific style */
-
-/* Colorize estimator box */
-#sk-container-id-1 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {
-  /* unfitted */
-  background-color: var(--sklearn-color-unfitted-level-2);
-}
-
-#sk-container-id-1 div.sk-estimator.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
-  /* fitted */
-  background-color: var(--sklearn-color-fitted-level-2);
-}
-
-#sk-container-id-1 div.sk-label label.sk-toggleable__label,
-#sk-container-id-1 div.sk-label label {
-  /* The background is the default theme color */
-  color: var(--sklearn-color-text-on-default-background);
-}
-
-/* On hover, darken the color of the background */
-#sk-container-id-1 div.sk-label:hover label.sk-toggleable__label {
-  color: var(--sklearn-color-text);
-  background-color: var(--sklearn-color-unfitted-level-2);
-}
-
-/* Label box, darken color on hover, fitted */
-#sk-container-id-1 div.sk-label.fitted:hover label.sk-toggleable__label.fitted {
-  color: var(--sklearn-color-text);
-  background-color: var(--sklearn-color-fitted-level-2);
-}
-
-/* Estimator label */
-
-#sk-container-id-1 div.sk-label label {
-  font-family: monospace;
-  font-weight: bold;
-  display: inline-block;
-  line-height: 1.2em;
-}
-
-#sk-container-id-1 div.sk-label-container {
-  text-align: center;
-}
-
-/* Estimator-specific */
-#sk-container-id-1 div.sk-estimator {
-  font-family: monospace;
-  border: 1px dotted var(--sklearn-color-border-box);
-  border-radius: 0.25em;
-  box-sizing: border-box;
-  margin-bottom: 0.5em;
-  /* unfitted */
-  background-color: var(--sklearn-color-unfitted-level-0);
-}
-
-#sk-container-id-1 div.sk-estimator.fitted {
-  /* fitted */
-  background-color: var(--sklearn-color-fitted-level-0);
-}
-
-/* on hover */
-#sk-container-id-1 div.sk-estimator:hover {
-  /* unfitted */
-  background-color: var(--sklearn-color-unfitted-level-2);
-}
-
-#sk-container-id-1 div.sk-estimator.fitted:hover {
-  /* fitted */
-  background-color: var(--sklearn-color-fitted-level-2);
-}
-
-/* Specification for estimator info (e.g. "i" and "?") */
-
-/* Common style for "i" and "?" */
-
-.sk-estimator-doc-link,
-a:link.sk-estimator-doc-link,
-a:visited.sk-estimator-doc-link {
-  float: right;
-  font-size: smaller;
-  line-height: 1em;
-  font-family: monospace;
-  background-color: var(--sklearn-color-background);
-  border-radius: 1em;
-  height: 1em;
-  width: 1em;
-  text-decoration: none !important;
-  margin-left: 0.5em;
-  text-align: center;
-  /* unfitted */
-  border: var(--sklearn-color-unfitted-level-1) 1pt solid;
-  color: var(--sklearn-color-unfitted-level-1);
-}
-
-.sk-estimator-doc-link.fitted,
-a:link.sk-estimator-doc-link.fitted,
-a:visited.sk-estimator-doc-link.fitted {
-  /* fitted */
-  border: var(--sklearn-color-fitted-level-1) 1pt solid;
-  color: var(--sklearn-color-fitted-level-1);
-}
-
-/* On hover */
-div.sk-estimator:hover .sk-estimator-doc-link:hover,
-.sk-estimator-doc-link:hover,
-div.sk-label-container:hover .sk-estimator-doc-link:hover,
-.sk-estimator-doc-link:hover {
-  /* unfitted */
-  background-color: var(--sklearn-color-unfitted-level-3);
-  color: var(--sklearn-color-background);
-  text-decoration: none;
-}
-
-div.sk-estimator.fitted:hover .sk-estimator-doc-link.fitted:hover,
-.sk-estimator-doc-link.fitted:hover,
-div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
-.sk-estimator-doc-link.fitted:hover {
-  /* fitted */
-  background-color: var(--sklearn-color-fitted-level-3);
-  color: var(--sklearn-color-background);
-  text-decoration: none;
-}
-
-/* Span, style for the box shown on hovering the info icon */
-.sk-estimator-doc-link span {
-  display: none;
-  z-index: 9999;
-  position: relative;
-  font-weight: normal;
-  right: .2ex;
-  padding: .5ex;
-  margin: .5ex;
-  width: min-content;
-  min-width: 20ex;
-  max-width: 50ex;
-  color: var(--sklearn-color-text);
-  box-shadow: 2pt 2pt 4pt #999;
-  /* unfitted */
-  background: var(--sklearn-color-unfitted-level-0);
-  border: .5pt solid var(--sklearn-color-unfitted-level-3);
-}
-
-.sk-estimator-doc-link.fitted span {
-  /* fitted */
-  background: var(--sklearn-color-fitted-level-0);
-  border: var(--sklearn-color-fitted-level-3);
-}
-
-.sk-estimator-doc-link:hover span {
-  display: block;
-}
-
-/* "?"-specific style due to the `<a>` HTML tag */
-
-#sk-container-id-1 a.estimator_doc_link {
-  float: right;
-  font-size: 1rem;
-  line-height: 1em;
-  font-family: monospace;
-  background-color: var(--sklearn-color-background);
-  border-radius: 1rem;
-  height: 1rem;
-  width: 1rem;
-  text-decoration: none;
-  /* unfitted */
-  color: var(--sklearn-color-unfitted-level-1);
-  border: var(--sklearn-color-unfitted-level-1) 1pt solid;
-}
-
-#sk-container-id-1 a.estimator_doc_link.fitted {
-  /* fitted */
-  border: var(--sklearn-color-fitted-level-1) 1pt solid;
-  color: var(--sklearn-color-fitted-level-1);
-}
-
-/* On hover */
-#sk-container-id-1 a.estimator_doc_link:hover {
-  /* unfitted */
-  background-color: var(--sklearn-color-unfitted-level-3);
-  color: var(--sklearn-color-background);
-  text-decoration: none;
-}
-
-#sk-container-id-1 a.estimator_doc_link.fitted:hover {
-  /* fitted */
-  background-color: var(--sklearn-color-fitted-level-3);
-}
-
-.estimator-table summary {
-    padding: .5rem;
-    font-family: monospace;
-    cursor: pointer;
-}
-
-.estimator-table details[open] {
-    padding-left: 0.1rem;
-    padding-right: 0.1rem;
-    padding-bottom: 0.3rem;
-}
-
-.estimator-table .parameters-table {
-    margin-left: auto !important;
-    margin-right: auto !important;
-}
-
-.estimator-table .parameters-table tr:nth-child(odd) {
-    background-color: #fff;
-}
-
-.estimator-table .parameters-table tr:nth-child(even) {
-    background-color: #f6f6f6;
-}
-
-.estimator-table .parameters-table tr:hover {
-    background-color: #e0e0e0;
-}
-
-.estimator-table table td {
-    border: 1px solid rgba(106, 105, 104, 0.232);
-}
-
-.user-set td {
-    color:rgb(255, 94, 0);
-    text-align: left;
-}
-
-.user-set td.value pre {
-    color:rgb(255, 94, 0) !important;
-    background-color: transparent !important;
-}
-
-.default td {
-    color: black;
-    text-align: left;
-}
-
-.user-set td i,
-.default td i {
-    color: black;
-}
-
-.copy-paste-icon {
-    background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0NDggNTEyIj48IS0tIUZvbnQgQXdlc29tZSBGcmVlIDYuNy4yIGJ5IEBmb250YXdlc29tZSAtIGh0dHBzOi8vZm9udGF3ZXNvbWUuY29tIExpY2Vuc2UgLSBodHRwczovL2ZvbnRhd2Vzb21lLmNvbS9saWNlbnNlL2ZyZWUgQ29weXJpZ2h0IDIwMjUgRm9udGljb25zLCBJbmMuLS0+PHBhdGggZD0iTTIwOCAwTDMzMi4xIDBjMTIuNyAwIDI0LjkgNS4xIDMzLjkgMTQuMWw2Ny45IDY3LjljOSA5IDE0LjEgMjEuMiAxNC4xIDMzLjlMNDQ4IDMzNmMwIDI2LjUtMjEuNSA0OC00OCA0OGwtMTkyIDBjLTI2LjUgMC00OC0yMS41LTQ4LTQ4bDAtMjg4YzAtMjYuNSAyMS41LTQ4IDQ4LTQ4ek00OCAxMjhsODAgMCAwIDY0LTY0IDAgMCAyNTYgMTkyIDAgMC0zMiA2NCAwIDAgNDhjMCAyNi41LTIxLjUgNDgtNDggNDhMNDggNTEyYy0yNi41IDAtNDgtMjEuNS00OC00OEwwIDE3NmMwLTI2LjUgMjEuNS00OCA0OC00OHoiLz48L3N2Zz4=);
-    background-repeat: no-repeat;
-    background-size: 14px 14px;
-    background-position: 0;
-    display: inline-block;
-    width: 14px;
-    height: 14px;
-    cursor: pointer;
-}
-</style><body><div id="sk-container-id-1" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>ColumnTransformer(transformers=[(&#x27;num&#x27;,
-                                 Pipeline(steps=[(&#x27;imputer&#x27;,
-                                                  SimpleImputer(strategy=&#x27;median&#x27;)),
-                                                 (&#x27;scaler&#x27;, StandardScaler())]),
-                                 [&#x27;SeniorCitizen&#x27;, &#x27;tenure&#x27;, &#x27;MonthlyCharges&#x27;,
-                                  &#x27;TotalCharges&#x27;]),
-                                (&#x27;cat&#x27;,
-                                 Pipeline(steps=[(&#x27;imputer&#x27;,
-                                                  SimpleImputer(strategy=&#x27;most_frequent&#x27;)),
-                                                 (&#x27;onehot&#x27;,
-                                                  OneHotEncoder(handle_unknown=&#x27;ignore&#x27;))]),
-                                 [&#x27;gender&#x27;, &#x27;Partner&#x27;, &#x27;Dependents&#x27;,
-                                  &#x27;PhoneService&#x27;, &#x27;MultipleLines&#x27;,
-                                  &#x27;InternetService&#x27;, &#x27;OnlineSecurity&#x27;,
-                                  &#x27;OnlineBackup&#x27;, &#x27;DeviceProtection&#x27;,
-                                  &#x27;TechSupport&#x27;, &#x27;StreamingTV&#x27;,
-                                  &#x27;StreamingMovies&#x27;, &#x27;Contract&#x27;,
-                                  &#x27;PaperlessBilling&#x27;, &#x27;PaymentMethod&#x27;])])</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-1" type="checkbox" ><label for="sk-estimator-id-1" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>ColumnTransformer</div></div><div><a class="sk-estimator-doc-link " rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.7/modules/generated/sklearn.compose.ColumnTransformer.html">?<span>Documentation for ColumnTransformer</span></a><span class="sk-estimator-doc-link ">i<span>Not fitted</span></span></div></label><div class="sk-toggleable__content " data-param-prefix="">
-        <div class="estimator-table">
-            <details>
-                <summary>Parameters</summary>
-                <table class="parameters-table">
-                  <tbody>
-                    
-        <tr class="user-set">
-            <td><i class="copy-paste-icon"
-                 onclick="copyToClipboard('transformers',
-                          this.parentElement.nextElementSibling)"
-            ></i></td>
-            <td class="param">transformers&nbsp;</td>
-            <td class="value">[(&#x27;num&#x27;, ...), (&#x27;cat&#x27;, ...)]</td>
-        </tr>
-    
-
-        <tr class="default">
-            <td><i class="copy-paste-icon"
-                 onclick="copyToClipboard('remainder',
-                          this.parentElement.nextElementSibling)"
-            ></i></td>
-            <td class="param">remainder&nbsp;</td>
-            <td class="value">&#x27;drop&#x27;</td>
-        </tr>
-    
-
-        <tr class="default">
-            <td><i class="copy-paste-icon"
-                 onclick="copyToClipboard('sparse_threshold',
-                          this.parentElement.nextElementSibling)"
-            ></i></td>
-            <td class="param">sparse_threshold&nbsp;</td>
-            <td class="value">0.3</td>
-        </tr>
-    
-
-        <tr class="default">
-            <td><i class="copy-paste-icon"
-                 onclick="copyToClipboard('n_jobs',
-                          this.parentElement.nextElementSibling)"
-            ></i></td>
-            <td class="param">n_jobs&nbsp;</td>
-            <td class="value">None</td>
-        </tr>
-    
-
-        <tr class="default">
-            <td><i class="copy-paste-icon"
-                 onclick="copyToClipboard('transformer_weights',
-                          this.parentElement.nextElementSibling)"
-            ></i></td>
-            <td class="param">transformer_weights&nbsp;</td>
-            <td class="value">None</td>
-        </tr>
-    
-
-        <tr class="default">
-            <td><i class="copy-paste-icon"
-                 onclick="copyToClipboard('verbose',
-                          this.parentElement.nextElementSibling)"
-            ></i></td>
-            <td class="param">verbose&nbsp;</td>
-            <td class="value">False</td>
-        </tr>
-    
-
-        <tr class="default">
-            <td><i class="copy-paste-icon"
-                 onclick="copyToClipboard('verbose_feature_names_out',
-                          this.parentElement.nextElementSibling)"
-            ></i></td>
-            <td class="param">verbose_feature_names_out&nbsp;</td>
-            <td class="value">True</td>
-        </tr>
-    
-
-        <tr class="default">
-            <td><i class="copy-paste-icon"
-                 onclick="copyToClipboard('force_int_remainder_cols',
-                          this.parentElement.nextElementSibling)"
-            ></i></td>
-            <td class="param">force_int_remainder_cols&nbsp;</td>
-            <td class="value">&#x27;deprecated&#x27;</td>
-        </tr>
-    
-                  </tbody>
-                </table>
-            </details>
-        </div>
-    </div></div></div><div class="sk-parallel"><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-2" type="checkbox" ><label for="sk-estimator-id-2" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>num</div></div></label><div class="sk-toggleable__content " data-param-prefix="num__"><pre>[&#x27;SeniorCitizen&#x27;, &#x27;tenure&#x27;, &#x27;MonthlyCharges&#x27;, &#x27;TotalCharges&#x27;]</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-serial"><div class="sk-item"><div class="sk-estimator  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-3" type="checkbox" ><label for="sk-estimator-id-3" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>SimpleImputer</div></div><div><a class="sk-estimator-doc-link " rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.7/modules/generated/sklearn.impute.SimpleImputer.html">?<span>Documentation for SimpleImputer</span></a></div></label><div class="sk-toggleable__content " data-param-prefix="num__imputer__">
-        <div class="estimator-table">
-            <details>
-                <summary>Parameters</summary>
-                <table class="parameters-table">
-                  <tbody>
-                    
-        <tr class="default">
-            <td><i class="copy-paste-icon"
-                 onclick="copyToClipboard('missing_values',
-                          this.parentElement.nextElementSibling)"
-            ></i></td>
-            <td class="param">missing_values&nbsp;</td>
-            <td class="value">nan</td>
-        </tr>
-    
-
-        <tr class="user-set">
-            <td><i class="copy-paste-icon"
-                 onclick="copyToClipboard('strategy',
-                          this.parentElement.nextElementSibling)"
-            ></i></td>
-            <td class="param">strategy&nbsp;</td>
-            <td class="value">&#x27;median&#x27;</td>
-        </tr>
-    
-
-        <tr class="default">
-            <td><i class="copy-paste-icon"
-                 onclick="copyToClipboard('fill_value',
-                          this.parentElement.nextElementSibling)"
-            ></i></td>
-            <td class="param">fill_value&nbsp;</td>
-            <td class="value">None</td>
-        </tr>
-    
-
-        <tr class="default">
-            <td><i class="copy-paste-icon"
-                 onclick="copyToClipboard('copy',
-                          this.parentElement.nextElementSibling)"
-            ></i></td>
-            <td class="param">copy&nbsp;</td>
-            <td class="value">True</td>
-        </tr>
-    
-
-        <tr class="default">
-            <td><i class="copy-paste-icon"
-                 onclick="copyToClipboard('add_indicator',
-                          this.parentElement.nextElementSibling)"
-            ></i></td>
-            <td class="param">add_indicator&nbsp;</td>
-            <td class="value">False</td>
-        </tr>
-    
-
-        <tr class="default">
-            <td><i class="copy-paste-icon"
-                 onclick="copyToClipboard('keep_empty_features',
-                          this.parentElement.nextElementSibling)"
-            ></i></td>
-            <td class="param">keep_empty_features&nbsp;</td>
-            <td class="value">False</td>
-        </tr>
-    
-                  </tbody>
-                </table>
-            </details>
-        </div>
-    </div></div></div><div class="sk-item"><div class="sk-estimator  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-4" type="checkbox" ><label for="sk-estimator-id-4" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>StandardScaler</div></div><div><a class="sk-estimator-doc-link " rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.7/modules/generated/sklearn.preprocessing.StandardScaler.html">?<span>Documentation for StandardScaler</span></a></div></label><div class="sk-toggleable__content " data-param-prefix="num__scaler__">
-        <div class="estimator-table">
-            <details>
-                <summary>Parameters</summary>
-                <table class="parameters-table">
-                  <tbody>
-                    
-        <tr class="default">
-            <td><i class="copy-paste-icon"
-                 onclick="copyToClipboard('copy',
-                          this.parentElement.nextElementSibling)"
-            ></i></td>
-            <td class="param">copy&nbsp;</td>
-            <td class="value">True</td>
-        </tr>
-    
-
-        <tr class="default">
-            <td><i class="copy-paste-icon"
-                 onclick="copyToClipboard('with_mean',
-                          this.parentElement.nextElementSibling)"
-            ></i></td>
-            <td class="param">with_mean&nbsp;</td>
-            <td class="value">True</td>
-        </tr>
-    
-
-        <tr class="default">
-            <td><i class="copy-paste-icon"
-                 onclick="copyToClipboard('with_std',
-                          this.parentElement.nextElementSibling)"
-            ></i></td>
-            <td class="param">with_std&nbsp;</td>
-            <td class="value">True</td>
-        </tr>
-    
-                  </tbody>
-                </table>
-            </details>
-        </div>
-    </div></div></div></div></div></div></div></div><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-5" type="checkbox" ><label for="sk-estimator-id-5" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>cat</div></div></label><div class="sk-toggleable__content " data-param-prefix="cat__"><pre>[&#x27;gender&#x27;, &#x27;Partner&#x27;, &#x27;Dependents&#x27;, &#x27;PhoneService&#x27;, &#x27;MultipleLines&#x27;, &#x27;InternetService&#x27;, &#x27;OnlineSecurity&#x27;, &#x27;OnlineBackup&#x27;, &#x27;DeviceProtection&#x27;, &#x27;TechSupport&#x27;, &#x27;StreamingTV&#x27;, &#x27;StreamingMovies&#x27;, &#x27;Contract&#x27;, &#x27;PaperlessBilling&#x27;, &#x27;PaymentMethod&#x27;]</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-serial"><div class="sk-item"><div class="sk-estimator  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-6" type="checkbox" ><label for="sk-estimator-id-6" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>SimpleImputer</div></div><div><a class="sk-estimator-doc-link " rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.7/modules/generated/sklearn.impute.SimpleImputer.html">?<span>Documentation for SimpleImputer</span></a></div></label><div class="sk-toggleable__content " data-param-prefix="cat__imputer__">
-        <div class="estimator-table">
-            <details>
-                <summary>Parameters</summary>
-                <table class="parameters-table">
-                  <tbody>
-                    
-        <tr class="default">
-            <td><i class="copy-paste-icon"
-                 onclick="copyToClipboard('missing_values',
-                          this.parentElement.nextElementSibling)"
-            ></i></td>
-            <td class="param">missing_values&nbsp;</td>
-            <td class="value">nan</td>
-        </tr>
-    
-
-        <tr class="user-set">
-            <td><i class="copy-paste-icon"
-                 onclick="copyToClipboard('strategy',
-                          this.parentElement.nextElementSibling)"
-            ></i></td>
-            <td class="param">strategy&nbsp;</td>
-            <td class="value">&#x27;most_frequent&#x27;</td>
-        </tr>
-    
-
-        <tr class="default">
-            <td><i class="copy-paste-icon"
-                 onclick="copyToClipboard('fill_value',
-                          this.parentElement.nextElementSibling)"
-            ></i></td>
-            <td class="param">fill_value&nbsp;</td>
-            <td class="value">None</td>
-        </tr>
-    
-
-        <tr class="default">
-            <td><i class="copy-paste-icon"
-                 onclick="copyToClipboard('copy',
-                          this.parentElement.nextElementSibling)"
-            ></i></td>
-            <td class="param">copy&nbsp;</td>
-            <td class="value">True</td>
-        </tr>
-    
-
-        <tr class="default">
-            <td><i class="copy-paste-icon"
-                 onclick="copyToClipboard('add_indicator',
-                          this.parentElement.nextElementSibling)"
-            ></i></td>
-            <td class="param">add_indicator&nbsp;</td>
-            <td class="value">False</td>
-        </tr>
-    
-
-        <tr class="default">
-            <td><i class="copy-paste-icon"
-                 onclick="copyToClipboard('keep_empty_features',
-                          this.parentElement.nextElementSibling)"
-            ></i></td>
-            <td class="param">keep_empty_features&nbsp;</td>
-            <td class="value">False</td>
-        </tr>
-    
-                  </tbody>
-                </table>
-            </details>
-        </div>
-    </div></div></div><div class="sk-item"><div class="sk-estimator  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-7" type="checkbox" ><label for="sk-estimator-id-7" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>OneHotEncoder</div></div><div><a class="sk-estimator-doc-link " rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.7/modules/generated/sklearn.preprocessing.OneHotEncoder.html">?<span>Documentation for OneHotEncoder</span></a></div></label><div class="sk-toggleable__content " data-param-prefix="cat__onehot__">
-        <div class="estimator-table">
-            <details>
-                <summary>Parameters</summary>
-                <table class="parameters-table">
-                  <tbody>
-                    
-        <tr class="default">
-            <td><i class="copy-paste-icon"
-                 onclick="copyToClipboard('categories',
-                          this.parentElement.nextElementSibling)"
-            ></i></td>
-            <td class="param">categories&nbsp;</td>
-            <td class="value">&#x27;auto&#x27;</td>
-        </tr>
-    
-
-        <tr class="default">
-            <td><i class="copy-paste-icon"
-                 onclick="copyToClipboard('drop',
-                          this.parentElement.nextElementSibling)"
-            ></i></td>
-            <td class="param">drop&nbsp;</td>
-            <td class="value">None</td>
-        </tr>
-    
-
-        <tr class="default">
-            <td><i class="copy-paste-icon"
-                 onclick="copyToClipboard('sparse_output',
-                          this.parentElement.nextElementSibling)"
-            ></i></td>
-            <td class="param">sparse_output&nbsp;</td>
-            <td class="value">True</td>
-        </tr>
-    
-
-        <tr class="default">
-            <td><i class="copy-paste-icon"
-                 onclick="copyToClipboard('dtype',
-                          this.parentElement.nextElementSibling)"
-            ></i></td>
-            <td class="param">dtype&nbsp;</td>
-            <td class="value">&lt;class &#x27;numpy.float64&#x27;&gt;</td>
-        </tr>
-    
-
-        <tr class="user-set">
-            <td><i class="copy-paste-icon"
-                 onclick="copyToClipboard('handle_unknown',
-                          this.parentElement.nextElementSibling)"
-            ></i></td>
-            <td class="param">handle_unknown&nbsp;</td>
-            <td class="value">&#x27;ignore&#x27;</td>
-        </tr>
-    
-
-        <tr class="default">
-            <td><i class="copy-paste-icon"
-                 onclick="copyToClipboard('min_frequency',
-                          this.parentElement.nextElementSibling)"
-            ></i></td>
-            <td class="param">min_frequency&nbsp;</td>
-            <td class="value">None</td>
-        </tr>
-    
-
-        <tr class="default">
-            <td><i class="copy-paste-icon"
-                 onclick="copyToClipboard('max_categories',
-                          this.parentElement.nextElementSibling)"
-            ></i></td>
-            <td class="param">max_categories&nbsp;</td>
-            <td class="value">None</td>
-        </tr>
-    
-
-        <tr class="default">
-            <td><i class="copy-paste-icon"
-                 onclick="copyToClipboard('feature_name_combiner',
-                          this.parentElement.nextElementSibling)"
-            ></i></td>
-            <td class="param">feature_name_combiner&nbsp;</td>
-            <td class="value">&#x27;concat&#x27;</td>
-        </tr>
-    
-                  </tbody>
-                </table>
-            </details>
-        </div>
-    </div></div></div></div></div></div></div></div></div></div></div></div><script>function copyToClipboard(text, element) {
-    // Get the parameter prefix from the closest toggleable content
-    const toggleableContent = element.closest('.sk-toggleable__content');
-    const paramPrefix = toggleableContent ? toggleableContent.dataset.paramPrefix : '';
-    const fullParamName = paramPrefix ? `${paramPrefix}${text}` : text;
-
-    const originalStyle = element.style;
-    const computedStyle = window.getComputedStyle(element);
-    const originalWidth = computedStyle.width;
-    const originalHTML = element.innerHTML.replace('Copied!', '');
-
-    navigator.clipboard.writeText(fullParamName)
-        .then(() => {
-            element.style.width = originalWidth;
-            element.style.color = 'green';
-            element.innerHTML = "Copied!";
-
-            setTimeout(() => {
-                element.innerHTML = originalHTML;
-                element.style = originalStyle;
-            }, 2000);
-        })
-        .catch(err => {
-            console.error('Failed to copy:', err);
-            element.style.color = 'red';
-            element.innerHTML = "Failed!";
-            setTimeout(() => {
-                element.innerHTML = originalHTML;
-                element.style = originalStyle;
-            }, 2000);
-        });
-    return false;
-}
-
-document.querySelectorAll('.fa-regular.fa-copy').forEach(function(element) {
-    const toggleableContent = element.closest('.sk-toggleable__content');
-    const paramPrefix = toggleableContent ? toggleableContent.dataset.paramPrefix : '';
-    const paramName = element.parentElement.nextElementSibling.textContent.trim();
-    const fullParamName = paramPrefix ? `${paramPrefix}${paramName}` : paramName;
-
-    element.setAttribute('title', fullParamName);
-});
-</script></body></div></div>
 </div>
+<p>El <code class="docutils literal notranslate"><span class="pre">ColumnTransformer</span></code> aplica a las variables numéricas imputación por mediana y escalado estándar, y a las categóricas imputación por moda y codificación one-hot. Al estar todo dentro del Pipeline, las estadísticas de escalado se calculan solo sobre los datos de entrenamiento y se aplican al conjunto de prueba sin recalcular, evitando data leakage.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">negativos</span> <span class="o">=</span> <span class="p">(</span><span class="n">y_train</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
@@ -2179,14 +655,8 @@ document.querySelectorAll('.fa-regular.fa-copy').forEach(function(element) {
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Clientes sin churn: 4139
-Clientes con churn: 1495
-scale_pos_weight: 2.77
-</pre></div>
 </div>
-</div>
-</div>
+<p>En el conjunto de entrenamiento hay 4.139 clientes sin churn y 1.495 con churn. El cociente 2.77 es el valor de <code class="docutils literal notranslate"><span class="pre">scale_pos_weight</span></code> que se usará en XGBoost para compensar el desbalance de clases.</p>
 </section>
 <section id="configuracion-de-modelos-y-busqueda-de-hiperparametros">
 <h2>5. Configuración de Modelos y Búsqueda de Hiperparámetros<a class="headerlink" href="#configuracion-de-modelos-y-busqueda-de-hiperparametros" title="Link to this heading">#</a></h2>
@@ -2194,7 +664,7 @@ scale_pos_weight: 2.77
 con <code class="docutils literal notranslate"><span class="pre">GridSearchCV</span></code>:</p>
 <ul class="simple">
 <li><p><strong>cv=5:</strong> validación cruzada estratificada de 5 pliegues.</p></li>
-<li><p><strong>scoring=’roc_auc’:</strong> métrica de selección (robusta al desbalance de clases).</p></li>
+<li><p><strong>scoring=”roc_auc”:</strong> métrica de selección (robusta al desbalance de clases).</p></li>
 <li><p><strong>n_jobs=-1:</strong> uso de todos los núcleos disponibles para paralelización.</p></li>
 <li><p><strong>refit=True:</strong> re-entrena con los mejores parámetros sobre el conjunto de entrenamiento completo.</p></li>
 </ul>
@@ -2277,6 +747,7 @@ con <code class="docutils literal notranslate"><span class="pre">GridSearchCV</s
 </div>
 </div>
 </div>
+<p>Se definen los espacios de búsqueda para los 4 modelos. En total hay 48 + 64 + 32 + 192 = 336 combinaciones de hiperparámetros, y como cada una se evalúa con 5-fold CV, se entrenan 1.680 modelos en total.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">evaluate_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">):</span>
@@ -2296,6 +767,7 @@ con <code class="docutils literal notranslate"><span class="pre">GridSearchCV</s
 </div>
 </div>
 </div>
+<p>La función <code class="docutils literal notranslate"><span class="pre">evaluate_model()</span></code> calcula las 5 métricas principales sobre el conjunto de prueba y devuelve un diccionario. Se llama después de cada GridSearchCV para registrar los resultados comparativos.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cv</span> <span class="o">=</span> <span class="n">StratifiedKFold</span><span class="p">(</span>
@@ -2357,55 +829,8 @@ con <code class="docutils literal notranslate"><span class="pre">GridSearchCV</s
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>================================================================================
-Entrenando modelo: Random Forest
-================================================================================
-Fitting 5 folds for each of 48 candidates, totalling 240 fits
-
-Mejor ROC AUC en validación cruzada: 0.8453
-Métricas en prueba:
-{&#39;accuracy&#39;: 0.765791341376863, &#39;precision&#39;: 0.5445344129554656, &#39;recall&#39;: 0.7192513368983957, &#39;f1_score&#39;: 0.619815668202765, &#39;roc_auc&#39;: 0.8392415200599345}
-
-Mejores parámetros:
-{&#39;classifier__class_weight&#39;: &#39;balanced&#39;, &#39;classifier__max_depth&#39;: 10, &#39;classifier__max_features&#39;: &#39;sqrt&#39;, &#39;classifier__min_samples_leaf&#39;: 2, &#39;classifier__min_samples_split&#39;: 5, &#39;classifier__n_estimators&#39;: 200}
-================================================================================
-Entrenando modelo: XGBoost
-================================================================================
-Fitting 5 folds for each of 64 candidates, totalling 320 fits
-
-Mejor ROC AUC en validación cruzada: 0.8504
-Métricas en prueba:
-{&#39;accuracy&#39;: 0.8041163946061036, &#39;precision&#39;: 0.6701388888888888, &#39;recall&#39;: 0.516042780748663, &#39;f1_score&#39;: 0.5830815709969789, &#39;roc_auc&#39;: 0.8481050918391072}
-
-Mejores parámetros:
-{&#39;classifier__colsample_bytree&#39;: 0.8, &#39;classifier__learning_rate&#39;: 0.05, &#39;classifier__max_depth&#39;: 3, &#39;classifier__n_estimators&#39;: 100, &#39;classifier__scale_pos_weight&#39;: 1, &#39;classifier__subsample&#39;: 0.8}
-================================================================================
-Entrenando modelo: CatBoost
-================================================================================
-Fitting 5 folds for each of 32 candidates, totalling 160 fits
-
-Mejor ROC AUC en validación cruzada: 0.8504
-Métricas en prueba:
-{&#39;accuracy&#39;: 0.7480482611781405, &#39;precision&#39;: 0.5164075993091537, &#39;recall&#39;: 0.7994652406417112, &#39;f1_score&#39;: 0.6274921301154249, &#39;roc_auc&#39;: 0.84755095714175}
-
-Mejores parámetros:
-{&#39;classifier__auto_class_weights&#39;: &#39;Balanced&#39;, &#39;classifier__depth&#39;: 4, &#39;classifier__iterations&#39;: 200, &#39;classifier__l2_leaf_reg&#39;: 5, &#39;classifier__learning_rate&#39;: 0.05}
-================================================================================
-Entrenando modelo: LightGBM
-================================================================================
-Fitting 5 folds for each of 192 candidates, totalling 960 fits
-
-Mejor ROC AUC en validación cruzada: 0.8487
-Métricas en prueba:
-{&#39;accuracy&#39;: 0.8005677785663591, &#39;precision&#39;: 0.6597938144329897, &#39;recall&#39;: 0.5133689839572193, &#39;f1_score&#39;: 0.5774436090225564, &#39;roc_auc&#39;: 0.8473998294970161}
-
-Mejores parámetros:
-{&#39;classifier__class_weight&#39;: None, &#39;classifier__colsample_bytree&#39;: 0.8, &#39;classifier__learning_rate&#39;: 0.05, &#39;classifier__max_depth&#39;: 5, &#39;classifier__n_estimators&#39;: 100, &#39;classifier__num_leaves&#39;: 15, &#39;classifier__subsample&#39;: 0.8}
-</pre></div>
 </div>
-</div>
-</div>
+<p>Los 4 modelos completaron el GridSearchCV. Los AUC-ROC en validación cruzada van de 0.8453 a 0.8504. En el conjunto de prueba XGBoost obtiene el mejor AUC con 0.8481, seguido muy de cerca por CatBoost y LightGBM.</p>
 </section>
 <section id="comparacion-de-resultados">
 <h2>6. Comparación de Resultados<a class="headerlink" href="#comparacion-de-resultados" title="Link to this heading">#</a></h2>
@@ -2433,102 +858,8 @@ el entrenamiento ni la optimización de hiperparámetros). Las métricas reporta
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>model</th>
-      <th>best_cv_roc_auc</th>
-      <th>test_accuracy</th>
-      <th>test_precision</th>
-      <th>test_recall</th>
-      <th>test_f1_score</th>
-      <th>test_roc_auc</th>
-      <th>best_params</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>1</th>
-      <td>XGBoost</td>
-      <td>0.850444</td>
-      <td>0.804116</td>
-      <td>0.670139</td>
-      <td>0.516043</td>
-      <td>0.583082</td>
-      <td>0.848105</td>
-      <td>{'classifier__colsample_bytree': 0.8, 'classif...</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>CatBoost</td>
-      <td>0.850411</td>
-      <td>0.748048</td>
-      <td>0.516408</td>
-      <td>0.799465</td>
-      <td>0.627492</td>
-      <td>0.847551</td>
-      <td>{'classifier__auto_class_weights': 'Balanced',...</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>LightGBM</td>
-      <td>0.848651</td>
-      <td>0.800568</td>
-      <td>0.659794</td>
-      <td>0.513369</td>
-      <td>0.577444</td>
-      <td>0.847400</td>
-      <td>{'classifier__class_weight': None, 'classifier...</td>
-    </tr>
-    <tr>
-      <th>0</th>
-      <td>Random Forest</td>
-      <td>0.845258</td>
-      <td>0.765791</td>
-      <td>0.544534</td>
-      <td>0.719251</td>
-      <td>0.619816</td>
-      <td>0.839242</td>
-      <td>{'classifier__class_weight': 'balanced', 'clas...</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
 </div>
-<section id="interpretacion-de-resultados-comparativos">
-<h3>Interpretación de Resultados Comparativos<a class="headerlink" href="#interpretacion-de-resultados-comparativos" title="Link to this heading">#</a></h3>
-<p>Los cuatro modelos evaluados presentan un desempeño competitivo en términos de AUC-ROC, con valores
-entre 0.839 y 0.848. El modelo <strong>XGBoost</strong> fue seleccionado como el mejor con un AUC-ROC de 0.8481,
-seguido de cerca por CatBoost (0.8476) y LightGBM (0.8474).</p>
-<p><strong>Análisis del trade-off Precision-Recall:</strong>
-Se observa que diferentes modelos optimizan distintos aspectos del problema:</p>
-<ul class="simple">
-<li><p><strong>XGBoost y LightGBM</strong> favorecen Precision (≈0.66-0.67) sobre Recall (≈0.51-0.52), lo que implica
-menor tasa de falsos positivos pero mayor tasa de clientes en riesgo no detectados.</p></li>
-<li><p><strong>CatBoost y Random Forest</strong> presentan mayor Recall (≈0.72-0.80) a costa de menor Precision,
-detectando más clientes en riesgo pero con más falsas alarmas.</p></li>
-</ul>
-<p><strong>Implicación de negocio:</strong> La elección entre Precision y Recall depende del costo relativo de cada
-tipo de error. Si el costo de una falsa alarma (acción de retención innecesaria) es bajo comparado
-con el costo de no detectar un churn real, modelos con mayor Recall serían preferibles. XGBoost
-fue seleccionado por su superior AUC-ROC global, que representa mejor la capacidad discriminativa
-general del modelo independientemente del umbral de clasificación.</p>
+<p>XGBoost lidera en AUC-ROC (0.8481) y Accuracy (0.8041). CatBoost tiene el Recall más alto (0.7995) pero menor Precision (0.5164), lo que significa que detecta más churns reales pero con más falsas alarmas. Cada modelo refleja un trade-off distinto entre los dos tipos de error.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">metrics_cols</span> <span class="o">=</span> <span class="p">[</span>
@@ -2545,79 +876,8 @@ general del modelo independientemente del umbral de clasificación.</p>
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>model</th>
-      <th>best_cv_roc_auc</th>
-      <th>test_accuracy</th>
-      <th>test_precision</th>
-      <th>test_recall</th>
-      <th>test_f1_score</th>
-      <th>test_roc_auc</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>1</th>
-      <td>XGBoost</td>
-      <td>0.8504</td>
-      <td>0.8041</td>
-      <td>0.6701</td>
-      <td>0.5160</td>
-      <td>0.5831</td>
-      <td>0.8481</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>CatBoost</td>
-      <td>0.8504</td>
-      <td>0.7480</td>
-      <td>0.5164</td>
-      <td>0.7995</td>
-      <td>0.6275</td>
-      <td>0.8476</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>LightGBM</td>
-      <td>0.8487</td>
-      <td>0.8006</td>
-      <td>0.6598</td>
-      <td>0.5134</td>
-      <td>0.5774</td>
-      <td>0.8474</td>
-    </tr>
-    <tr>
-      <th>0</th>
-      <td>Random Forest</td>
-      <td>0.8453</td>
-      <td>0.7658</td>
-      <td>0.5445</td>
-      <td>0.7193</td>
-      <td>0.6198</td>
-      <td>0.8392</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
 </div>
+<p>Con los valores redondeados se ve mejor la comparación. La diferencia máxima en AUC entre los 4 modelos es de apenas 0.0089 puntos, lo que indica que las señales predictivas del dataset son fuertes y cualquier algoritmo basado en árboles las captura bien.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">results_plot</span> <span class="o">=</span> <span class="n">results_df_sorted</span><span class="p">[</span><span class="n">metrics_cols</span><span class="p">]</span><span class="o">.</span><span class="n">melt</span><span class="p">(</span>
@@ -2646,10 +906,8 @@ general del modelo independientemente del umbral de clasificación.</p>
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<img alt="../_images/501694e2fd609474395c9eb8382caa8419f447fef80b094279cf6be8ae62017a.png" src="../_images/501694e2fd609474395c9eb8382caa8419f447fef80b094279cf6be8ae62017a.png" />
 </div>
-</div>
+<p>El gráfico agrupa las 6 métricas por modelo. XGBoost y LightGBM tienen barras de Accuracy y Precision más altas pero Recall más bajo. CatBoost y Random Forest muestran el patrón inverso: más Recall a costa de menos Precision.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">best_model_name</span> <span class="o">=</span> <span class="n">results_df_sorted</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;model&quot;</span><span class="p">]</span>
@@ -2659,29 +917,16 @@ general del modelo independientemente del umbral de clasificación.</p>
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Mejor modelo seleccionado: XGBoost
-</pre></div>
 </div>
-</div>
-</div>
+<p>XGBoost es seleccionado como mejor modelo con AUC-ROC de 0.8481 en el conjunto de prueba.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">results_df_sorted</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;best_params&quot;</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;classifier__colsample_bytree&#39;: 0.8,
- &#39;classifier__learning_rate&#39;: 0.05,
- &#39;classifier__max_depth&#39;: 3,
- &#39;classifier__n_estimators&#39;: 100,
- &#39;classifier__scale_pos_weight&#39;: 1,
- &#39;classifier__subsample&#39;: 0.8}
-</pre></div>
 </div>
-</div>
-</div>
+<p>Los mejores parámetros encontrados son árboles poco profundos (<code class="docutils literal notranslate"><span class="pre">max_depth=3</span></code>), learning rate conservador (0.05), submuestreo de datos y features al 80%, y sin ajuste de peso por clase. La profundidad reducida actúa como regularización y evita el sobreajuste.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y_pred_best</span> <span class="o">=</span> <span class="n">best_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
@@ -2695,19 +940,8 @@ general del modelo independientemente del umbral de clasificación.</p>
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>              precision    recall  f1-score   support
-
-    No Churn       0.84      0.91      0.87      1035
-       Churn       0.67      0.52      0.58       374
-
-    accuracy                           0.80      1409
-   macro avg       0.75      0.71      0.73      1409
-weighted avg       0.79      0.80      0.80      1409
-</pre></div>
 </div>
-</div>
-</div>
+<p>El modelo predice bien la clase «No Churn» con F1 de 0.87, pero tiene más dificultad con «Churn» (F1=0.58). El Recall de 0.52 para Churn significa que el modelo no detecta aproximadamente la mitad de los clientes que realmente abandonarán.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cm</span> <span class="o">=</span> <span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred_best</span><span class="p">)</span>
@@ -2723,10 +957,8 @@ weighted avg       0.79      0.80      0.80      1409
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<img alt="../_images/67770315f7aec54e608aa70e9df4c874d0fdfa3a5b5cd84d5221edbfbbcea1be.png" src="../_images/67770315f7aec54e608aa70e9df4c874d0fdfa3a5b5cd84d5221edbfbbcea1be.png" />
 </div>
-</div>
+<p>XGBoost clasifica correctamente 942 de 1.035 clientes sin churn (91%) y 193 de 374 con churn (52%). Los 181 falsos negativos —clientes con churn predichos como No Churn— son el error más costoso: representan clientes en riesgo que el sistema no detectará.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
@@ -2748,10 +980,8 @@ weighted avg       0.79      0.80      0.80      1409
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<img alt="../_images/81959922043c29d53cd259f5f84cc592888199df8d0b8a02e8f67beb8975d4a2.png" src="../_images/81959922043c29d53cd259f5f84cc592888199df8d0b8a02e8f67beb8975d4a2.png" />
 </div>
-</div>
+<p>Las curvas ROC de los 4 modelos están muy juntas y todas por encima de la diagonal del clasificador aleatorio. XGBoost queda levemente arriba con AUC=0.848.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">REPORTS_DIR</span> <span class="o">=</span> <span class="n">BASE_DIR</span> <span class="o">/</span> <span class="s2">&quot;reports&quot;</span>
@@ -2765,12 +995,8 @@ weighted avg       0.79      0.80      0.80      1409
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Resultados guardados en: c:\Users\sergi\OneDrive\Desktop\Machine Learning\MP3\reports\model_results.csv
-</pre></div>
 </div>
-</div>
-</div>
+<p>Los resultados comparativos de los 4 modelos se guardan en <code class="docutils literal notranslate"><span class="pre">reports/model_results.csv</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">preprocessor_fitted</span> <span class="o">=</span> <span class="n">best_model</span><span class="o">.</span><span class="n">named_steps</span><span class="p">[</span><span class="s2">&quot;preprocessor&quot;</span><span class="p">]</span>
@@ -2797,134 +1023,8 @@ weighted avg       0.79      0.80      0.80      1409
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>feature</th>
-      <th>importance</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>36</th>
-      <td>Contract_Month-to-month</td>
-      <td>0.347328</td>
-    </tr>
-    <tr>
-      <th>27</th>
-      <td>TechSupport_No</td>
-      <td>0.087796</td>
-    </tr>
-    <tr>
-      <th>18</th>
-      <td>OnlineSecurity_No</td>
-      <td>0.086592</td>
-    </tr>
-    <tr>
-      <th>16</th>
-      <td>InternetService_Fiber optic</td>
-      <td>0.072132</td>
-    </tr>
-    <tr>
-      <th>15</th>
-      <td>InternetService_DSL</td>
-      <td>0.046834</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>tenure</td>
-      <td>0.030129</td>
-    </tr>
-    <tr>
-      <th>43</th>
-      <td>PaymentMethod_Electronic check</td>
-      <td>0.029413</td>
-    </tr>
-    <tr>
-      <th>38</th>
-      <td>Contract_Two year</td>
-      <td>0.026457</td>
-    </tr>
-    <tr>
-      <th>32</th>
-      <td>StreamingTV_Yes</td>
-      <td>0.018293</td>
-    </tr>
-    <tr>
-      <th>39</th>
-      <td>PaperlessBilling_No</td>
-      <td>0.017553</td>
-    </tr>
-    <tr>
-      <th>35</th>
-      <td>StreamingMovies_Yes</td>
-      <td>0.016653</td>
-    </tr>
-    <tr>
-      <th>37</th>
-      <td>Contract_One year</td>
-      <td>0.015204</td>
-    </tr>
-    <tr>
-      <th>17</th>
-      <td>InternetService_No</td>
-      <td>0.014803</td>
-    </tr>
-    <tr>
-      <th>14</th>
-      <td>MultipleLines_Yes</td>
-      <td>0.014030</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>Dependents_Yes</td>
-      <td>0.013952</td>
-    </tr>
-    <tr>
-      <th>21</th>
-      <td>OnlineBackup_No</td>
-      <td>0.013693</td>
-    </tr>
-    <tr>
-      <th>12</th>
-      <td>MultipleLines_No</td>
-      <td>0.013372</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>TotalCharges</td>
-      <td>0.013034</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>MonthlyCharges</td>
-      <td>0.012588</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>Dependents_No</td>
-      <td>0.009907</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
 </div>
+<p><code class="docutils literal notranslate"><span class="pre">Contract_Month-to-month</span></code> domina con 34.7% de importancia, más que las siguientes 5 variables sumadas. <code class="docutils literal notranslate"><span class="pre">TechSupport_No</span></code> y <code class="docutils literal notranslate"><span class="pre">OnlineSecurity_No</span></code> ocupan el segundo y tercer lugar, consistente con los patrones del EDA.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">classifier_fitted</span><span class="p">,</span> <span class="s2">&quot;feature_importances_&quot;</span><span class="p">):</span>
@@ -2945,10 +1045,8 @@ weighted avg       0.79      0.80      0.80      1409
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<img alt="../_images/aa46d712efe27f4804eb2f67980f98f208fe896e7bdeed856c60c805b7a01d77.png" src="../_images/aa46d712efe27f4804eb2f67980f98f208fe896e7bdeed856c60c805b7a01d77.png" />
 </div>
-</div>
+<p><code class="docutils literal notranslate"><span class="pre">Contract_Month-to-month</span></code> domina ampliamente en la parte derecha del gráfico. Las demás variables importantes son binarias derivadas del one-hot encoding. <code class="docutils literal notranslate"><span class="pre">tenure</span></code> es la única variable numérica que aparece con importancia relevante en el top 20.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Importancia de características para los 4 modelos (subplots comparativos)</span>
@@ -3008,28 +1106,7 @@ weighted avg       0.79      0.80      0.80      1409
 </div>
 </div>
 </div>
-</section>
-<section id="interpretacion-de-la-importancia-de-caracteristicas">
-<h3>Interpretación de la Importancia de Características<a class="headerlink" href="#interpretacion-de-la-importancia-de-caracteristicas" title="Link to this heading">#</a></h3>
-<p>El análisis de importancia de características revela una notable <strong>consistencia entre modelos</strong>:
-en todos los algoritmos evaluados, las mismas variables aparecen entre las más relevantes, lo que
-otorga solidez y confiabilidad a las conclusiones.</p>
-<p><strong>Variable dominante:</strong> <code class="docutils literal notranslate"><span class="pre">Contract_Month-to-month</span></code> emerge como el predictor más potente en todos
-los modelos, con importancias que oscilan entre el 15% y el 35%. Este resultado es coherente con
-el hallazgo del EDA: los contratos mensuales presentan una tasa de churn del 42.7%, la más alta
-de todas las modalidades contractuales.</p>
-<p><strong>Variables de segundo orden:</strong> <code class="docutils literal notranslate"><span class="pre">TechSupport_No</span></code>, <code class="docutils literal notranslate"><span class="pre">OnlineSecurity_No</span></code> e <code class="docutils literal notranslate"><span class="pre">InternetService_Fiber</span> <span class="pre">optic</span></code>
-aparecen consistentemente entre las 5 más importantes. Estos factores de riesgo secundarios
-representan oportunidades concretas de intervención: ofrecer servicios de soporte y seguridad
-a clientes con contrato mensual y fibra óptica podría reducir significativamente el riesgo de churn.</p>
-<p><strong>Variables numéricas:</strong> <code class="docutils literal notranslate"><span class="pre">tenure</span></code> (antigüedad) aparece como la única variable numérica con alta
-importancia consistente, confirmando que los clientes con menor permanencia son inherentemente
-más vulnerables al abandono. <code class="docutils literal notranslate"><span class="pre">MonthlyCharges</span></code> y <code class="docutils literal notranslate"><span class="pre">TotalCharges</span></code> tienen importancias moderadas,
-posiblemente porque parte de su información ya está capturada por otras variables correlacionadas.</p>
-<p><strong>Implicación para el negocio:</strong> Las acciones de retención más costo-efectivas deberían enfocarse
-en tres palancas: (1) migrar clientes de contratos mensuales a contratos anuales con incentivos,
-(2) ofrecer servicios de soporte técnico y seguridad como parte de paquetes de fidelización,
-y (3) implementar programas especiales para clientes con antigüedad inferior a 12 meses.</p>
+<p>En los cuatro modelos aparecen las mismas variables en los primeros puestos. <code class="docutils literal notranslate"><span class="pre">Contract_Month-to-month</span></code> domina en todos —especialmente en XGBoost donde llega al 35%—, seguida de <code class="docutils literal notranslate"><span class="pre">TechSupport_No</span></code>, <code class="docutils literal notranslate"><span class="pre">OnlineSecurity_No</span></code> e <code class="docutils literal notranslate"><span class="pre">InternetService_Fiber</span> <span class="pre">optic</span></code>. <code class="docutils literal notranslate"><span class="pre">tenure</span></code> es la única variable numérica que aparece de forma consistente entre las más importantes. Que cuatro algoritmos distintos coincidan en las mismas variables le da mucha solidez a esas conclusiones.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">classifier_fitted</span><span class="p">,</span> <span class="s2">&quot;feature_importances_&quot;</span><span class="p">):</span>
@@ -3041,12 +1118,8 @@ y (3) implementar programas especiales para clientes con antigüedad inferior a 
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Importancia de características guardada en: c:\Users\sergi\OneDrive\Desktop\Machine Learning\MP3\reports\feature_importance.csv
-</pre></div>
 </div>
-</div>
-</div>
+<p>La importancia de características se guarda en <code class="docutils literal notranslate"><span class="pre">reports/feature_importance.csv</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">MODELS_DIR</span> <span class="o">=</span> <span class="n">BASE_DIR</span> <span class="o">/</span> <span class="s2">&quot;models&quot;</span>
@@ -3060,12 +1133,8 @@ y (3) implementar programas especiales para clientes con antigüedad inferior a 
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Modelo guardado en: c:\Users\sergi\OneDrive\Desktop\Machine Learning\MP3\models\best_model.joblib
-</pre></div>
 </div>
-</div>
-</div>
+<p>El pipeline completo (preprocesador + XGBoost) se serializa en <code class="docutils literal notranslate"><span class="pre">models/best_model.joblib</span></code>. Al guardar el pipeline entero —no solo el clasificador—, el preprocesamiento se aplica automáticamente en cada inferencia sin necesidad de pasos adicionales.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">metadata</span> <span class="o">=</span> <span class="p">{</span>
@@ -3090,12 +1159,8 @@ y (3) implementar programas especiales para clientes con antigüedad inferior a 
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Metadatos guardados en: c:\Users\sergi\OneDrive\Desktop\Machine Learning\MP3\models\model_metadata.json
-</pre></div>
 </div>
-</div>
-</div>
+<p>Los metadatos del modelo (nombre, features, mapping de la variable objetivo, métrica de selección) se guardan en JSON. Son leídos por el Notebook 3 y por la API para garantizar que se usen exactamente las mismas features que durante el entrenamiento.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">loaded_model</span> <span class="o">=</span> <span class="n">joblib</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">MODEL_PATH</span><span class="p">)</span>
@@ -3110,14 +1175,8 @@ y (3) implementar programas especiales para clientes con antigüedad inferior a 
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Predicción: 0
-Probabilidad de churn: 0.0344
-</pre></div>
 </div>
-</div>
-</div>
-</section>
+<p>El modelo cargado funciona correctamente: para el primer cliente del conjunto de prueba predice No Churn con una probabilidad de churn de apenas 3.44%.</p>
 </section>
 <section id="conclusiones-del-modelado-predictivo">
 <h2>7. Conclusiones del Modelado Predictivo<a class="headerlink" href="#conclusiones-del-modelado-predictivo" title="Link to this heading">#</a></h2>
@@ -3175,19 +1234,19 @@ la API de predicción en tiempo real (FastAPI).</p></li>
 <div class="prev-next-area">
     <a class="left-prev"
        href="01_eda_telco_churn.html"
-       title="previous page">
+       title="página anterior">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
-        <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Proyecto Integrador 5.12 — Capítulo 5: Árboles e Interpretabilidad</p>
+        <p class="prev-next-subtitle">anterior</p>
+        <p class="prev-next-title">EDA — Predicción de Churn en Telecomunicaciones</p>
       </div>
     </a>
     <a class="right-next"
        href="03_interpretability_lime.html"
-       title="next page">
+       title="siguiente página">
       <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Proyecto Integrador 5.12 — Capítulo 5: Árboles e Interpretabilidad</p>
+        <p class="prev-next-subtitle">siguiente</p>
+        <p class="prev-next-title">Interpretabilidad Local con LIME</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -3203,32 +1262,15 @@ la API de predicción en tiempo real (FastAPI).</p></li>
 
   <div class="sidebar-secondary-item">
   <div class="page-toc tocsection onthispage">
-    <i class="fa-solid fa-list"></i> Contents
+    <i class="fa-solid fa-list"></i> Contenido
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Proyecto Integrador 5.12 — Capítulo 5: Árboles e Interpretabilidad</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#notebook-2-modelado-predictivo-con-pipeline-y-gridsearchcv">Notebook 2: Modelado Predictivo con Pipeline y GridSearchCV</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#objetivo-del-notebook">Objetivo del Notebook</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#modelado-predictivo-telco-customer-churn">Modelado predictivo - Telco Customer Churn</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretacion-de-las-curvas-roc">Interpretación de las Curvas ROC</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretacion-de-las-matrices-de-confusion">Interpretación de las Matrices de Confusión</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pipeline-de-preprocesamiento">3. Pipeline de Preprocesamiento</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#configuracion-de-modelos-y-busqueda-de-hiperparametros">5. Configuración de Modelos y Búsqueda de Hiperparámetros</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#comparacion-de-resultados">6. Comparación de Resultados</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretacion-de-resultados-comparativos">Interpretación de Resultados Comparativos</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretacion-de-la-importancia-de-caracteristicas">Interpretación de la Importancia de Características</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#comparacion-de-resultados">6. Comparación de Resultados</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusiones-del-modelado-predictivo">7. Conclusiones del Modelado Predictivo</a></li>
 </ul>
-</li>
-</ul>
-
   </nav></div>
 
 </div></div>
@@ -3242,20 +1284,13 @@ la API de predicción en tiempo real (FastAPI).</p></li>
   <div class="footer-item">
     
 <p class="component-author">
-By Mateo Chang - Sergio Cadavid - Juan Camilo Conrado
+Por Sergio Cadavid · Juan Conrado · Mateo Chang
 </p>
 
   </div>
   
   <div class="footer-item">
     
-
-  <p class="copyright">
-    
-      © Copyright 2023.
-      <br/>
-    
-  </p>
 
   </div>
   
